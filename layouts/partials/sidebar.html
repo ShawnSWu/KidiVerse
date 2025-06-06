@@ -3,7 +3,7 @@
   {{- if .Pages -}}
     <ul class="sidebar-list sidebar-sublist">
       {{- range .Pages.ByTitle -}}
-        {{- $isSection := gt (len .Pages) 0 -}}
+        {{- $isSection := or (gt (len .Pages) 0) (eq .Kind "section") -}}
         <li class="sidebar-item">
           {{- if $isSection -}}
             <div class="sidebar-folder">
@@ -12,10 +12,14 @@
                   <path d="M9 18l6-6-6-6"/>
                 </svg>
                 <span class="sidebar-folder-toggle">
-                  {{- with .File -}}
-                    {{ path.Base .Path | replaceRE "\\.md$" "" }}
-                  {{- else -}}
+                  {{- if .Title -}}
                     {{ .Title }}
+                  {{- else -}}
+                    {{- with .File -}}
+                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" }}
+                    {{- else -}}
+                      {{ .Name | humanize | title }}
+                    {{- end -}}
                   {{- end -}}
                 </span>
               </div>
