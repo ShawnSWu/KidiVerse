@@ -1,7 +1,7 @@
 baseURL = "http://localhost:1313/"
 languageCode = "zh-tw"
-title = "KidiVerse 示例站"
+title = "KidiVerse"
 
 [params]
   description = "示例：Hugo 雙欄深色佈局，左側自動讀取 content 目錄結構"
-  author = "Shawn Wu"    # ← 這裡把作者名稱放到 .Site.Params.author
+  author = "Shawn Wu"
