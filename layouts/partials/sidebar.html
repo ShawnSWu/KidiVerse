@@ -3,7 +3,13 @@
   <ul class="sidebar-list">
     {{- range .Pages.ByTitle -}}
       <li class="sidebar-item">
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <a href="{{ .RelPermalink }}">
+          {{- with .File -}}
+          {{ path.Base .Path | replaceRE "\\.md$" "" }}
+          {{- else -}}
+          {{ .Title }}
+          {{- end -}}
+        </a>
         {{- if gt (len .Pages) 0 -}}
           {{ template "listPagesRecursively" . }}
         {{- end -}}
@@ -18,7 +24,13 @@
   <ul class="sidebar-list sidebar-list--root">
     {{- range $sections -}}
       <li class="sidebar-item sidebar-item--section">
-        <span class="sidebar-section-title">{{ .Title }}</span>
+        <span class="sidebar-section-title">
+          {{- with .File -}}
+          {{ path.Base .Path | replaceRE "\\.md$" "" }}
+          {{- else -}}
+          {{ .Title }}
+          {{- end -}}
+        </span>
         {{ template "listPagesRecursively" . }}
       </li>
     {{- end -}}
