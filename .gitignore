@@ -9,6 +9,10 @@
 *.cov
 *.prof
 
+.git
+
+content/
+public/
 
 vendor/
 

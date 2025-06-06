@@ -1,0 +1,14 @@
+{{/* themes/KidiVerse/layouts/_default/terms.html */}}
+{{ define "main" }}
+  <section class="terms-section" style="padding:1rem;">
+    <h2>所有分類</h2>
+    <ul>
+      {{ range .Data.Terms.Alphabetical }}
+        <li>
+          <a href="{{ .Page.RelPermalink }}">{{ .LinkTitle }}</a> ({{ .Count }})
+        </li>
+      {{ end }}
+    </ul>
+    <p><a href="{{ "/" | relURL }}">← 回首頁</a></p>
+  </section>
+{{ end }}

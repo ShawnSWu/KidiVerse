@@ -1,0 +1,12 @@
+{{/* themes/KidiVerse/layouts/partials/header.html */}}
+<header class="site-header">
+  <div class="header-inner">
+    <h1 class="site-title">
+      <a href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
+    </h1>
+    {{ with .Site.Params.description }}
+      <p class="site-description">{{ . }}</p>
+    {{ end }}
+  </div>
+  <hr/>
+</header>

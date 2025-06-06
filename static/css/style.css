@@ -1,0 +1,132 @@
+/* themes/KidiVerse/static/css/style.css */
+
+/* (1) 全站 Reset / 基本設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    line-height: 1.6;
+  }
+  
+  /* (2) Header/ Footer 基礎樣式 */
+  .site-header, .site-footer {
+    padding: 1rem;
+    background-color: #2d2d2d;
+    color: #fff;
+  }
+  
+  .site-header .site-title,
+  .site-header .site-title a {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .site-header .site-description {
+    margin: 0.2rem 0 0;
+    color: #bbb;
+    font-size: 0.9rem;
+  }
+  
+  /* (3) container 分左右兩欄 */
+  .container {
+    display: flex;
+    min-height: calc(100vh - 4rem);
+  }
+  
+  /* (4) 左側 Sidebar */
+  .sidebar {
+    width: 240px;
+    background-color: #252526;
+    padding: 1rem;
+    overflow-y: auto;
+    border-right: 1px solid #333;
+  }
+  
+  /* Sidebar 各層清單 */
+  .sidebar-nav {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sidebar-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #9cdcfe;
+  }
+  
+  .sidebar-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.3rem 0 1rem;
+  }
+  
+  .sidebar-item {
+    margin: 0.3rem 0;
+  }
+  
+  .sidebar-item a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  
+  .sidebar-item a:hover {
+    color: #61dafb;
+  }
+  
+  .sidebar-item--section > .sidebar-section-title {
+    font-weight: bold;
+    color: #ce9178;
+    cursor: default;
+  }
+  
+  /* (5) 右側 Main Content */
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: #1e1e1e;
+  }
+  
+  /* (6) 內文樣式 */
+  .home-intro h2,
+  .post-title {
+    color: #ffffff;
+  }
+  
+  .home-intro p,
+  .post-article p,
+  .markdown-area,
+  .canvas-area {
+    margin: 1rem 0;
+    color: #d4d4d4;
+  }
+  
+  .home-intro ul,
+  .post-article ul {
+    list-style: disc inside;
+    padding-left: 1rem;
+  }
+  
+  .post-article h1,
+  .post-article h2,
+  .post-article h3 {
+    color: #dcdcaa;
+  }
+  
+  .post-meta {
+    font-size: 0.85rem;
+    color: #999;
+  }
+  
+  /* (7) Footer 文字 */
+  .site-footer p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+    text-align: center;
+  }
+  

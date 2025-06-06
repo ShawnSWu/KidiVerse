@@ -1,0 +1,23 @@
+{{/* themes/KidiVerse/layouts/_default/single.html */}}
+{{ define "main" }}
+  <article class="post-article">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <p class="post-meta">發布日期：{{ .Date.Format "2006-01-02" }}</p>
+    <hr/>
+
+    {{ $canvas := .Resources.GetMatch "*.html" }}
+    {{ if $canvas }}
+      <div class="canvas-area">
+        {{ $canvas.Content | safeHTML }}
+      </div>
+    {{ else }}
+      <div class="markdown-area">
+        {{ .Content }}
+      </div>
+    {{ end }}
+
+    <footer class="post-footer">
+      <p><a href="{{ "/" | relURL }}">← 回首頁</a></p>
+    </footer>
+  </article>
+{{ end }}

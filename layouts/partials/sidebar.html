@@ -1,0 +1,26 @@
+{{/* themes/KidiVerse/layouts/partials/sidebar.html */}}
+{{- define "listPagesRecursively" -}}
+  <ul class="sidebar-list">
+    {{- range .Pages.ByTitle -}}
+      <li class="sidebar-item">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- if gt (len .Pages) 0 -}}
+          {{ template "listPagesRecursively" . }}
+        {{- end -}}
+      </li>
+    {{- end -}}
+  </ul>
+{{- end -}}
+
+<nav class="sidebar-nav">
+  <h2 class="sidebar-title">內容目錄</h2>
+  {{- $sections := .Site.Sections.ByTitle -}}
+  <ul class="sidebar-list sidebar-list--root">
+    {{- range $sections -}}
+      <li class="sidebar-item sidebar-item--section">
+        <span class="sidebar-section-title">{{ .Title }}</span>
+        {{ template "listPagesRecursively" . }}
+      </li>
+    {{- end -}}
+  </ul>
+</nav>

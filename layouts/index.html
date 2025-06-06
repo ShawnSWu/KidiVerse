@@ -1,0 +1,20 @@
+{{/* themes/KidiVerse/layouts/index.html */}}
+{{ define "main" }}
+  <section class="home-intro">
+    <h2>歡迎來到 {{ .Site.Title }}</h2>
+    {{ with .Site.Params.description }}
+      <p>{{ . }}</p>
+    {{ end }}
+    <hr/>
+    <h3>最新文章</h3>
+    <ul>
+      {{ range first 5 (where .Site.RegularPages "Type" "posts").ByDate.Reverse }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <small> ({{ .Date.Format "2006-01-02" }})</small>
+        </li>
+      {{ end }}
+    </ul>
+    <p>……如欲查看更多，請使用左側選單。</p>
+  </section>
+{{ end }}
