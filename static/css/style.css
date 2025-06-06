@@ -16,6 +16,8 @@ body {
     background-color: transparent;
     color: #94a3b8;
     border: none;
+    position: relative;
+    z-index: 10;
   }
   
   .site-header .site-title,
@@ -39,21 +41,28 @@ body {
     min-height: calc(100vh - 1rem);
     position: relative;
     padding-top: 1rem;
+    padding-left: 1rem;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    width: 100%;
   }
   
   /* (4) 左側 Sidebar */
   .sidebar {
-    width: 260px;
+    width: 240px;
     background-color: #1e293b;
-    padding: 1.75rem 1.25rem;
+    padding: 2.5rem 1.5rem 2rem;
     overflow-y: auto;
     border: none;
     border-radius: 12px;
-    margin: 1.5rem 0 2rem 3rem;
-    height: calc(100vh - 8rem);
     position: sticky;
     top: 2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    left: 2rem;
+    margin: 1.5rem 0 0 2rem;
+    max-height: calc(100vh - 4rem);
+    box-shadow: 4px 0 15px -3px rgba(0, 0, 0, 0.1);
   }
   
   /* Sidebar 各層清單 */
@@ -63,12 +72,12 @@ body {
   }
   
   .sidebar-title {
-    margin: 0 0 1.5rem;
-    font-size: 1.1rem;
+    margin: 0 0 1.5rem 0.5rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #f8fafc;
+    color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
   }
   
   .sidebar-list {
@@ -78,7 +87,62 @@ body {
   }
   
   .sidebar-item {
-    margin: 0.3rem 0;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .sidebar-folder {
+    position: relative;
+  }
+  
+  .sidebar-folder-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    width: 100%;
+  }
+  
+  .sidebar-folder-toggle {
+    flex: 1;
+    display: inline-block;
+    padding: 0.25rem 0;
+  }
+  
+  .sidebar-folder-toggle:hover {
+    opacity: 0.8;
+  }
+  
+  .folder-icon {
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+    fill: #94a3b8;
+  }
+  
+  .sidebar-folder-title,
+  .sidebar-folder-title {
+    color: #e2e8f0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
+  }
+  
+  .sidebar-folder-title:hover,
+  .sidebar-link:hover {
+    color: #60a5fa;
+  }
+  
+  .sidebar-sublist {
+    padding-left: 1.5rem;
+    margin: 0.25rem 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+  }
+  
+  .sidebar-sublist .sidebar-sublist {
+    padding-left: 1rem;
   }
   
   .sidebar-item a {
@@ -103,9 +167,9 @@ body {
     padding: 2rem 4rem 2rem 2rem;
     background-color: transparent;
     border: none;
-    margin-left: 0;
     border-radius: 0;
     box-shadow: none;
+    position: relative;
   }
   
   /* (6) 內文樣式 */
