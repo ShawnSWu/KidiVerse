@@ -806,11 +806,13 @@ button {
 .sidebar-folder-content {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.3s ease-in-out;
+  will-change: max-height;
 }
 
-.sidebar-folder[open] .sidebar-folder-content {
-  max-height: 1000px;
+.sidebar-folder-content.expanded {
+  max-height: none !important;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .sidebar-sublist {

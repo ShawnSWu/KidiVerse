@@ -8,30 +8,33 @@
     <nav class="sidebar-nav">
       {{ $currentPage := . }}
       {{ range $index, $section := .Site.Sections.ByTitle }}
-        <div class="sidebar-folder" data-folder-id="section-{{ $index }}">
-          <button class="sidebar-folder-toggle" aria-expanded="false">
-            <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <span class="folder-title">
-              {{- if .Title -}}
-                {{ .Title | title }}
-              {{- else -}}
-                {{- with .File -}}
-                  {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+        {{ $pages := .Pages }}
+        {{ if gt (len $pages) 0 }}
+          <div class="sidebar-folder" data-folder-id="section-{{ $index }}">
+            <button class="sidebar-folder-toggle" aria-expanded="false">
+              <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="folder-title">
+                {{- if .Title -}}
+                  {{ .Title | title }}
                 {{- else -}}
-                  {{ .Name | humanize | title }}
+                  {{- with .File -}}
+                    {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                  {{- else -}}
+                    {{ .Name | humanize | title }}
+                  {{- end -}}
                 {{- end -}}
-              {{- end -}}
-            </span>
-            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-          <div class="sidebar-folder-content">
-            {{ template "listPagesRecursively" . }}
+              </span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="sidebar-folder-content">
+              {{ template "listPagesRecursively" (dict "currentPage" $currentPage "pages" .Pages) }}
+            </div>
           </div>
-        </div>
+        {{ end }}
       {{ end }}
     </nav>
     
@@ -43,37 +46,41 @@
 </aside>
 
 {{ define "listPagesRecursively" }}
-  {{ $currentPage := . }}
-  {{ if .Pages }}
+  {{ $currentPage := .currentPage }}
+  {{ $pages := .pages }}
+  {{ if $pages }}
     <ul class="sidebar-sublist">
-      {{ range $index, $page := .Pages.ByTitle }}
+      {{ range $index, $page := $pages.ByTitle }}
         {{ if .IsSection }}
-          <li class="sidebar-item">
-            <div class="sidebar-folder" data-folder-id="folder-{{ with $page.File }}{{ .UniqueID }}{{ else }}{{ $index }}{{ end }}">
-              <button class="sidebar-folder-toggle" aria-expanded="false">
-                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <span class="folder-title">
-                  {{- if .Title -}}
-                    {{ .Title | title }}
-                  {{- else -}}
-                    {{- with .File -}}
-                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+          {{ $subpages := .Pages }}
+          {{ if gt (len $subpages) 0 }}
+            <li class="sidebar-item">
+              <div class="sidebar-folder" data-folder-id="folder-{{ with $page.File }}{{ .UniqueID }}{{ else }}{{ $index }}{{ end }}">
+                <button class="sidebar-folder-toggle" aria-expanded="false">
+                  <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span class="folder-title">
+                    {{- if .Title -}}
+                      {{ .Title | title }}
                     {{- else -}}
-                      {{ .Name | humanize | title }}
+                      {{- with .File -}}
+                        {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                      {{- else -}}
+                        {{ .Name | humanize | title }}
+                      {{- end -}}
                     {{- end -}}
-                  {{- end -}}
-                </span>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-              <div class="sidebar-folder-content">
-                {{ template "listPagesRecursively" . }}
+                  </span>
+                  <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+                <div class="sidebar-folder-content">
+                  {{ template "listPagesRecursively" (dict "currentPage" $currentPage "pages" .Pages) }}
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          {{ end }}
         {{ else }}
           <li class="sidebar-item">
             <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $currentPage.RelPermalink }} active{{ end }}">

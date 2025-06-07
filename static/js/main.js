@@ -85,16 +85,24 @@ document.addEventListener('DOMContentLoaded', function() {
       const folderId = folder.getAttribute('data-folder-id');
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       
+      // Toggle the expanded class and update state
       if (isExpanded) {
         // Collapse
         content.style.maxHeight = '0';
+        content.classList.remove('expanded');
         toggle.setAttribute('aria-expanded', 'false');
         if (folderId) {
           localStorage.setItem(`folder-${folderId}`, 'false');
         }
       } else {
         // Expand
-        content.style.maxHeight = content.scrollHeight + 'px';
+        // First, set to actual height for smooth transition
+        content.style.maxHeight = (content.scrollHeight+100) + 'px';
+        // Then add the expanded class which has a larger max-height
+        setTimeout(() => {
+          content.classList.add('expanded');
+        }, 10);
+        
         toggle.setAttribute('aria-expanded', 'true');
         if (folderId) {
           localStorage.setItem(`folder-${folderId}`, 'true');
@@ -102,9 +110,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
     
-    // Set initial state for all folders
-    const folders = container.querySelectorAll('.sidebar-folder');
-    folders.forEach(folder => {
+    // Initialize all folder toggles
+    const folderToggles = container.querySelectorAll('.sidebar-folder');
+    
+    folderToggles.forEach(folder => {
       const toggle = folder.querySelector('.sidebar-folder-toggle');
       const content = folder.querySelector('.sidebar-folder-content');
       const folderId = folder.getAttribute('data-folder-id');
@@ -115,10 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const isOpen = folderId ? localStorage.getItem(`folder-${folderId}`) !== 'false' : false;
       
       if (isOpen) {
+        // Set initial height to 0, then expand to content height
+        content.style.maxHeight = '0';
+        // Force reflow to ensure the transition works
+        void content.offsetHeight;
+        // Set to content height and add expanded class
         content.style.maxHeight = content.scrollHeight + 'px';
+        content.classList.add('expanded');
         toggle.setAttribute('aria-expanded', 'true');
       } else {
         content.style.maxHeight = '0';
+        content.classList.remove('expanded');
         toggle.setAttribute('aria-expanded', 'false');
       }
       
