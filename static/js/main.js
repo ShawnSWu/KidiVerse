@@ -67,44 +67,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Handle folder toggles in sidebar
-  const folderToggles = document.querySelectorAll('.sidebar-folder-toggle');
-  
-  folderToggles.forEach(toggle => {
-    const folder = toggle.closest('.sidebar-folder');
-    if (!folder) return;
+  const initFolderToggles = (container = document) => {
+    const folderToggles = container.querySelectorAll('.sidebar-folder-toggle');
     
-    const folderId = folder.getAttribute('data-folder-id') || Math.random().toString(36).substr(2, 9);
-    const content = folder.querySelector('.sidebar-folder-content');
-    
-    if (!content) return;
-    
-    // Restore saved state or default to open
-    const isOpen = localStorage.getItem(`folder-${folderId}`) !== 'false';
-    
-    // Set initial state
-    if (isOpen) {
-      content.style.maxHeight = content.scrollHeight + 'px';
-      toggle.setAttribute('aria-expanded', 'true');
-    } else {
-      content.style.maxHeight = '0';
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-    
-    // Toggle on click
-    toggle.addEventListener('click', () => {
-      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    folderToggles.forEach(toggle => {
+      const folder = toggle.closest('.sidebar-folder');
+      if (!folder) return;
       
-      if (isExpanded) {
-        content.style.maxHeight = '0';
-        toggle.setAttribute('aria-expanded', 'false');
-        localStorage.setItem(`folder-${folderId}`, 'false');
-      } else {
+      const folderId = folder.getAttribute('data-folder-id') || 
+                     Array.from(folder.closest('ul').children).indexOf(folder.closest('li')) + 1;
+      const content = folder.querySelector('.sidebar-folder-content');
+      
+      if (!content) return;
+      
+      // Restore saved state or default to open
+      const isOpen = localStorage.getItem(`folder-${folderId}`) !== 'false';
+      
+      // Set initial state
+      if (isOpen) {
         content.style.maxHeight = content.scrollHeight + 'px';
         toggle.setAttribute('aria-expanded', 'true');
-        localStorage.setItem(`folder-${folderId}`, 'true');
+      } else {
+        content.style.maxHeight = '0';
+        toggle.setAttribute('aria-expanded', 'false');
       }
+      
+      // Initialize nested folders
+      initFolderToggles(content);
+      
+      // Toggle on click
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+          content.style.maxHeight = '0';
+          toggle.setAttribute('aria-expanded', 'false');
+          localStorage.setItem(`folder-${folderId}`, 'false');
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          toggle.setAttribute('aria-expanded', 'true');
+          localStorage.setItem(`folder-${folderId}`, 'true');
+        }
+      });
     });
-  });
+  };
+  
+  // Initialize all folder toggles on page load
+  initFolderToggles();
   
   // Update max-height when window is resized
   window.addEventListener('resize', () => {

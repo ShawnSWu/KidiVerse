@@ -35,34 +35,189 @@ body {
     font-size: 0.9rem;
   }
   
-  /* (3) container 分左右兩欄 */
-  .container {
+  /* (3) Page Layout Structure */
+  .page-container {
+    min-height: 100vh;
     display: flex;
-    min-height: calc(100vh - 1rem);
-    position: relative;
-    padding-top: 1rem;
-    padding-left: 1rem;
+    flex-direction: column;
+    background-color: var(--bg-color);
+  }
+  
+  .page-content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    margin: 0;
+    padding: 1rem 0 1rem 1rem;
+    box-sizing: border-box;
+    gap: 0;
   }
   
   .content-wrapper {
     display: flex;
     width: 100%;
+    gap: 2rem;
   }
   
-  /* (4) 左側 Sidebar */
+  /* Main content area */
+  .main-content {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-color);
+    border-radius: 8px 0 0 0;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .content-container {
+    padding: 2rem 2rem 2rem 3rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .page-content {
+      flex-direction: column;
+      padding: 1rem;
+    }
+    
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      max-height: 60vh;
+      margin-bottom: 1.5rem;
+    }
+    
+    .content-container {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1440px;
+    }
+    
+    .main-content {
+      max-width: calc(100% - 260px);
+    }
+  }
+  
+  /* (4) Sidebar */
   .sidebar {
-    width: 240px;
-    background-color: #343535;
-    padding: 2.5rem 1.5rem 2rem;
-    overflow-y: auto;
-    border: none;
-    border-radius: 12px;
+    --sidebar-width: 240px;
+    width: var(--sidebar-width);
+    flex: 0 0 var(--sidebar-width);
     position: sticky;
-    top: 2rem;
-    left: 2rem;
-    margin: 1.5rem 0 0 2rem;
-    max-height: calc(100vh - 4rem);
-    box-shadow: 4px 0 15px -3px rgba(0, 0, 0, 0.1);
+    top: 6rem; /* Space for header */
+    height: calc(100vh - 7rem); /* Account for header and bottom margin */
+    overflow: hidden; /* Hide scrollbar from container */
+    z-index: 10;
+    margin: 0 2rem 1rem 0;
+    padding: 1rem 0;
+  }
+  
+  /* Custom scrollbar for webkit browsers */
+  .sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 0.5rem 0;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Firefox scrollbar */
+  .sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
+  
+  .sidebar-container {
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 
+                0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Hide overflow from container */
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .sidebar-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), 
+                0 3px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .sidebar-header {
+    padding: 1.25rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-title {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0 0.5rem;
+  }
+  
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 0.75rem 1.25rem;
+    margin: 0;
+    width: 100%;
+    max-height: 100%;
+    /* Add padding to prevent content from being hidden behind scrollbar */
+    padding-right: 0.5rem;
+    margin-right: -0.5rem;
+  }
+  
+  /* Ensure content doesn't get cut off by rounded corners */
+  .sidebar-nav > *:first-child {
+    margin-top: 0;
+  }
+  
+  .sidebar-nav > *:last-child {
+    margin-bottom: 0;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+  
+  .sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
   }
   
   /* Sidebar 各層清單 */
@@ -105,20 +260,54 @@ body {
   }
   
   .sidebar-folder-toggle {
-    flex: 1;
-    display: inline-block;
-    padding: 0.25rem 0;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #e2e8f0;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-align: left;
+    padding: 0.4rem 0.75rem;
+    margin: 0.05rem 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    position: relative;
+    min-height: 28px;
+  }
+  
+  .sidebar-folder-toggle:hover {
+    background: rgba(255, 255, 255, 0.05);
   }
   
   .sidebar-folder-toggle:hover {
     opacity: 0.8;
   }
   
-  .folder-icon {
+  .folder-icon,
+  .file-icon {
     flex-shrink: 0;
     margin-right: 0.5rem;
+    transition: all 0.2s ease;
+    fill: none;
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 1.75;
+  }
+  
+  .chevron {
+    margin-left: auto;
     transition: transform 0.2s ease;
-    fill: #94a3b8;
+    opacity: 0.6;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .sidebar-folder[open] .chevron {
+    transform: rotate(90deg);
   }
   
   .sidebar-folder-header .sidebar-folder-toggle {
@@ -135,24 +324,63 @@ body {
   }
   
   .sidebar-sublist {
-    padding-left: 1.5rem;
-    margin: 0.25rem 0;
+    padding-left: 1rem;
+    margin: 0 0 0 0.5rem;
     overflow: hidden;
-    transition: max-height 0.2s ease;
+    transition: max-height 0.25s ease-out;
+    max-width: 100%;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Active state for current page */
+  .sidebar-item a.active {
+    background: rgba(111, 113, 241, 0.15);
+    color: #6f71f1;
+    font-weight: 500;
+  }
+  
+  .sidebar-item a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #6f71f1;
+    border-radius: 0 2px 2px 0;
   }
   
   .sidebar-sublist .sidebar-sublist {
     padding-left: 1rem;
   }
   
+  .sidebar-item {
+    position: relative;
+    margin-bottom: 0.25rem;
+  }
+  
   .sidebar-item a {
-    color: #ffffff;
+    color: #e2e8f0;
     text-decoration: none;
-    font-size: 0.95rem;
-    display: block;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.75rem 0.4rem 1.75rem;
+    margin: 0.05rem 0;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: transparent;
+    position: relative;
+    line-height: 1.2;
+    min-height: 28px;
+  }
+  
+  .sidebar-item a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
   }
   
   .sidebar-item a:focus,
@@ -970,6 +1198,7 @@ input:checked + .slider:before {
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #6f71f1, #9f7aea);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
 }

@@ -1,57 +1,42 @@
 {{/* themes/KidiVerse/layouts/partials/sidebar.html */}}
-<aside class="modern-sidebar">
-  <div class="sidebar-inner">
-    <div class="sidebar-header">
-      <h2 class="sidebar-title">Contents</h2>
-      <button class="sidebar-close" aria-label="Close sidebar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
+<aside class="sidebar">
+  <div class="sidebar-container">
+    <header class="sidebar-header">
+      <h2 class="sidebar-title">CONTENTS</h2>
+    </header>
     
     <nav class="sidebar-nav">
-      <ul class="sidebar-list">
-        {{ $currentPage := . }}
-        {{ range .Site.Sections.ByTitle }}
-          <li class="sidebar-item">
-            <div class="sidebar-folder">
-              <button class="sidebar-folder-toggle" aria-expanded="false">
-                <svg class="folder-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <svg class="chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-                <span class="folder-title">
-                  {{- if .Title -}}
-                    {{ .Title }}
-                  {{- else -}}
-                    {{- with .File -}}
-                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
-                    {{- else -}}
-                      {{ .Name | humanize | title }}
-                    {{- end -}}
-                  {{- end -}}
-                </span>
-              </button>
-              <div class="sidebar-folder-content">
-                {{ template "listPagesRecursively" . }}
-              </div>
-            </div>
-          </li>
-        {{ end }}
-      </ul>
+      {{ $currentPage := . }}
+      {{ range .Site.Sections.ByTitle }}
+        <div class="sidebar-folder">
+          <button class="sidebar-folder-toggle">
+            <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="folder-title">
+              {{- if .Title -}}
+                {{ .Title | title }}
+              {{- else -}}
+                {{- with .File -}}
+                  {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                {{- else -}}
+                  {{ .Name | humanize | title }}
+                {{- end -}}
+              {{- end -}}
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <div class="sidebar-folder-content">
+            {{ template "listPagesRecursively" . }}
+          </div>
+        </div>
+      {{ end }}
     </nav>
     
     <div class="sidebar-footer">
       <div class="theme-toggle-container">
-        <span>Dark Mode</span>
-        <label class="switch">
-          <input type="checkbox" class="theme-switch">
-          <span class="slider"></span>
-        </label>
       </div>
     </div>
   </div>
@@ -65,16 +50,13 @@
         {{ if .IsSection }}
           <li class="sidebar-item">
             <div class="sidebar-folder">
-              <button class="sidebar-folder-toggle" aria-expanded="false">
-                <svg class="folder-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <button class="sidebar-folder-toggle">
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <svg class="chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
                 <span class="folder-title">
                   {{- if .Title -}}
-                    {{ .Title }}
+                    {{ .Title | title }}
                   {{- else -}}
                     {{- with .File -}}
                       {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
@@ -83,6 +65,9 @@
                     {{- end -}}
                   {{- end -}}
                 </span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
               </button>
               <div class="sidebar-folder-content">
                 {{ template "listPagesRecursively" . }}
@@ -92,13 +77,13 @@
         {{ else }}
           <li class="sidebar-item">
             <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $currentPage.RelPermalink }} active{{ end }}">
-              <svg class="file-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
                 <polyline points="13 2 13 9 20 9"></polyline>
               </svg>
               <span class="link-text">
                 {{- if .Title -}}
-                  {{ .Title }}
+                  {{ .Title | title }}
                 {{- else -}}
                   {{- with .File -}}
                     {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}

@@ -23,14 +23,18 @@
 <body>
   {{ partial "header.html" . }}
 
-  <div class="container">
-    <aside class="sidebar">
-      {{ partial "sidebar.html" . }}
-    </aside>
+  <div class="page-container">
+    <div class="page-content">
+      <aside class="sidebar">
+        {{ partial "sidebar.html" . }}
+      </aside>
 
-    <main class="main-content">
-      {{ block "main" . }}{{ end }}
-    </main>
+      <main class="main-content">
+        <div class="content-container">
+          {{ block "main" . }}{{ end }}
+        </div>
+      </main>
+    </div>
   </div>
 
   {{ partial "footer.html" . }}
