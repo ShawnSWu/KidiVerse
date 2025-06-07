@@ -204,7 +204,464 @@ body {
     position: relative;
   }
   
-  /* (6) 內文樣式 */
+  /* Modern Design System */
+:root {
+  --primary: #6f71f1;
+  --primary-light: rgba(111, 113, 241, 0.1);
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --bg: #181616;
+  --card-bg: #1e1e1e;
+  --border: #2d2d2d;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern Container */
+.modern-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Hero Section */
+.modern-hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-subtitle {
+  display: block;
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 0 0 1.5rem;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #6f71f1, #9f7aea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.hero-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #6f71f1, #9f7aea);
+  margin: 3rem auto 0;
+  border-radius: 2px;
+}
+
+/* Section Styles */
+.modern-section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.section-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.section-text h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.section-text p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Decorative Elements */
+.section-decor {
+  position: relative;
+  height: 300px;
+}
+
+.decor-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(111, 113, 241, 0.1), transparent);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.decor-square {
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--primary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -30%) rotate(15deg);
+  opacity: 0.3;
+}
+
+/* Notes Section */
+.notes-section {
+  padding-top: 4rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.modern-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.modern-note-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.modern-note-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-color: var(--primary);
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.note-header h3 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--text);
+  flex: 1;
+}
+
+.note-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+.note-excerpt {
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem;
+  flex: 1;
+}
+
+.note-footer {
+  margin-top: auto;
+}
+
+.read-more {
+  color: var(--primary);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.read-more::after {
+  content: '→';
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.modern-note-card:hover .read-more::after {
+  transform: translateX(3px);
+}
+
+/* Footer */
+.modern-footer {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.footer-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.footer-decoration .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: block;
+}
+
+.footer-decoration .line {
+  width: 100px;
+  height: 1px;
+  background: var(--border);
+  margin: 0 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .section-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .section-decor {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+  }
+  
+  .modern-notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Home Page Styles */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  margin: 4rem 0 5rem;
+  padding: 0 1rem;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #6f71f1, #9f7aea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  margin: 0 auto;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Cards */
+.intro-card,
+.cta-card {
+  background: #2d2d2d;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #3e3e3e;
+}
+
+.intro-card:hover,
+.cta-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.icon-container {
+  flex-shrink: 0;
+  background: rgba(111, 113, 241, 0.1);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6f71f1;
+}
+
+.icon-container svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Recent Notes */
+.recent-notes {
+  margin: 5rem 0;
+}
+
+.recent-notes h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #e2e8f0;
+  text-align: center;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.note-card {
+  background: #2d2d2d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #3e3e3e;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.note-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: #6f71f1;
+}
+
+.note-card h3 {
+  color: #e2e8f0;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.note-date {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.note-excerpt {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Footer Note */
+.footer-note {
+  text-align: center;
+  margin: 4rem 0 2rem;
+  padding: 2rem;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .tagline {
+    font-size: 1.2rem;
+  }
+  
+  .card-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .icon-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* (6) 內文樣式 */
   .home-intro h2,
   .post-title {
     color: #d4d4d4;

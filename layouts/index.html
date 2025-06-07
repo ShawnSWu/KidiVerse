@@ -1,20 +1,77 @@
-{{/* themes/KidiVerse/layouts/index.html */}}
 {{ define "main" }}
-  <section class="home-intro">
-    <h2>歡迎來到 {{ .Site.Title }}</h2>
-    {{ with .Site.Params.description }}
-      <p>{{ . }}</p>
-    {{ end }}
-    <hr/>
-    <h3>最新文章</h3>
-    <ul>
-      {{ range first 5 (where .Site.RegularPages "Type" "posts").ByDate.Reverse }}
-        <li>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          <small> ({{ .Date.Format "2006-01-02" }})</small>
-        </li>
-      {{ end }}
-    </ul>
-    <p>……如欲查看更多，請使用左側選單。</p>
-  </section>
+<div class="modern-container">
+  <!-- Hero Section -->
+  <header class="modern-hero">
+    <div class="hero-content">
+      <span class="hero-subtitle">Welcome to</span>
+      <h1 class="hero-title">{{ .Site.Title }}</h1>
+      <p class="hero-description">A digital garden of interconnected thoughts and ideas</p>
+      <div class="hero-divider"></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="modern-main">
+    <!-- About Section -->
+    <section class="modern-section about-section">
+      <div class="section-content">
+        <div class="section-text">
+          <h2>My Digital Garden</h2>
+          <p>This is my personal knowledge hub—built by connecting Obsidian notes and Canvas visualizations into a web-friendly interface. Whether it's tech notes, random sparks of inspiration, or things I've googled five times too many, it all lives here.</p>
+        </div>
+        <div class="section-decor">
+          <div class="decor-circle"></div>
+          <div class="decor-square"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="modern-section cta-section">
+      <div class="section-content">
+        <div class="section-text">
+          <h2>Build Your Own</h2>
+          <p>Want to build something like this yourself? It's simple: just drop your Obsidian vault (Markdown files and pre-rendered Canvas HTML) into the content folder, and you're good to go. No extra setup, no tears—just clean knowledge, neatly published.</p>
+        </div>
+        <div class="section-illustration">
+          <div class="illustration-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Notes -->
+    <section class="modern-section notes-section">
+      <div class="section-header">
+        <h2>Recent Notes</h2>
+        <p class="section-subtitle">Latest updates from my digital garden</p>
+      </div>
+      <div class="modern-notes-grid">
+        {{ range first 6 (where .Site.RegularPages "Type" "!=" "").ByDate.Reverse }}
+          <a href="{{ .RelPermalink }}" class="modern-note-card">
+            <div class="note-header">
+              <h3>{{ .Title }}</h3>
+              <span class="note-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+            </div>
+            {{ with .Description }}
+              <p class="note-excerpt">{{ . | truncate 100 }}</p>
+            {{ end }}
+            <div class="note-footer">
+              <span class="read-more">Read more →</span>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="modern-footer">
+    <p>Feel free to browse around. My brain is (perpetually) under construction 🚧🧠</p>
+    <div class="footer-decoration">
+      <span class="dot"></span>
+      <span class="line"></span>
+      <span class="dot"></span>
+    </div>
+  </footer>
+</div>
 {{ end }}
