@@ -7,9 +7,9 @@
     
     <nav class="sidebar-nav">
       {{ $currentPage := . }}
-      {{ range .Site.Sections.ByTitle }}
-        <div class="sidebar-folder">
-          <button class="sidebar-folder-toggle">
+      {{ range $index, $section := .Site.Sections.ByTitle }}
+        <div class="sidebar-folder" data-folder-id="section-{{ $index }}">
+          <button class="sidebar-folder-toggle" aria-expanded="false">
             <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
             </svg>
@@ -46,11 +46,11 @@
   {{ $currentPage := . }}
   {{ if .Pages }}
     <ul class="sidebar-sublist">
-      {{ range .Pages.ByTitle }}
+      {{ range $index, $page := .Pages.ByTitle }}
         {{ if .IsSection }}
           <li class="sidebar-item">
-            <div class="sidebar-folder">
-              <button class="sidebar-folder-toggle">
+            <div class="sidebar-folder" data-folder-id="folder-{{ with $page.File }}{{ .UniqueID }}{{ else }}{{ $index }}{{ end }}">
+              <button class="sidebar-folder-toggle" aria-expanded="false">
                 <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>

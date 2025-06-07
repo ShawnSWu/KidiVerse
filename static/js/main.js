@@ -66,24 +66,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Handle folder toggles in sidebar
+  // Handle folder toggles in sidebar with event delegation
   const initFolderToggles = (container = document) => {
-    const folderToggles = container.querySelectorAll('.sidebar-folder-toggle');
-    
-    folderToggles.forEach(toggle => {
+    // Handle clicks on folder toggles
+    const handleToggleClick = (e) => {
+      const toggle = e.target.closest('.sidebar-folder-toggle');
+      if (!toggle) return;
+      
+      e.preventDefault();
+      e.stopPropagation();
+      
       const folder = toggle.closest('.sidebar-folder');
       if (!folder) return;
       
-      const folderId = folder.getAttribute('data-folder-id') || 
-                     Array.from(folder.closest('ul').children).indexOf(folder.closest('li')) + 1;
       const content = folder.querySelector('.sidebar-folder-content');
-      
       if (!content) return;
       
-      // Restore saved state or default to open
-      const isOpen = localStorage.getItem(`folder-${folderId}`) !== 'false';
+      const folderId = folder.getAttribute('data-folder-id');
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       
-      // Set initial state
+      if (isExpanded) {
+        // Collapse
+        content.style.maxHeight = '0';
+        toggle.setAttribute('aria-expanded', 'false');
+        if (folderId) {
+          localStorage.setItem(`folder-${folderId}`, 'false');
+        }
+      } else {
+        // Expand
+        content.style.maxHeight = content.scrollHeight + 'px';
+        toggle.setAttribute('aria-expanded', 'true');
+        if (folderId) {
+          localStorage.setItem(`folder-${folderId}`, 'true');
+        }
+      }
+    };
+    
+    // Set initial state for all folders
+    const folders = container.querySelectorAll('.sidebar-folder');
+    folders.forEach(folder => {
+      const toggle = folder.querySelector('.sidebar-folder-toggle');
+      const content = folder.querySelector('.sidebar-folder-content');
+      const folderId = folder.getAttribute('data-folder-id');
+      
+      if (!toggle || !content) return;
+      
+      // Set initial state from localStorage or default to closed
+      const isOpen = folderId ? localStorage.getItem(`folder-${folderId}`) !== 'false' : false;
+      
       if (isOpen) {
         content.style.maxHeight = content.scrollHeight + 'px';
         toggle.setAttribute('aria-expanded', 'true');
@@ -92,24 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.setAttribute('aria-expanded', 'false');
       }
       
-      // Initialize nested folders
-      initFolderToggles(content);
-      
-      // Toggle on click
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        
-        if (isExpanded) {
-          content.style.maxHeight = '0';
-          toggle.setAttribute('aria-expanded', 'false');
-          localStorage.setItem(`folder-${folderId}`, 'false');
-        } else {
-          content.style.maxHeight = content.scrollHeight + 'px';
-          toggle.setAttribute('aria-expanded', 'true');
-          localStorage.setItem(`folder-${folderId}`, 'true');
-        }
-      });
+      // Add click event
+      toggle.addEventListener('click', handleToggleClick);
     });
   };
   
