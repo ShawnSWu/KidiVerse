@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
-    background-color: #0f172a;
+    background-color: #181616;
     color: #e2e8f0;
     line-height: 1.6;
   }
@@ -52,7 +52,7 @@ body {
   /* (4) 左側 Sidebar */
   .sidebar {
     width: 240px;
-    background-color: #1e293b;
+    background-color: #343535;
     padding: 2.5rem 1.5rem 2rem;
     overflow-y: auto;
     border: none;
@@ -121,9 +121,9 @@ body {
     fill: #94a3b8;
   }
   
-  .sidebar-folder-title,
-  .sidebar-folder-title {
-    color: #e2e8f0;
+  .sidebar-folder-header .sidebar-folder-toggle {
+    color: 	#6f71f1;
+    font-weight: 600;
     text-decoration: none;
     transition: color 0.2s ease;
     display: inline-block;
@@ -146,9 +146,41 @@ body {
   }
   
   .sidebar-item a {
-    color: #d4d4d4;
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.95rem;
+    display: block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+  
+  .sidebar-item a:focus,
+  .sidebar-item a:hover {
+    background-color: rgba(111, 113, 241, 0.1);
+    color: #6f71f1;
+    outline: none;
+  }
+  
+  .sidebar-item a.active,
+  .sidebar-item a.active:hover,
+  .sidebar-item a:active,
+  .sidebar-item a:focus {
+    background-color: rgba(111, 113, 241, 0.25);
+    color: #6f71f1;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  .sidebar-item a.active::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #6f71f1;
+    border-radius: 0 3px 3px 0;
   }
   
   .sidebar-item a:hover {

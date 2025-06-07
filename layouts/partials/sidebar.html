@@ -28,7 +28,7 @@
               </div>
             </div>
           {{- else -}}
-            <a href="{{ .RelPermalink }}" class="sidebar-link">
+            <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $.RelPermalink }} active{{ end }}">
               {{- with .File -}}
                 {{ path.Base .Path | replaceRE "\\.md$" "" }}
               {{- else -}}
