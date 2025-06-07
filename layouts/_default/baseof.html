@@ -1,11 +1,24 @@
 {{/* themes/KidiVerse/layouts/_default/baseof.html */}}
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ .Site.Title }}{{ if not .IsHome }} | {{ .Title }}{{ end }}</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ "images/logo.svg" | relURL }}">
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="{{ "js/main.js" | relURL }}" as="script">
 </head>
 <body>
   {{ partial "header.html" . }}
@@ -21,5 +34,8 @@
   </div>
 
   {{ partial "footer.html" . }}
+  
+  <!-- JavaScript -->
+  <script src="{{ "js/main.js" | relURL }}" defer></script>
 </body>
 </html>

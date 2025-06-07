@@ -1,176 +1,116 @@
 {{/* themes/KidiVerse/layouts/partials/sidebar.html */}}
-{{- define "listPagesRecursively" -}}
-  {{- if .Pages -}}
-    <ul class="sidebar-list sidebar-sublist">
-      {{- range .Pages.ByTitle -}}
-        {{- $isSection := or (gt (len .Pages) 0) (eq .Kind "section") -}}
-        <li class="sidebar-item">
-          {{- if $isSection -}}
+<aside class="modern-sidebar">
+  <div class="sidebar-inner">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">Contents</h2>
+      <button class="sidebar-close" aria-label="Close sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul class="sidebar-list">
+        {{ $currentPage := . }}
+        {{ range .Site.Sections.ByTitle }}
+          <li class="sidebar-item">
             <div class="sidebar-folder">
-              <div class="sidebar-folder-header">
-                <svg class="folder-icon" viewBox="0 0 24 24" width="16" height="16">
-                  <path d="M9 18l6-6-6-6"/>
+              <button class="sidebar-folder-toggle" aria-expanded="false">
+                <svg class="folder-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>
-                <span class="sidebar-folder-toggle">
+                <svg class="chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span class="folder-title">
                   {{- if .Title -}}
                     {{ .Title }}
                   {{- else -}}
                     {{- with .File -}}
-                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" }}
+                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
                     {{- else -}}
                       {{ .Name | humanize | title }}
                     {{- end -}}
                   {{- end -}}
                 </span>
-              </div>
+              </button>
               <div class="sidebar-folder-content">
                 {{ template "listPagesRecursively" . }}
               </div>
             </div>
-          {{- else -}}
-            <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $.RelPermalink }} active{{ end }}">
-              {{- with .File -}}
-                {{ path.Base .Path | replaceRE "\\.md$" "" }}
-              {{- else -}}
-                {{ .Title }}
-              {{- end -}}
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="theme-toggle-container">
+        <span>Dark Mode</span>
+        <label class="switch">
+          <input type="checkbox" class="theme-switch">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</aside>
+
+{{ define "listPagesRecursively" }}
+  {{ $currentPage := . }}
+  {{ if .Pages }}
+    <ul class="sidebar-sublist">
+      {{ range .Pages.ByTitle }}
+        {{ if .IsSection }}
+          <li class="sidebar-item">
+            <div class="sidebar-folder">
+              <button class="sidebar-folder-toggle" aria-expanded="false">
+                <svg class="folder-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <svg class="chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span class="folder-title">
+                  {{- if .Title -}}
+                    {{ .Title }}
+                  {{- else -}}
+                    {{- with .File -}}
+                      {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                    {{- else -}}
+                      {{ .Name | humanize | title }}
+                    {{- end -}}
+                  {{- end -}}
+                </span>
+              </button>
+              <div class="sidebar-folder-content">
+                {{ template "listPagesRecursively" . }}
+              </div>
+            </div>
+          </li>
+        {{ else }}
+          <li class="sidebar-item">
+            <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $currentPage.RelPermalink }} active{{ end }}">
+              <svg class="file-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+              </svg>
+              <span class="link-text">
+                {{- if .Title -}}
+                  {{ .Title }}
+                {{- else -}}
+                  {{- with .File -}}
+                    {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                  {{- else -}}
+                    {{ .Name | humanize | title }}
+                  {{- end -}}
+                {{- end -}}
+              </span>
             </a>
-          {{- end -}}
-        </li>
-      {{- end -}}
+          </li>
+        {{ end }}
+      {{ end }}
     </ul>
-  {{- end -}}
-{{- end -}}
-
-<nav class="sidebar-nav">
-  <h2 class="sidebar-title">Explore</h2>
-  <ul class="sidebar-list sidebar-list--root">
-    {{- range .Site.Sections.ByTitle -}}
-      <li class="sidebar-item sidebar-item--section">
-        <div class="sidebar-folder">
-          <div class="sidebar-folder-header">
-            <svg class="folder-icon" viewBox="0 0 24 24" width="16" height="16">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
-            <span class="sidebar-folder-toggle">
-              {{- with .File -}}
-                {{ path.Base .Path | replaceRE "\\.md$" "" }}
-              {{- else -}}
-                {{ .Title }}
-              {{- end -}}
-            </span>
-          </div>
-          <div class="sidebar-folder-content">
-            {{ template "listPagesRecursively" . }}
-          </div>
-        </div>
-      </li>
-    {{- end -}}
-  </ul>
-</nav>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Handle folder toggles
-  document.querySelectorAll('.sidebar-folder-header').forEach(header => {
-    const toggle = header.querySelector('.sidebar-folder-toggle');
-    const folder = header.closest('.sidebar-folder');
-    const content = folder.querySelector('.sidebar-folder-content');
-    const icon = header.querySelector('.folder-icon');
-    
-    // Load saved state or default to collapsed
-    const isExpanded = localStorage.getItem(`folder-${toggle.textContent.trim()}`) === 'true';
-    
-    // Set initial state
-    if (isExpanded) {
-      content.style.display = 'block';
-      icon.style.transform = 'rotate(90deg)';
-    } else {
-      content.style.display = 'none';
-      icon.style.transform = 'rotate(0deg)';
-    }
-    
-    // Toggle on header click
-    header.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      if (content.style.display === 'none') {
-        content.style.display = 'block';
-        icon.style.transform = 'rotate(90deg)';
-        localStorage.setItem(`folder-${toggle.textContent.trim()}`, 'true');
-      } else {
-        content.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-        localStorage.setItem(`folder-${toggle.textContent.trim()}`, 'false');
-      }
-    });
-  });
-});
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const folderToggles = document.querySelectorAll('.sidebar-folder-toggle');
-    
-    function toggleFolder(toggle) {
-      const parent = toggle.closest('.sidebar-folder');
-      const sublist = parent.querySelector('> .sidebar-sublist');
-      if (!sublist) return;
-      
-      const isHidden = sublist.style.display === 'none';
-      sublist.style.display = isHidden ? 'block' : 'none';
-      const icon = toggle.querySelector('.folder-icon');
-      if (icon) {
-        icon.style.transform = isHidden ? 'rotate(0)' : 'rotate(-90deg)';
-      }
-      
-      // Save state in localStorage
-      const path = toggle.querySelector('a')?.getAttribute('href') || '';
-      if (path) {
-        localStorage.setItem(`sidebar-${path}`, isHidden ? 'expanded' : 'collapsed');
-      }
-    }
-    
-    folderToggles.forEach(toggle => {
-      const parent = toggle.closest('.sidebar-folder');
-      const sublist = parent.querySelector('> .sidebar-sublist');
-      
-      if (sublist) {
-        // Initialize state from localStorage
-        const path = toggle.querySelector('a')?.getAttribute('href') || '';
-        const savedState = path ? localStorage.getItem(`sidebar-${path}`) : null;
-        
-        // Set initial state
-        if (savedState === 'collapsed') {
-          sublist.style.display = 'none';
-          const icon = toggle.querySelector('.folder-icon');
-          if (icon) icon.style.transform = 'rotate(-90deg)';
-        } else {
-          sublist.style.display = 'block';
-        }
-        
-        // Add click handler
-        toggle.addEventListener('click', (e) => {
-          // Only toggle if not clicking on a link
-          if (e.target.tagName !== 'A') {
-            e.preventDefault();
-            toggleFolder(toggle);
-          }
-        });
-      }
-    });
-    
-    // Close all folders by default if none were previously saved
-    if (!localStorage.getItem('sidebar-initialized')) {
-      folderToggles.forEach(toggle => {
-        const parent = toggle.closest('.sidebar-folder');
-        const sublist = parent?.querySelector('> .sidebar-sublist');
-        if (sublist && !sublist.style.display) {
-          toggleFolder(toggle);
-        }
-      });
-      localStorage.setItem('sidebar-initialized', 'true');
-    }
-  });
-</script>
+  {{ end }}
+{{ end }}
