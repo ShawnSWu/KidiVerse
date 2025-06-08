@@ -1257,7 +1257,7 @@ input:checked + .slider:before {
 .planet {
   position: absolute;
   left: 50%;
-  top: 55%;
+  top: 50%; /* Adjusted to center with orbit */
   transform: translate(-50%, -50%);
   width: 160px;
   height: 160px;
@@ -1294,39 +1294,58 @@ input:checked + .slider:before {
 }
 
 .orbit {
-  position: absolute;
+  /* 先移除 margin-top / margin-left 等老寫法，改用 translate */
+  top: 50%;
   left: 50%;
-  top: 55%;
   width: 270px;
   height: 270px;
   border: 1.5px dashed rgba(138,63,252,0.25);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+  position: absolute;
+  transform-origin: center center;
   animation: orbitSpin 18s linear infinite;
+  z-index: 1;
 }
 
 @keyframes orbitSpin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+/* 這層做「環繞中心」的旋轉 */
+.satellite-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%); 
+  transform-origin: center center;
+}
+
+@keyframes satelliteOrbit {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 把真正的 .satellite 固定在軌道頂端 */
 .satellite {
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 50%;
-  width: 26px;
-  height: 26px;
-  background: linear-gradient(135deg, #6F71F1 60%, #8A3FFC 100%);
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;    /* half width */
+  margin-top: -14px;     /* half height, to align center with path */
+  background: linear-gradient(135deg, #8A3FFC 60%, #6F71F1 100%);
   border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(138,63,252,0.18);
-  border: 2px solid #fff2;
-  transform: translate(-50%, 0);
-  animation: satelliteMove 6s cubic-bezier(0.4,0,0.2,1) infinite;
+  box-shadow: 0 0 12px 2px rgba(138,63,252,0.25);
+  z-index: 2;
 }
 
 @keyframes satelliteMove {
-  0%, 100% { top: 10px; }
-  50% { top: -14px; }
+  /* 0%, 100% { top: 10px; }
+  50% { top: -14px; } */
 }
 
 .footer-decoration .dot {
@@ -1554,6 +1573,131 @@ input:checked + .slider:before {
     text-align: center;
   }
 
+/* ========== Hero Visual Orbit Animation ========== */
+.hero-visual {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  margin-top: -90px;
+  margin-left: -90px;
+  border: 1.5px dashed rgba(138,63,252,0.18);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: orbit-rotate 7s linear infinite;
+  z-index: 1;
+}
+
+@keyframes orbit-rotate {
+  100% { transform: rotate(360deg); }
+}
+
+.satellite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 68px; /* 放在圓周上 */
+  background: linear-gradient(135deg, #8A3FFC 60%, #6F71F1 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 12px 2px rgba(138,63,252,0.18);
+}
+
+/* ========== Hero Visual Animation ========== */
+.hero-visual {
+  position: relative;
+  width: 300px; /* Increased size */
+  height: 300px; /* Increased size */
+  margin: 3rem auto 2.5rem auto;
+}
+
+.planet {
+  /* 保留原本的浮動動畫 planetFloat（可選）*/
+  animation:
+    planetFloat 6s ease-in-out infinite,
+    planetRotate 20s linear infinite reverse;
+  transform-origin: center center;
+}
+
+/* 只做 rotate */
+@keyframes planetRotate {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.crater {
+  position: absolute;
+  background-color: rgba(0,0,0,0.15);
+  border-radius: 50%;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.crater:nth-child(1) {
+  width: 52px; /* Scaled size */
+  height: 52px; /* Scaled size */
+  top: 20%;
+  left: 55%;
+}
+
+.crater:nth-child(2) {
+  width: 35px; /* Scaled size */
+  height: 35px; /* Scaled size */
+  top: 50%;
+  left: 20%;
+}
+
+.crater:nth-child(3) {
+  width: 44px; /* Scaled size */
+  height: 44px; /* Scaled size */
+  top: 65%;
+  left: 65%;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 270px; /* Increased size */
+  height: 270px; /* Increased size */
+  margin-top: -135px; /* Adjusted for new size */
+  margin-left: -135px; /* Adjusted for new size */
+  border: 1.5px dashed rgba(138,63,252,0.25);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: orbit-rotate 7s linear infinite;
+  z-index: 1;
+}
+
+@keyframes orbit-rotate {
+  100% { transform: rotate(360deg); }
+}
+
+.satellite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px; /* Increased size */
+  height: 28px; /* Increased size */
+  /* margin-top is -(satellite_height / 2) */
+  /* margin-left is (orbit_path_radius - satellite_radius) */
+  /* Orbit path radius = (orbit_content_width / 2) + (orbit_border_thickness / 2) */
+  /* (267px/2) + (1.5px/2) - (28px/2) = 133.5px + 0.75px - 14px = 120.25px */
+  margin: -14px 0 0 120.25px; /* Adjusted for new sizes and precise positioning */
+  background: linear-gradient(135deg, #8A3FFC 60%, #6F71F1 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 12px 2px rgba(138,63,252,0.25);
+  z-index: 3;
+}
+
 /* ========== Build Your Own Universes Section ========== */
 .section-content {
   background: linear-gradient(120deg, rgba(138,63,252,0.08) 0%, rgba(111,113,241,0.04) 100%);
@@ -1673,3 +1817,8 @@ input:checked + .slider:before {
 
 
 @import url('modern-container-modern.css');
+
+.cta-actions {
+  text-align: center; /* Centers the button (child) */
+  margin: 20px auto; /* Centers the div itself and adds vertical spacing */
+}
