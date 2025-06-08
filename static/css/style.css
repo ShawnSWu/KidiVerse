@@ -1741,12 +1741,13 @@ input:checked + .slider:before {
   height: 1.5px; /* Thickness of the underline */
   background-color: rgba(138, 63, 252, 0.7); /* Underline color */
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-out;
+  transform-origin: right; /* Default origin for contraction */
+  transition: transform 0.3s ease-out; /* Transition for transform property */
 }
 
 .garden-lead .highlight-text:hover::after {
   transform: scaleX(1);
+  transform-origin: left; /* Origin for expansion */
 }
 
 .garden-content {
