@@ -48,7 +48,7 @@ body {
     flex: 1;
     width: 100%;
     margin: 0;
-    padding: 1rem 0 1rem 1rem;
+    padding: 1rem 0rem 1rem 2rem;
     box-sizing: border-box;
     gap: 0;
   }
@@ -58,19 +58,7 @@ body {
     width: 100%;
     gap: 2rem;
   }
-  
-  /* Main content area */
-  .main-content {
-    flex: 1;
-    min-width: 0;
-    background: var(--bg-color);
-    border-radius: 8px 0 0 0;
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  
+ 
   
   /* Responsive adjustments */
   @media (max-width: 1024px) {
@@ -411,18 +399,7 @@ body {
     color: #9cdcfe;
     cursor: default;
   }
-  
-  /* (5) 右側 Main Content */
-  .main-content {
-    flex: 1;
-    padding: 2rem 4rem 2rem 2rem;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    position: relative;
-  }
-  
+
   /* Modern Design System */
 :root {
   --primary: #8A3FFC;
@@ -1053,7 +1030,7 @@ input:checked + .slider:before {
 
 /* ========== MAIN CONTENT ========== */
 .main-content {
-  padding: 2rem 1.5rem;
+  padding: 2rem 2rem 1rem 3rem;
   transition: margin-left 0.3s ease;
 }
 
@@ -1085,13 +1062,13 @@ input:checked + .slider:before {
 .space-hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: start;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+  background: none;
   color: #e2e8f0;
-  padding: 2rem 1.5rem 15rem;
+  padding: 0rem 1.5rem 5rem 1.5rem;
   text-align: left;
 }
 
@@ -1124,8 +1101,7 @@ input:checked + .slider:before {
 }
 
 .hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1000px;
   position: relative;
   z-index: 2;
   display: grid;
@@ -1815,9 +1791,6 @@ input:checked + .slider:before {
   font-family: serif;
   opacity: 0.7;
 }
-
-
-@import url('modern-container-modern.css');
 
 .cta-actions {
   text-align: center; /* Centers the button (child) */
