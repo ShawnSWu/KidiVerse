@@ -1557,48 +1557,119 @@ input:checked + .slider:before {
 /* ========== Build Your Own Universes Section ========== */
 .section-content {
   background: linear-gradient(120deg, rgba(138,63,252,0.08) 0%, rgba(111,113,241,0.04) 100%);
-  border-radius: 22px;
-  box-shadow: 0 6px 36px rgba(138,63,252,0.09), 0 1.5px 8px rgba(111,113,241,0.08);
-  padding: 2.5rem 2rem 2rem 2rem;
-  margin: 2.5rem auto 3rem auto;
-  max-width: 700px;
+  border-radius: 28px; /* Softer corners */
+  box-shadow: 0 4px 28px rgba(138,63,252,0.07), 0 1px 6px rgba(111,113,241,0.06); /* More subtle shadow */
+  padding: 3.5rem 2.5rem 3rem 2.5rem; /* Maintained padding for internal content spacing */
+  margin: 3rem 0 4rem 0; /* Removed auto horizontal margins, adjusted vertical */
+  /* max-width: 760px; */ /* Removed to allow full width of parent */
   position: relative;
   z-index: 2;
 }
 .garden-title {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 2.1rem;
+  font-size: 2.5rem; /* Slightly smaller */
   font-weight: 800;
-  color: #8A3FFC;
-  margin-bottom: 0.7rem;
-  letter-spacing: -0.01em;
-  text-shadow: 0 2px 24px rgba(138,63,252,0.07);
+  color: #a084fa;
+  margin-bottom: 1.5rem; /* Increased margin */
+  letter-spacing: 0.01em; /* Adjusted spacing */
+  text-shadow: 0 2px 20px rgba(138,63,252,0.1);
+  text-align: center;
+  position: relative;
 }
+.garden-title::after {
+  content: '';
+  display: block;
+  width: 90px; /* Wider */
+  height: 2.5px; /* Thinner */
+  background: linear-gradient(90deg, rgba(138,52,252,0.85) 50%, rgba(111,90,241,0.7) 100%); /* Refined gradient */
+  margin: 0.9rem auto 0 auto; /* Adjusted margin */
+  border-radius: 2px;
+}
+
 .garden-lead {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1.18rem;
-  color: #c7bfff;
-  margin-bottom: 1.3rem;
-  font-weight: 500;
-  line-height: 1.7;
+  font-size: 1.35rem; /* Adjusted for hierarchy */
+  color: #e0e0ff; /* Slightly softer white */
+  margin-bottom: 2.2rem; /* Increased margin */
+  font-weight: 400; /* Regular weight */
+  line-height: 1.8; /* Increased line height */
+  text-align: center;
+  max-width: 680px; /* Control line length */
+  margin-left: auto;
+  margin-right: auto;
 }
+/* Removed redundant .garden-lead .highlight-text block */
 .garden-lead .highlight-text {
-  color: #8A3FFC;
+  /* color: #8A3FFC; */ /* Using gradient, so direct color is not strictly needed */
   font-weight: 700;
   background: linear-gradient(90deg, #8A3FFC 60%, #6F71F1 100%);
   -webkit-background-clip: text;
+  background-clip: text; /* Standard property for compatibility */
   -webkit-text-fill-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: rgba(138, 63, 252, 0.5);
+  text-underline-offset: 3px;
 }
 .garden-content {
-  margin-top: 1.5rem;
-  padding-left: 0.2rem;
+  margin-top: 2rem; /* Increased margin */
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
 }
 .garden-paragraph {
-  font-size: 1.09rem;
-  color: #e2e8f0;
-  line-height: 1.7;
-  margin-bottom: 0.7rem;
+  font-size: 1.15rem; /* Adjusted size */
+  color: #c8c8ff; /* Slightly lighter/softer */
+  line-height: 1.85; /* Increased line height */
+  margin-bottom: 1rem; /* Adjusted margin */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: italic;
+  position: relative;
+  text-align: center;
+  max-width: 640px; /* Adjusted for readability with quotes */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 3.5rem; /* Space for quotes */
 }
+.garden-paragraph::before,
+.garden-paragraph::after {
+  content: "“";
+  font-family: 'Georgia', serif; /* Or a preferred quote font */
+  font-size: 4rem; /* Size of quotes */
+  font-style: normal; /* Override parent italic */
+  font-weight: 600;
+  color: rgba(138, 63, 252, 0.20); /* Softer purple for quotes */
+  position: absolute;
+  top: -0.1em; /* Fine-tune vertical alignment */
+  line-height: 1;
+  opacity: 0.8;
+}
+.garden-paragraph::before {
+  left: 0.15em; /* Position left quote */
+}
+.garden-paragraph::after {
+  content: "”";
+  right: 0.15em; /* Position right quote */
+}
+.garden-paragraph::before {
+  content: '\201C';
+  color: #8A3FFC;
+  font-size: 2.4rem;
+  position: absolute;
+  left: 0.3rem;
+  top: -0.6rem;
+  font-family: serif;
+  opacity: 0.7;
+}
+.garden-paragraph::after {
+  content: '\201D';
+  color: #8A3FFC;
+  font-size: 2.4rem;
+  position: absolute;
+  right: 0.3rem;
+  bottom: -0.6rem;
+  font-family: serif;
+  opacity: 0.7;
+}
+
 
 @import url('modern-container-modern.css');
