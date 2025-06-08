@@ -419,6 +419,7 @@ body {
   --bg-secondary: #1F2937;
   --border: #374151;
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --primary-rgb: 138, 63, 252; /* RGB for primary color for use in rgba() */
 }
 
 /* ========== BASE STYLES ========== */
@@ -1889,55 +1890,116 @@ input:checked + .slider:before {
   /* The existing quote styles for .garden-paragraph will still apply */
 }
 
-/* Feature Grid - Modern Card Layout */
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/* New Card Styles - Nebula/Glassmorphism Theme */
+.card-section {
+  display: flex;
   gap: 2rem;
+  justify-content: center;
+  align-items: stretch; /* To make cards of same height if content differs slightly */
   margin-top: 3rem;
+  padding: 1rem 0; /* Add some padding for breathing room */
+  flex-wrap: wrap;
 }
 
-.feature-item {
-  background-color: var(--card-bg, #252532); /* Ensure --card-bg is defined or use a fallback */
-  border-radius: 12px;
+.card {
+  position: relative; /* For pseudo-elements */
+  overflow: hidden; /* To contain pseudo-elements */
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(111, 113, 241, 0.08)); /* Slightly increased opacity for glass */
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%); /* Safari */
+  box-shadow: 0 8px 32px rgba(var(--primary-rgb), 0.1);
   padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 320px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text);
 }
 
-.feature-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.card::before { /* Nebula glow */
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(160, 132, 250, 0.15) 0%, rgba(var(--primary-rgb), 0.05) 30%, transparent 60%);
+  opacity: 0.7;
+  filter: blur(20px);
+  z-index: -1;
+  animation: nebula-pulse 15s infinite alternate ease-in-out;
 }
 
-.feature-item .feature-icon {
-  font-size: 2.5rem; 
+@keyframes nebula-pulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.1) rotate(10deg); opacity: 0.8; }
+  100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(var(--primary-rgb), 0.25);
+}
+
+.card:hover::before {
+  transform: scale(1.2) rotate(5deg);
+  opacity: 0.9;
+  animation-play-state: paused; /* Optional: Pause animation and hold brighter state */
+}
+
+.card::after { /* Twinkling stars container */
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out 0.1s; /* Slight delay for stars to appear */
+  z-index: 0; /* Above nebula, below content text */
+  /* Using multiple box-shadows for stars */
+  box-shadow:
+    /* Star 1 */ 15% 20% 0 0px rgba(220, 200, 255, 0.7),
+    /* Star 2 */ 80% 30% 0 1px rgba(200, 180, 255, 0.6),
+    /* Star 3 */ 40% 70% 0 0px rgba(230, 210, 255, 0.8),
+    /* Star 4 */ 65% 85% 0 1px rgba(210, 190, 255, 0.5),
+    /* Star 5 */ 25% 50% 0 0px rgba(220, 200, 255, 0.75);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card-icon {
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #8A3FFC; /* Purple Accent */
-  line-height: 1;
-  background-color: rgba(138, 63, 252, 0.1);
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
+  text-align: center;
+  color: var(--primary);
+  text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+  z-index: 1; /* Ensure icon is above pseudo-elements */
+  position: relative; /* For z-index to work */
 }
 
-.feature-item h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #e2e8f0;
+.card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
   margin-bottom: 0.75rem;
+  text-align: center;
+  z-index: 1;
+  position: relative;
 }
 
-.feature-item p {
+.card-text {
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: var(--text-light);
   line-height: 1.6;
-  flex-grow: 1; 
+  text-align: center;
+  flex-grow: 1;
+  margin-bottom: 0;
+  z-index: 1;
+  position: relative;
 }
 
 /* CTA Actions within this section - specific styling if needed, or reuse existing */
