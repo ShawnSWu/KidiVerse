@@ -1246,6 +1246,87 @@ input:checked + .slider:before {
 .hero-visual {
   position: relative;
   height: 400px;
+  width: 100%;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.planet {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle at 60% 40%, #8A3FFC 60%, #2d1a4a 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px 10px rgba(138,63,252,0.25), 0 0 0 8px rgba(111,113,241,0.08);
+  z-index: 2;
+  overflow: visible;
+  animation: planetFloat 6s ease-in-out infinite;
+}
+
+@keyframes planetFloat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -54%) scale(1.04); }
+}
+
+.crater {
+  position: absolute;
+  background: rgba(44, 20, 60, 0.5);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.crater:nth-child(1) {
+  width: 28px; height: 12px;
+  left: 32px; top: 42px;
+}
+.crater:nth-child(2) {
+  width: 16px; height: 8px;
+  left: 90px; top: 80px;
+}
+.crater:nth-child(3) {
+  width: 20px; height: 10px;
+  left: 60px; top: 110px;
+}
+
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 270px;
+  height: 270px;
+  border: 1.5px dashed rgba(138,63,252,0.25);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: orbitSpin 18s linear infinite;
+}
+
+@keyframes orbitSpin {
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.satellite {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #6F71F1 60%, #8A3FFC 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 16px 4px rgba(138,63,252,0.18);
+  border: 2px solid #fff2;
+  transform: translate(-50%, 0);
+  animation: satelliteMove 6s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+
+@keyframes satelliteMove {
+  0%, 100% { top: 10px; }
+  50% { top: -14px; }
 }
 
 .footer-decoration .dot {
@@ -1472,5 +1553,52 @@ input:checked + .slider:before {
     color: #888;
     text-align: center;
   }
+
+/* ========== Build Your Own Universes Section ========== */
+.section-content {
+  background: linear-gradient(120deg, rgba(138,63,252,0.08) 0%, rgba(111,113,241,0.04) 100%);
+  border-radius: 22px;
+  box-shadow: 0 6px 36px rgba(138,63,252,0.09), 0 1.5px 8px rgba(111,113,241,0.08);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 2.5rem auto 3rem auto;
+  max-width: 700px;
+  position: relative;
+  z-index: 2;
+}
+.garden-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #8A3FFC;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 24px rgba(138,63,252,0.07);
+}
+.garden-lead {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.18rem;
+  color: #c7bfff;
+  margin-bottom: 1.3rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.garden-lead .highlight-text {
+  color: #8A3FFC;
+  font-weight: 700;
+  background: linear-gradient(90deg, #8A3FFC 60%, #6F71F1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.garden-content {
+  margin-top: 1.5rem;
+  padding-left: 0.2rem;
+}
+.garden-paragraph {
+  font-size: 1.09rem;
+  color: #e2e8f0;
+  line-height: 1.7;
+  margin-bottom: 0.7rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
 @import url('modern-container-modern.css');
