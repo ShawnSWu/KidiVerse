@@ -37,7 +37,7 @@ body {
   
   /* (3) Page Layout Structure */
   .page-container {
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     background-color: var(--bg-color);
@@ -92,7 +92,7 @@ body {
     width: var(--sidebar-width);
     flex: 0 0 var(--sidebar-width);
     position: sticky;
-    top: 6rem; /* Space for header */
+    top: 8rem; /* Space for header */
     height: calc(100vh - 7rem); 
     overflow: hidden; /* Hide scrollbar from container */
     z-index: 10;
@@ -1040,7 +1040,7 @@ input:checked + .slider:before {
 
 /* ========== MAIN CONTENT ========== */
 .main-content {
-  padding: 2rem 2rem 1rem 3rem;
+  padding: 2rem 2rem 1rem 5rem;
   transition: margin-left 0.3s ease;
 }
 
@@ -1112,7 +1112,7 @@ input:checked + .slider:before {
 }
 
 .hero-content {
-  max-width: 1000px;
+  max-width: 1200px;
   position: relative;
   z-index: 2;
   display: grid;
@@ -1846,6 +1846,8 @@ input:checked + .slider:before {
 .build-universe-section {
   padding: 4rem 1.5rem;
   background-color: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .build-universe-section .container {
