@@ -1252,6 +1252,7 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  transform: scale(1.7); /* Scale the container and its contents */
 }
 
 .planet {
