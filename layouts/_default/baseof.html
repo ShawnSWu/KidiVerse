@@ -23,6 +23,7 @@
 <body>
   <div class="page-container">
     <div class="page-content">
+      <div class="space-stars"></div>
       <aside class="sidebar">
         {{ partial "sidebar.html" . }}
       </aside>
@@ -35,5 +36,6 @@
 
   <!-- JavaScript -->
   <script src="{{ "js/main.js" | relURL }}" defer></script>
+  <script src="{{ `/js/cosmic-background.js` | relURL }}" defer></script>
 </body>
 </html>
