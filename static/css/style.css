@@ -1838,8 +1838,8 @@ input:checked + .slider:before {
 }
 
 .cta-actions {
-  text-align: center; /* Centers the button (child) */
-  margin: 20px auto; /* Centers the div itself and adds vertical spacing */
+  text-align: center;
+  margin: 0px auto;
 }
 
 /* ========== BUILD YOUR OWN UNIVERSE SECTION ========== */
@@ -2004,7 +2004,6 @@ input:checked + .slider:before {
 /* CTA Actions within this section - specific styling if needed, or reuse existing */
 .build-universe-section .cta-actions {
   text-align: center;
-  margin-top: 3rem; /* More spacing if this is within the new section */
 }
 
 /* Responsive adjustments for build-universe-layout */
