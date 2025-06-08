@@ -1846,8 +1846,6 @@ input:checked + .slider:before {
 .build-universe-section {
   padding: 4rem 1.5rem;
   background-color: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .build-universe-section .container {
