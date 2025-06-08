@@ -162,6 +162,16 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     padding: 0 0.5rem;
+
+    display: block;
+    font-size: 4.5rem;
+    background: linear-gradient(90deg, #6f71f1, #9f7aea);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0.8rem 0;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(111, 113, 241, 0.3);
   }
   
   .sidebar-nav {
@@ -1684,17 +1694,27 @@ input:checked + .slider:before {
   position: relative;
   z-index: 2;
 }
+
 .garden-title {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 2.5rem; /* Slightly smaller */
   font-weight: 800;
-  color: #a084fa;
   margin-bottom: 1.5rem; /* Increased margin */
   letter-spacing: 0.01em; /* Adjusted spacing */
   text-shadow: 0 2px 20px rgba(138,63,252,0.1);
   text-align: center;
   position: relative;
+  display: block;
+  font-size: 4.5rem;
+  background: linear-gradient(90deg, #6f71f1, #9f7aea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0.8rem 0;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(111, 113, 241, 0.3);
 }
+
 .garden-title::after {
   content: '';
   display: block;
@@ -1730,6 +1750,10 @@ input:checked + .slider:before {
   display: inline-block; /* Ensures hover area is tight to text */
   padding-bottom: 2px; /* Space for underline to appear without shifting layout */
   transition: text-decoration-color 0.3s ease;
+  background: linear-gradient(90deg, #5E6EFF, #9f7aea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .garden-lead .highlight-text::after {
