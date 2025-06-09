@@ -2140,14 +2140,13 @@ input:checked + .slider:before {
 }
 
 .markdown-area ol {
-  list-style-type: decimal-leading-zero;
   counter-reset: item;
 }
 .markdown-area ol li {
   counter-increment: item;
 }
 .markdown-area ol li::marker {
-  color: #8A3FFC;
+  color: #d2c7f0;
   font-weight: bold;
   font-size: 1em;
 }
@@ -2288,7 +2287,7 @@ input:checked + .slider:before {
 
 /* Links */
 .markdown-area a {
-  color: #FFFFFF; /* Bright White */
+  color: #d2c7f0;
   text-decoration: none;
   font-weight: bold;
   border-bottom: 1px solid transparent;
@@ -2298,7 +2297,7 @@ input:checked + .slider:before {
 
 .markdown-area a:hover,
 .markdown-area a:focus {
-  color: #bfabff;
+  color: #6f71f1;
   border-bottom-color: #bfabff;
 }
 
