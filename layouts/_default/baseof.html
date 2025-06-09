@@ -20,10 +20,9 @@
   <!-- Preload critical assets -->
   <link rel="preload" href="{{ "js/main.js" | relURL }}" as="script">
 </head>
-<body>
+<body class="{{ if .IsHome }}is-homepage{{ end }}">
   <div class="page-container">
     <div class="page-content">
-      <div class="space-stars"></div>
       <aside class="sidebar">
         {{ partial "sidebar.html" . }}
       </aside>

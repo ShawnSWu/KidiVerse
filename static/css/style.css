@@ -2369,3 +2369,89 @@ input:checked + .slider:before {
 .markdown-area .highlight {
   display: inline-block;
 }
+
+/* Homepage Space Hero Stars Animation */
+.is-homepage .space-hero {
+  position: relative; /* Ensure stars are positioned relative to the hero */
+  overflow: hidden; /* Optional: if stars go outside hero bounds */
+}
+
+.is-homepage .space-hero .space-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* So stars don't interfere with content */
+  z-index: -1; /* Ensure stars are behind hero content */
+}
+
+.is-homepage .space-hero .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  opacity: 0; /* Start invisible, fade in with animation */
+  animation: twinkle 4s infinite ease-in-out;
+  box-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 15px #FFFFFF; /* Enhanced glow */
+}
+
+/* Distribute stars - positions for 5 stars as in index.html */
+.is-homepage .space-hero .star:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 3.5s; /* Varied duration */
+  width: 1px;
+  height: 1px;
+}
+
+.is-homepage .space-hero .star:nth-child(2) {
+  top: 50%;
+  left: 80%;
+  animation-delay: 0.5s;
+  animation-duration: 4.2s; /* Varied duration */
+}
+
+.is-homepage .space-hero .star:nth-child(3) {
+  top: 80%;
+  left: 30%;
+  animation-delay: 1s;
+  animation-duration: 2.8s; /* Varied duration */
+  width: 3px;
+  height: 3px;
+}
+
+.is-homepage .space-hero .star:nth-child(4) {
+  top: 10%;
+  left: 90%;
+  animation-delay: 1.5s;
+  animation-duration: 3.8s; /* Varied duration */
+  width: 2px; 
+  height: 2px;
+}
+
+.is-homepage .space-hero .star:nth-child(5) {
+  top: 60%;
+  left: 50%;
+  animation-delay: 2s;
+  animation-duration: 4.5s; /* Varied duration */
+  width: 1px;
+  height: 1px;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  75% { 
+    opacity: 0.6; /* Varied opacity */
+    transform: scale(0.9);
+  }
+}
