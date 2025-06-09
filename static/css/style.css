@@ -2025,7 +2025,7 @@ input:checked + .slider:before {
 .markdown-area {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.7; /* Adjusted line-height for base text */
-  color: #d4d4d4;
+  color: #B0B0B0; /* Darker White - Base text color */
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -2040,10 +2040,11 @@ input:checked + .slider:before {
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.02em;
+  color: #FFFFFF; /* Bright White */
 }
 
 .markdown-area h1 {
-  color: #9cdcfe;
+  /* color: #9cdcfe; -- Overridden by common heading color */
   font-size: 2.9rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -2076,14 +2077,14 @@ input:checked + .slider:before {
   font-size: 2.3rem;
   margin-top: 2.0rem;
   margin-bottom: 1.0rem;
-  color: #c586c0;
+  /* color: #c586c0; -- Overridden by common heading color */
 }
 
 .markdown-area h4 {
   font-size: 2.0rem;
   margin-top: 1.8rem;
   margin-bottom: 0.9rem;
-  color: #4ec9b0;
+  /* color: #4ec9b0; -- Overridden by common heading color */
   font-weight: 600;
 }
 
@@ -2099,7 +2100,7 @@ input:checked + .slider:before {
   margin-top: 1.6rem;
   margin-bottom: 0.8rem;
   font-weight: 600;
-  color: #ce9178;
+  /* color: #ce9178; -- Overridden by common heading color */
 }
 
 /* Paragraphs */
@@ -2107,7 +2108,7 @@ input:checked + .slider:before {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.05rem; /* Standardized paragraph font size */
-  color: #cccccc;
+  color: #B0B0B0; /* Darker White */
 }
 
 /* Lists */
@@ -2121,6 +2122,7 @@ input:checked + .slider:before {
 .markdown-area li {
   margin-bottom: 0.6rem; /* Consistent list item spacing */
   line-height: 1.7;
+  color: #B0B0B0; /* Darker White */
 }
 
 .markdown-area ul {
@@ -2187,14 +2189,14 @@ input:checked + .slider:before {
   background-color: rgba(138, 63, 252, 0.12);
   padding: 0.25em 0.5em;
   border-radius: 5px;
-  color: #e0e0e0;
+  color: #FFFFFF; /* Bright White - Inline Code */
 }
 
 .markdown-area pre code {
   background-color: transparent;
   padding: 0;
   border-radius: 0;
-  color: #e8e8e8;
+  color: #FFFFFF; /* Bright White - Code Block */
   font-size: 0.9rem;
 }
 
@@ -2247,7 +2249,7 @@ input:checked + .slider:before {
   border-bottom: 2px solid rgba(138, 63, 252, 0.55);
   padding: 1rem 1.2rem;
   text-align: left;
-  color: #f0f0f0;
+  color: #FFFFFF; /* Bright White */
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.9em;
@@ -2257,7 +2259,7 @@ input:checked + .slider:before {
 .markdown-area td {
   padding: 1rem 1.2rem;
   border-bottom: 1px solid #404040;
-  color: #d0d0d0;
+  color: #B0B0B0; /* Darker White */
 }
 
 .markdown-area th:first-child {
@@ -2286,9 +2288,9 @@ input:checked + .slider:before {
 
 /* Links */
 .markdown-area a {
-  color: #a084fa;
+  color: #FFFFFF; /* Bright White */
   text-decoration: none;
-  font-weight: 600;
+  font-weight: bold;
   border-bottom: 1px solid transparent;
   transition: color 0.2s ease, border-bottom-color 0.2s ease;
   padding: 0.05em 0;
@@ -2352,7 +2354,7 @@ input:checked + .slider:before {
 
 .markdown-area dt {
   font-weight: 700;
-  color: #9cdcfe;
+  color: #FFFFFF; /* Bright White */
   margin-top: 1.2rem; /* Spacing for term */
   font-size: 1.1rem;
 }
@@ -2362,6 +2364,7 @@ input:checked + .slider:before {
   margin-bottom: 0.8rem; /* Spacing for definition */
   padding-left: 1rem;
   border-left: 2px solid rgba(138, 63, 252, 0.2);
+  color: #B0B0B0; /* Darker White */
 }
 
 .markdown-area .highlight {
