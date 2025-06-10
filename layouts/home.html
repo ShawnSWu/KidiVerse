@@ -1,0 +1,124 @@
+{{ define "main" }}
+  <div class="home-container">
+    <div class="home-hero">
+      <h1>歡迎來到 KidiVerse</h1>
+      <p class="home-subtitle">知識與記憶的宇宙</p>
+    </div>
+
+    <div class="home-content">
+      <div class="home-section">
+        <h2>最新文章</h2>
+        <div class="article-grid">
+          {{ range first 6 (where .Site.RegularPages "Section" "!=" "") }}
+            <div class="article-card">
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ .Summary | truncate 100 }}</p>
+              <a href="{{ .RelPermalink }}" class="read-more">閱讀更多 →</a>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+
+      <div class="home-section">
+        <h2>探索分類</h2>
+        <div class="category-grid">
+          {{ range .Site.Sections }}
+            <div class="category-card">
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ len .Pages }} 篇文章</p>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+
+    <div class="home-footer">
+      <a href="/about" class="about-link">關於 KidiVerse</a>
+    </div>
+  </div>
+
+  <style>
+    .home-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .home-hero {
+      text-align: center;
+      margin: 4rem 0;
+    }
+    
+    .home-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #6e48aa, #9d50bb);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    
+    .home-subtitle {
+      font-size: 1.5rem;
+      color: #666;
+    }
+    
+    .home-section {
+      margin: 3rem 0;
+    }
+    
+    .article-grid, .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    
+    .article-card, .category-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #fff;
+    }
+    
+    .article-card:hover, .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    
+    .article-card h3, .category-card h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+    
+    .read-more {
+      display: inline-block;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #6e48aa;
+      text-decoration: none;
+    }
+    
+    .home-footer {
+      text-align: center;
+      margin: 4rem 0 2rem;
+    }
+    
+    .about-link {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #6e48aa;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    
+    .about-link:hover {
+      background: #9d50bb;
+    }
+  </style>
+{{ end }}

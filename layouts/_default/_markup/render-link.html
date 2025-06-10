@@ -1,0 +1,12 @@
+{{- $link := .Destination -}}
+{{- $text := .Text -}}
+
+{{- if strings.HasPrefix $link "[[" -}}
+  {{- /* 處理 Obsidian 風格的內部連結 [[page]] */ -}}
+  {{- $pagename := strings.TrimPrefix "[[" (strings.TrimSuffix "]]" $link) -}}
+  {{- /* 這裡可以添加內部連結的處理邏輯，如果需要的話 */ -}}
+  <a href="/{{ $pagename | urlize }}">{{ $text | default $pagename }}</a>
+{{- else -}}
+  {{- /* 處理標準 Markdown 連結語法 [text](link) */ -}}
+  <a href="{{ $link | safeURL }}"{{ with .Title}} title="{{ . }}"{{ end }}>{{ $text | safeHTML }}</a>
+{{- end -}}

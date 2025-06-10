@@ -1,0 +1,16 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+
+{{- if strings.HasPrefix $src "[[" -}}
+  {{- /* 處理 Obsidian 風格的圖片語法 ![[filename.png]] */ -}}
+  {{- $filename := strings.TrimPrefix "[[" (strings.TrimSuffix "]]" $src) -}}
+  {{- with .Page.Resources.GetMatch (printf "attachments/%s" $filename) -}}
+    <img src="{{ .Permalink }}" alt="{{ $alt | default $filename }}">
+  {{- else -}}
+    {{- /* 圖片不存在時顯示錯誤訊息 */ -}}
+    <span style="color:red">圖片不存在: {{ $filename }}</span>
+  {{- end -}}
+{{- else -}}
+  {{- /* 處理標準 Markdown 圖片語法 ![alt](src) */ -}}
+  <img src="{{ $src }}" alt="{{ $alt }}">
+{{- end -}}
