@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Toggle mobile menu
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const sidebar = document.querySelector('.modern-sidebar');
+  const sidebar = document.querySelector('.sidebar');
   const sidebarClose = document.querySelector('.sidebar-close');
   
   if (mobileMenuToggle) {

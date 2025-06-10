@@ -1,6 +1,5 @@
 /* themes/KidiVerse/static/css/style.css */
 
-/* (1) 全站 Reset / 基本設定 */
 body {
     margin: 0;
     padding: 0;
@@ -10,7 +9,6 @@ body {
     line-height: 1.6;
   }
   
-  /* (2) Header/ Footer 基礎樣式 */
   .site-header, .site-footer {
     padding: 1.5rem 2.5rem 0;
     background-color: transparent;
@@ -86,7 +84,7 @@ body {
     }
   }
   
-  /* (4) Sidebar */
+  /* Sidebar */
   .sidebar {
     --sidebar-width: 240px;
     width: var(--sidebar-width);
@@ -208,7 +206,7 @@ body {
     background: transparent;
   }
   
-  /* Sidebar 各層清單 */
+  /* Sidebar List */
   .sidebar-nav {
     margin: 0;
     padding: 0;
@@ -841,12 +839,6 @@ button {
   transform: translateX(0);
 }
 
-.sidebar-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .sidebar-header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
@@ -860,22 +852,6 @@ button {
   font-weight: 600;
   color: var(--text);
   margin: 0;
-}
-
-.sidebar-close {
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-light);
-  border-radius: 0.25rem;
-  transition: var(--transition);
-}
-
-.sidebar-close:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text);
 }
 
 .sidebar-nav {
@@ -1062,10 +1038,6 @@ input:checked + .slider:before {
   
   .main-content {
     margin-left: var(--sidebar-width);
-  }
-  
-  .sidebar-close {
-    display: none;
   }
 }
 
@@ -1283,7 +1255,6 @@ input:checked + .slider:before {
 }
 
 .orbit {
-  /* 先移除 margin-top / margin-left 等老寫法，改用 translate */
   top: 50%;
   left: 50%;
   width: 270px;
@@ -1301,7 +1272,6 @@ input:checked + .slider:before {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* 這層做「環繞中心」的旋轉 */
 .satellite-orbit {
   position: absolute;
   top: 50%;
@@ -1317,7 +1287,6 @@ input:checked + .slider:before {
   100% { transform: rotate(360deg); }
 }
 
-/* 把真正的 .satellite 固定在軌道頂端 */
 .satellite {
   position: absolute;
   top: 0;
@@ -1522,7 +1491,6 @@ input:checked + .slider:before {
   }
 }
 
-/* (6) 內文樣式 */
   .home-intro h2,
   .post-title {
     color: #d4d4d4;
@@ -1553,7 +1521,6 @@ input:checked + .slider:before {
     color: #666;
   }
   
-  /* (7) Footer 文字 */
   .site-footer p {
     margin: 0;
     font-size: 0.85rem;
@@ -1609,14 +1576,12 @@ input:checked + .slider:before {
 }
 
 .planet {
-  /* 保留原本的浮動動畫 planetFloat（可選）*/
   animation:
     planetFloat 6s ease-in-out infinite,
     planetRotate 20s linear infinite reverse;
   transform-origin: center center;
 }
 
-/* 只做 rotate */
 @keyframes planetRotate {
   0%   { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
