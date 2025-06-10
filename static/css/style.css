@@ -8,6 +8,10 @@ body {
     color: #e2e8f0;
     line-height: 1.6;
   }
+
+  strong {
+    font-weight: 900;
+  }
   
   .site-header, .site-footer {
     padding: 1.5rem 2.5rem 0;
