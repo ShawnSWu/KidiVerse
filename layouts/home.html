@@ -2,6 +2,12 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
+      <a href="/about/" class="planet-about-btn" title="About KidiVerse">
+        <div class="planet-rings"></div>
+        <div class="planet-body">
+          <div class="planet-surface"></div>
+        </div>
+      </a>
       <div class="welcome-header">
         <h1>Welcome back, Alex</h1>
       </div>
@@ -196,6 +202,70 @@
         color: #6f71f1;
       }
       
+      /* Planet About Button */
+      .planet-about-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 100;
+        transition: transform 0.3s ease;
+      }
+      
+      .planet-about-btn:hover {
+        transform: scale(1.15);
+      }
+      
+      .planet-body {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8a67f1, #6f71f1);
+        box-shadow: 0 0 10px rgba(111, 113, 241, 0.7);
+        top: 5px;
+        left: 5px;
+        overflow: hidden;
+        animation: planetRotate 20s linear infinite;
+      }
+      
+      .planet-surface {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-image: 
+          radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 10%),
+          radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.2) 0%, transparent 10%),
+          radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      }
+      
+      .planet-rings {
+        position: absolute;
+        width: 48px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid rgba(200, 180, 255, 0.5);
+        box-shadow: 0 0 5px rgba(170, 140, 255, 0.6);
+        top: 13px;
+        left: -4px;
+        transform: rotateX(75deg);
+        animation: ringsRotate 15s linear infinite;
+        background: linear-gradient(90deg, transparent, rgba(170, 140, 255, 0.2), transparent);
+      }
+      
+      @keyframes planetRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes ringsRotate {
+        0% { transform: rotateX(75deg) rotate(0deg); }
+        100% { transform: rotateX(75deg) rotate(360deg); }
+      }
+      
       /* Responsive adjustments */
       @media (max-width: 768px) {
         .notes-grid {
@@ -204,6 +274,26 @@
         
         .stats-row {
           grid-template-columns: 1fr 1fr;
+        }
+        
+        .planet-about-btn {
+          top: 15px;
+          right: 15px;
+          width: 35px;
+          height: 35px;
+        }
+        
+        .planet-body {
+          width: 25px;
+          height: 25px;
+          top: 5px;
+          left: 5px;
+        }
+        
+        .planet-rings {
+          width: 35px;
+          height: 10px;
+          top: 10px;
         }
       }
     </style>
