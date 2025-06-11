@@ -1,0 +1,218 @@
+{
+  "nodes": [
+    {
+      "id": "blockchain_md",
+      "label": "blockchain.md",
+      "size": 10,
+      "group": "Tech",
+      "category": "Tech,Finance"
+    },
+    {
+      "id": "tag_blockchain",
+      "label": "blockchain",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_crypto",
+      "label": "crypto",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_web3",
+      "label": "web3",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_technology",
+      "label": "technology",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "docker_compose_md",
+      "label": "docker-compose.md",
+      "size": 10,
+      "group": "Tech",
+      "category": "Tech"
+    },
+    {
+      "id": "tag_docker",
+      "label": "docker",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_docker_compose",
+      "label": "docker-compose",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_container",
+      "label": "container",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_devops",
+      "label": "devops",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "kubernetes_md",
+      "label": "kubernetes.md",
+      "size": 10,
+      "group": "Tech",
+      "category": "Tech"
+    },
+    {
+      "id": "tag_kubernetes",
+      "label": "kubernetes",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "tag_cloud_native",
+      "label": "cloud-native",
+      "size": 8,
+      "group": "tag",
+      "color": "#6366F1"
+    },
+    {
+      "id": "docker_basics_md",
+      "label": "docker-basics.md",
+      "size": 10,
+      "group": "Tech",
+      "category": "Tech"
+    },
+    {
+      "id": "about_md",
+      "label": "about.md",
+      "size": 10,
+      "group": "document"
+    },
+    {
+      "id": "k8s_md",
+      "label": "k8s.md",
+      "size": 12,
+      "group": "document"
+    },
+    {
+      "id": "docker_md",
+      "label": "Docker.md",
+      "size": 12,
+      "group": "document"
+    },
+    {
+      "id": "git_basics_md",
+      "label": "git-basics.md",
+      "size": 10,
+      "group": "document"
+    }
+  ],
+  "links": [
+    {
+      "source": "tag_blockchain",
+      "target": "blockchain_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_crypto",
+      "target": "blockchain_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_web3",
+      "target": "blockchain_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_technology",
+      "target": "blockchain_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_docker",
+      "target": "docker_compose_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_docker_compose",
+      "target": "docker_compose_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_container",
+      "target": "docker_compose_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_devops",
+      "target": "docker_compose_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_kubernetes",
+      "target": "kubernetes_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_container",
+      "target": "kubernetes_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_devops",
+      "target": "kubernetes_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_cloud_native",
+      "target": "kubernetes_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_docker",
+      "target": "docker_basics_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_container",
+      "target": "docker_basics_md",
+      "weight": 1,
+      "type": "tag"
+    },
+    {
+      "source": "tag_devops",
+      "target": "docker_basics_md",
+      "weight": 1,
+      "type": "tag"
+    }
+  ]
+}

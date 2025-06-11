@@ -1,0 +1,58 @@
+{
+  "lastUpdated": "2025-06-11T22:33:50+08:00",
+  "welcomeMessage": "Welcome back",
+  "userName": "Alexs",
+  "stats": {
+    "totalNotes": 4,
+    "recentNotesCount": 4
+  },
+  "recentNotes": [
+    {
+      "title": "Docker Basics",
+      "summary": "Container and disciprosisuset to Docker containers.",
+      "url": "/container/docker/",
+      "timeAgo": "2 days ago"
+    },
+    {
+      "title": "Meeting Notes",
+      "summary": "Discussion discussages prioritlaces on key issues and.",
+      "url": "/meetings/notes/",
+      "timeAgo": "2 days ago"
+    },
+    {
+      "title": "Blockchain Technology",
+      "summary": "Explore concepts and applications. Learn more.",
+      "url": "/tech/blockchain/",
+      "timeAgo": "2 days ago"
+    },
+    {
+      "title": "Project Roadmap",
+      "summary": "Project goals and milestoirnges.",
+      "url": "/projects/roadmap/",
+      "timeAgo": "2 days ago"
+    }
+  ],
+  "knowledgeGraph": {
+    "nodes": [
+      {"id": "central", "x": 50, "y": 50, "radius": 40, "class": "graph-central-node"},
+      {"id": "node1", "x": 30, "y": 30, "radius": 15, "class": "graph-node"},
+      {"id": "node2", "x": 70, "y": 30, "radius": 15, "class": "graph-node"},
+      {"id": "node3", "x": 30, "y": 70, "radius": 15, "class": "graph-node"},
+      {"id": "node4", "x": 70, "y": 70, "radius": 15, "class": "graph-node"},
+      {"id": "node5", "x": 50, "y": 20, "radius": 15, "class": "graph-node"},
+      {"id": "node6", "x": 50, "y": 80, "radius": 15, "class": "graph-node"},
+      {"id": "node7", "x": 20, "y": 50, "radius": 15, "class": "graph-node"},
+      {"id": "node8", "x": 80, "y": 50, "radius": 15, "class": "graph-node"}
+    ],
+    "edges": [
+      {"source": "central", "target": "node1"},
+      {"source": "central", "target": "node2"},
+      {"source": "central", "target": "node3"},
+      {"source": "central", "target": "node4"},
+      {"source": "central", "target": "node5"},
+      {"source": "central", "target": "node6"},
+      {"source": "central", "target": "node7"},
+      {"source": "central", "target": "node8"}
+    ]
+  }
+}

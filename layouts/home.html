@@ -25,36 +25,24 @@
       </a>
       <div class="planet-overlay"></div>
       <div class="welcome-header">
-        <h1>Welcome back, Alex</h1>
+        <h1>{{ with $.Site.Data.dashboard }}{{ .welcomeMessage }}, {{ .userName }}{{ end }}</h1>
       </div>
 
       <div class="recent-notes-section">
         <h2>Recent Notes</h2>
         
         <div class="notes-grid">
-          <div class="note-card">
-            <h3>Docker Basics</h3>
-            <p>Container and disciprosisuset to Docker containers.</p>
-            <div class="note-meta">2 days ago</div>
-          </div>
-          
-          <div class="note-card">
-            <h3>Meeting Notes</h3>
-            <p>Discussion discussages prioritlaces on key issues and.</p>
-            <div class="note-meta">2 days ago</div>
-          </div>
-          
-          <div class="note-card">
-            <h3>Blockchain Technology</h3>
-            <p>Explore concepts and applications. Learn more.</p>
-            <div class="note-meta">2 days ago</div>
-          </div>
-          
-          <div class="note-card">
-            <h3>Project Roadmap</h3>
-            <p>Project goals and milestoirnges.</p>
-            <div class="note-meta">2 days ago</div>
-          </div>
+          {{ with $.Site.Data.dashboard }}
+            {{ range .recentNotes }}
+              <div class="note-card">
+                <a href="{{ .url }}" class="note-link">
+                  <h3>{{ .title }}</h3>
+                  <p>{{ .summary }}</p>
+                  <div class="note-meta">{{ .timeAgo }}</div>
+                </a>
+              </div>
+            {{ end }}
+          {{ end }}
         </div>
       </div>
 
@@ -63,37 +51,45 @@
         <div class="graph-container">
           <div class="graph-visualization">
             <svg id="knowledge-graph" width="100%" height="300">
+              {{ with $.Site.Data.dashboard }}
+                <!-- 先處理所有節點 -->
+                {{ range .knowledgeGraph.nodes }}
+                  <circle cx="{{ .x }}%" cy="{{ .y }}%" r="{{ .radius }}" class="{{ .class }}" />
+                {{ end }}
+                
+                <!-- 處理所有邊 - 簡化版，使用固定的中心點連接 -->
+                {{ range .knowledgeGraph.edges }}
+                  <!-- 從固定的中心點(50%,50%)連接到目標節點 -->
+                  <line x1="50%" y1="50%" x2="50%" y2="50%" class="graph-edge" />
+                {{ end }}
+              {{ end }}
+              
+              <!-- 用靜態方式回退，確保顯示正常 -->
               <circle cx="50%" cy="50%" r="40" class="graph-central-node" />
               <circle cx="30%" cy="30%" r="15" class="graph-node" />
               <circle cx="70%" cy="30%" r="15" class="graph-node" />
               <circle cx="30%" cy="70%" r="15" class="graph-node" />
               <circle cx="70%" cy="70%" r="15" class="graph-node" />
-              <circle cx="50%" cy="20%" r="15" class="graph-node" />
-              <circle cx="50%" cy="80%" r="15" class="graph-node" />
-              <circle cx="20%" cy="50%" r="15" class="graph-node" />
-              <circle cx="80%" cy="50%" r="15" class="graph-node" />
               <line x1="50%" y1="50%" x2="30%" y2="30%" class="graph-edge" />
               <line x1="50%" y1="50%" x2="70%" y2="30%" class="graph-edge" />
               <line x1="50%" y1="50%" x2="30%" y2="70%" class="graph-edge" />
               <line x1="50%" y1="50%" x2="70%" y2="70%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="50%" y2="20%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="50%" y2="80%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="20%" y2="50%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="80%" y2="50%" class="graph-edge" />
             </svg>
           </div>
         </div>
         
         <div class="stats-row">
-          <div class="stat-box">
-            <div class="stat-title">Total Notes</div>
-            <div class="stat-value">134</div>
-          </div>
-          
-          <div class="stat-box">
-            <div class="stat-title">Notes in Last 7 Days</div>
-            <div class="stat-value">4</div>
-          </div>
+          {{ with $.Site.Data.dashboard }}
+            <div class="stat-box">
+              <div class="stat-title">Total Notes</div>
+              <div class="stat-value">{{ .stats.totalNotes }}</div>
+            </div>
+            
+            <div class="stat-box">
+              <div class="stat-title">Notes in Last 7 Days</div>
+              <div class="stat-value">{{ .stats.recentNotesCount }}</div>
+            </div>
+          {{ end }}
         </div>
       </div>
     </div>
