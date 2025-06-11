@@ -2,10 +2,25 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
-      <a href="/about/" class="planet-about-btn" id="planetAbout" title="About KidiVerse">
-        <div class="planet-rings"></div>
-        <div class="planet-body">
-          <div class="planet-surface"></div>
+      <a href="/about/" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
+        <div class="galaxy-arms">
+          <div class="arm arm1"></div>
+          <div class="arm arm2"></div>
+          <div class="arm arm3"></div>
+        </div>
+        <div class="galaxy-stars">
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <span class="star"></span><span class="star"></span><span class="star"></span>
+          <!-- Special purple star -->
+          <span class="special-star"></span>
         </div>
       </a>
       <div class="planet-overlay"></div>
@@ -203,68 +218,182 @@
         color: #6f71f1;
       }
       
-      /* Planet About Button */
-      .planet-about-btn {
-        position: absolute;
+      /* Galaxy button styles */
+      .galaxy-btn {
+        position: fixed;
         top: 20px;
         right: 20px;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         cursor: pointer;
-        z-index: 100;
-        transition: transform 0.3s ease;
+        z-index: 1000;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: visible;
       }
       
-      .planet-about-btn:hover {
-        transform: scale(1.15);
+      .galaxy-btn:hover {
+        transform: scale(1.15) rotate(5deg);
+        filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.8));
       }
       
-      .planet-body {
+      .galaxy-arms {
         position: absolute;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #8a67f1, #6f71f1);
-        box-shadow: 0 0 10px rgba(111, 113, 241, 0.7);
-        top: 5px;
-        left: 5px;
-        overflow: hidden;
-        animation: planetRotate 20s linear infinite;
+        width: 100%;
+        height: 100%;
+        animation: rotate 25s linear infinite;
+        opacity: 0.8;
       }
       
-      .planet-surface {
+      .arm {
         position: absolute;
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-image: 
-          radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 10%),
-          radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.2) 0%, transparent 10%),
-          radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        border-top: 2px solid transparent;
+        border-bottom: 1px solid transparent;
+        transform-origin: center;
       }
       
-      .planet-rings {
+      .arm1 {
+        border-image: linear-gradient(90deg, transparent 10%, #e0aaff 50%, transparent 90%) 1;
+        animation: spiral 8s linear infinite;
+      }
+      
+      .arm2 {
+        border-image: linear-gradient(90deg, transparent 10%, #c77dff 50%, transparent 90%) 1;
+        animation: spiral 12s linear infinite reverse;
+        width: 80%;
+        height: 80%;
+        top: 10%;
+        left: 10%;
+      }
+      
+      .arm3 {
+        border-image: linear-gradient(90deg, transparent 10%, #9d4edd 50%, transparent 90%) 1;
+        animation: spiral 15s linear infinite;
+        width: 60%;
+        height: 60%;
+        top: 20%;
+        left: 20%;
+      }
+      
+      .galaxy-stars {
         position: absolute;
-        width: 48px;
-        height: 14px;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+      
+      .star {
+        position: absolute;
+        background: white;
         border-radius: 50%;
-        border: 2px solid rgba(200, 180, 255, 0.5);
-        box-shadow: 0 0 5px rgba(170, 140, 255, 0.6);
-        top: 13px;
-        left: -4px;
-        transform: rotateX(75deg);
-        animation: ringsRotate 15s linear infinite;
-        background: linear-gradient(90deg, transparent, rgba(170, 140, 255, 0.2), transparent);
+        animation: twinkle 3s infinite;
+        opacity: 0;
       }
       
-      @keyframes planetRotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+      /* 生成30顆星星的隨機位置和大小 */
+      .star:nth-child(1) { width: 1px; height: 1px; top: 15%; left: 20%; animation-delay: 0.1s; }
+      .star:nth-child(2) { width: 1.5px; height: 1.5px; top: 30%; left: 75%; animation-delay: 0.5s; }
+      .star:nth-child(3) { width: 1px; height: 1px; top: 45%; left: 15%; animation-delay: 1s; }
+      .star:nth-child(4) { width: 2px; height: 2px; top: 60%; left: 80%; animation-delay: 1.5s; }
+      .star:nth-child(5) { width: 1px; height: 1px; top: 25%; left: 40%; animation-delay: 0.8s; }
+      .star:nth-child(6) { width: 1.5px; height: 1.5px; top: 70%; left: 30%; animation-delay: 1.2s; }
+      .star:nth-child(7) { width: 1px; height: 1px; top: 35%; left: 85%; animation-delay: 0.7s; }
+      .star:nth-child(8) { width: 1.5px; height: 1.5px; top: 85%; left: 25%; animation-delay: 0.3s; }
+      .star:nth-child(9) { width: 1px; height: 1px; top: 50%; left: 50%; animation-delay: 1.1s; }
+      .star:nth-child(10) { width: 2px; height: 2px; top: 20%; left: 60%; animation-delay: 1.7s; }
+      .star:nth-child(11) { width: 1px; height: 1px; top: 65%; left: 45%; animation-delay: 0.4s; }
+      .star:nth-child(12) { width: 1.5px; height: 1.5px; top: 40%; left: 70%; animation-delay: 0.9s; }
+      .star:nth-child(13) { width: 1px; height: 1px; top: 75%; left: 15%; animation-delay: 1.3s; }
+      .star:nth-child(14) { width: 1.5px; height: 1.5px; top: 30%; left: 55%; animation-delay: 0.6s; }
+      .star:nth-child(15) { width: 1px; height: 1px; top: 90%; left: 65%; animation-delay: 1.8s; }
+      .star:nth-child(16) { width: 2px; height: 2px; top: 10%; left: 35%; animation-delay: 0.2s; }
+      .star:nth-child(17) { width: 1px; height: 1px; top: 55%; left: 25%; animation-delay: 0.7s; }
+      .star:nth-child(18) { width: 1.5px; height: 1.5px; top: 80%; left: 75%; animation-delay: 1.4s; }
+      .star:nth-child(19) { width: 1px; height: 1px; top: 45%; left: 90%; animation-delay: 0.8s; }
+      .star:nth-child(20) { width: 1.5px; height: 1.5px; top: 65%; left: 10%; animation-delay: 1.1s; }
+      .star:nth-child(21) { width: 1px; height: 1px; top: 25%; left: 30%; animation-delay: 0.5s; }
+      .star:nth-child(22) { width: 2px; height: 2px; top: 50%; left: 80%; animation-delay: 1.6s; }
+      .star:nth-child(23) { width: 1px; height: 1px; top: 35%; left: 20%; animation-delay: 0.9s; }
+      .star:nth-child(24) { width: 1.5px; height: 1.5px; top: 70%; left: 60%; animation-delay: 0.4s; }
+      .star:nth-child(25) { width: 1px; height: 1px; top: 15%; left: 45%; animation-delay: 1.2s; }
+      .star:nth-child(26) { width: 1.5px; height: 1.5px; top: 85%; left: 35%; animation-delay: 0.7s; }
+      .star:nth-child(27) { width: 1px; height: 1px; top: 55%; left: 85%; animation-delay: 1.3s; }
+      .star:nth-child(28) { width: 2px; height: 2px; top: 30%; left: 65%; animation-delay: 0.8s; }
+      .star:nth-child(29) { width: 1px; height: 1px; top: 75%; left: 25%; animation-delay: 1.5s; }
+      .star:nth-child(30) { width: 1.5px; height: 1.5px; top: 40%; left: 50%; animation-delay: 0.6s; }
+      
+      .special-star {
+        position: absolute !important;
+        display: block !important;
+        width: 5px !important;
+        height: 5px !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        background: #c084fc !important;
+        border-radius: 50%;
+        box-shadow: 
+          0 0 15px 5px #c084fc,
+          0 0 30px 10px #a855f7,
+          0 0 45px 15px #7e22ce;
+        animation: pulse 1.5s ease-in-out infinite !important;
+        z-index: 10 !important;
+        pointer-events: none !important;
+        transform-origin: center !important;
       }
       
-      @keyframes ringsRotate {
-        0% { transform: rotateX(75deg) rotate(0deg); }
-        100% { transform: rotateX(75deg) rotate(360deg); }
+      @keyframes pulse {
+        0%, 100% { 
+          opacity: 0.9; 
+          transform: translate(-50%, -50%) scale(1); 
+          box-shadow: 
+            0 0 5px 1px #c084fc,
+            0 0 10px 2px #a855f7,
+            0 0 15px 3px #7e22ce;
+        }
+        50% { 
+          opacity: 1; 
+          transform: translate(-50%, -50%) scale(1.5);
+          box-shadow: 
+            0 0 8px 2px #c084fc,
+            0 0 15px 4px #a855f7,
+            0 0 25px 6px #7e22ce;
+        }
+      }
+      
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      @keyframes spiral {
+        0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+        50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
+        100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px 5px rgba(157, 78, 221, 0.5); }
+        50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 8px rgba(157, 78, 221, 0.7); }
+      }
+      
+      @keyframes twinkle {
+        0%, 100% { opacity: 0; transform: scale(0.8); filter: drop-shadow(0 0 1px white); }
+        50% { opacity: 0.8; transform: scale(1.2); filter: drop-shadow(0 0 2px white); }
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
       }
       
       /* Responsive adjustments */
