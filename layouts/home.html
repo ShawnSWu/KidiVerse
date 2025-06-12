@@ -45,35 +45,35 @@
               {{ with $.Site.Data.dashboard }}
                 <!-- 先處理所有節點 -->
                 {{ range .knowledgeGraph.nodes }}
-                  <circle cx="{{ .x }}%" cy="{{ .y }}%" r="{{ .radius }}" class="{{ .class }}" />
+                  <circle cx="{{ .x }}%" cy="{{ .y }}%" r="{{ .radius }}" class="{{ .class }}" style="fill: var(--theme-primary); opacity: 0.6;" />
                 {{ end }}
                 
                 <!-- 處理所有邊 - 簡化版，使用固定的中心點連接 -->
                 {{ range .knowledgeGraph.edges }}
                   <!-- 從固定的中心點(50%,50%)連接到目標節點 -->
-                  <line x1="50%" y1="50%" x2="50%" y2="50%" class="graph-edge" />
+                  <line x1="50%" y1="50%" x2="{{ .x }}%" y2="{{ .y }}%" class="graph-edge" style="stroke: var(--theme-primary); stroke-opacity: 0.3;" />
                 {{ end }}
               {{ end }}
               
               <!-- 用靜態方式回退，確保顯示正常 -->
-              <circle cx="50%" cy="50%" r="22" class="graph-central-node" />
+              <circle cx="50%" cy="50%" r="22" class="graph-central-node" style="fill: var(--theme-primary);" />
               <!-- satellites -->
-              <circle cx="50%" cy="15%" r="10" class="graph-node" />
-              <circle cx="80%" cy="30%" r="10" class="graph-node" />
-              <circle cx="85%" cy="60%" r="10" class="graph-node" />
-              <circle cx="65%" cy="85%" r="10" class="graph-node" />
-              <circle cx="35%" cy="85%" r="10" class="graph-node" />
-              <circle cx="15%" cy="60%" r="10" class="graph-node" />
-              <circle cx="20%" cy="30%" r="10" class="graph-node" />
+              <circle cx="50%" cy="15%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="80%" cy="30%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="85%" cy="60%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="65%" cy="85%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="35%" cy="85%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="15%" cy="60%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
+              <circle cx="20%" cy="30%" r="10" class="graph-node" style="fill: none; stroke: var(--theme-primary); stroke-width: 2px;" />
               
               <!-- edges -->
-              <line x1="50%" y1="50%" x2="50%" y2="15%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="80%" y2="30%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="85%" y2="60%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="65%" y2="85%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="35%" y2="85%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="15%" y2="60%" class="graph-edge" />
-              <line x1="50%" y1="50%" x2="20%" y2="30%" class="graph-edge" />
+              <line x1="50%" y1="50%" x2="50%" y2="15%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="80%" y2="30%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="85%" y2="60%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="65%" y2="85%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="35%" y2="85%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="15%" y2="60%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
+              <line x1="50%" y1="50%" x2="20%" y2="30%" class="graph-edge" style="stroke: var(--theme-primary); stroke-width: 1px; stroke-dasharray: 3 3; opacity: 0.4;" />
             </svg>
           </div>
         </div>
@@ -118,14 +118,9 @@
 
     <style>
       /* Dashboard specific styles */
-      :root{
-        --kv-bg: #0a0f1a;
-        --kv-primary: #9d4edd; /* brand purple */
-        --kv-accent: #2dd4bf; /* mint accent */
-        --kv-fg: #e5e7eb;
-      }
+      /* 這些變數已經在全局 CSS 中定義，這裡移除以避免衝突 */
       
-      body{background:var(--kv-bg);color:var(--kv-fg);font-family:"Inter",sans-serif;letter-spacing:.02em;}
+      body{background:var(--theme-bg);color:var(--theme-text);font-family:"Inter",sans-serif;letter-spacing:.02em;}
       
       /* Welcome section with avatar */
       .welcome-flex {
@@ -143,8 +138,8 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        border: 3px solid #8b5cf6;
-        box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        border: 3px solid var(--theme-primary);
+        box-shadow: 0 0 15px rgba(var(--theme-primary-rgb), 0.5);
         object-fit: cover;
       }
       
@@ -162,14 +157,14 @@
       
       .layout-description {
         font-size: 0.9rem;
-        color: #8b5cf6;
+        color: var(--theme-primary);
         margin-bottom: 0.5rem;
         font-style: italic;
       }
       
       .welcome-tagline {
         margin-top: 0.25rem;
-        color: #a5b4fc;
+        color: var(--text-muted);
         font-size: 0.9rem;
         font-weight: 400;
       }
@@ -182,9 +177,8 @@
       .recent-notes-section h2,
       .knowledge-section h2 {
         font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-        font-weight: 500;
-        color: #e2e8f0;
+        margin-bottom: 0.5rem;
+        color: var(--theme-primary);
       }
       
       .notes-grid {
@@ -235,6 +229,7 @@
         margin: 0 auto 1.5rem;
         height: 60vh;
         min-height: 350px;
+        border: 1px solid rgba(var(--theme-border-rgb), 0.25);
       }
       
       .graph-visualization {
@@ -244,10 +239,10 @@
       }
       
       /* graph minimalist */
-      .graph-node{fill:none;stroke:var(--kv-primary);stroke-width:2px;transition:stroke .2s,opacity .2s}
-      .graph-node:hover{stroke:var(--kv-accent);opacity:.8}
-      .graph-central-node{fill:var(--kv-primary);stroke:none;}
-      .graph-edge{stroke:var(--kv-primary);stroke-width:1px;stroke-dasharray:3 3;opacity:.4}
+      .graph-node{fill:none;stroke:var(--theme-primary);stroke-width:2px;transition:stroke .2s,opacity .2s}
+      .graph-node:hover{stroke:var(--theme-accent);opacity:.8}
+      .graph-central-node{fill:var(--theme-primary);stroke:none;}
+      .graph-edge{stroke:var(--theme-primary);stroke-width:1px;stroke-dasharray:3 3;opacity:.4}
       
       .stats-row {
         display: grid;
@@ -292,7 +287,7 @@
       
       .galaxy-btn:hover {
         transform: scale(1.15) rotate(5deg);
-        filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.8));
+        filter: drop-shadow(0 0 15px rgba(var(--theme-primary-rgb), 0.8));
       }
       
       .galaxy-arms {
@@ -314,12 +309,12 @@
       }
       
       .arm1 {
-        border-image: linear-gradient(90deg, transparent 10%, #e0aaff 50%, transparent 90%) 1;
+        border-image: linear-gradient(90deg, transparent 10%, var(--theme-primary-light) 50%, transparent 90%) 1;
         animation: spiral 8s linear infinite;
       }
       
       .arm2 {
-        border-image: linear-gradient(90deg, transparent 10%, #c77dff 50%, transparent 90%) 1;
+        border-image: linear-gradient(90deg, transparent 10%, var(--theme-primary) 50%, transparent 90%) 1;
         animation: spiral 12s linear infinite reverse;
         width: 80%;
         height: 80%;
@@ -328,7 +323,7 @@
       }
       
       .arm3 {
-        border-image: linear-gradient(90deg, transparent 10%, #9d4edd 50%, transparent 90%) 1;
+        border-image: linear-gradient(90deg, transparent 10%, var(--theme-primary-dark) 50%, transparent 90%) 1;
         animation: spiral 15s linear infinite;
         width: 60%;
         height: 60%;
@@ -393,12 +388,12 @@
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        background: #c084fc !important;
+        background: var(--theme-primary) !important;
         border-radius: 50%;
         box-shadow: 
-          0 0 15px 5px #c084fc,
-          0 0 30px 10px #a855f7,
-          0 0 45px 15px #7e22ce;
+          0 0 15px 5px var(--theme-primary),
+          0 0 30px 10px var(--theme-accent),
+          0 0 45px 15px var(--theme-primary);
         animation: pulse 1.5s ease-in-out infinite !important;
         z-index: 10 !important;
         pointer-events: none !important;
@@ -410,17 +405,17 @@
           opacity: 0.9; 
           transform: translate(-50%, -50%) scale(1); 
           box-shadow: 
-            0 0 5px 1px #c084fc,
-            0 0 10px 2px #a855f7,
-            0 0 15px 3px #7e22ce;
+            0 0 5px 1px var(--theme-primary),
+            0 0 10px 2px var(--theme-accent),
+            0 0 15px 3px var(--theme-primary-dark);
         }
         50% { 
           opacity: 1; 
           transform: translate(-50%, -50%) scale(1.5);
           box-shadow: 
-            0 0 8px 2px #c084fc,
-            0 0 15px 4px #a855f7,
-            0 0 25px 6px #7e22ce;
+            0 0 8px 2px var(--theme-primary),
+            0 0 15px 4px var(--theme-accent),
+            0 0 25px 6px var(--theme-primary-dark);
         }
       }
       
@@ -436,8 +431,8 @@
       }
       
       @keyframes pulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px 5px rgba(157, 78, 221, 0.5); }
-        50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 8px rgba(157, 78, 221, 0.7); }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px 5px rgba(var(--theme-primary-rgb), 0.5); }
+        50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 25px 8px rgba(var(--theme-primary-rgb), 0.7); }
       }
       
       @keyframes twinkle {
@@ -572,24 +567,24 @@
       /* === New dashboard grid === */
       .info-panels{
         display:flex;gap:1rem;margin-top:0.5rem;flex-wrap:wrap}
-      .panel{flex:1;min-width:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem;transition:color .2s}
-      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:var(--kv-primary)}
+      .panel{flex:1;min-width:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(var(--theme-border-rgb), 0.08);border-radius:12px;padding:1rem;transition:color .2s}
+      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:var(--theme-primary)}
 
       /* latest notes list */
       .latest-panel ul{list-style:none;padding:0;margin:0}
       .latest-panel li{display:flex;justify-content:space-between;margin:.35rem 0;font-size:.85rem}
-      .note-title a{color:var(--kv-primary);text-decoration:none}
-      .note-title a:hover{color:var(--kv-accent);text-decoration:underline}
-      .note-age{color:var(--kv-fg);font-size:.75rem;margin-left:.5rem}
+      .note-title a{color:var(--theme-primary);text-decoration:none}
+      .note-title a:hover{color:var(--theme-accent);text-decoration:underline}
+      .note-age{color:var(--text-muted);font-size:.75rem;margin-left:.5rem}
 
       /* stats */
       .stat-cols{display:flex;gap:1rem}
-      .stat-big{font-size:2.2rem;font-weight:700;color:var(--kv-accent);line-height:1}
-      .stat-label{font-size:.8rem;color:var(--kv-fg);margin-top:.25rem}
-      .stat-col{flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.05)}
+      .stat-big{font-size:2.2rem;font-weight:700;color:var(--theme-accent);line-height:1}
+      .stat-label{font-size:.8rem;color:var(--text-muted);margin-top:.25rem}
+      .stat-col{flex:1;text-align:center;border-left:1px solid rgba(var(--theme-border-rgb),.05)}
       .stat-col:first-child{border-left:none}
       
-      .panel:hover .panel h3,.panel:hover .note-title a,.panel:hover .stat-big{color:var(--kv-accent)}
+      .panel:hover .panel h3,.panel:hover .note-title a,.panel:hover .stat-big{color:var(--theme-accent)}
     </style>
     
     <script>
