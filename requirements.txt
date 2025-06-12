@@ -1,0 +1,8 @@
+# KidiVerse Python dependencies
+
+sentence-transformers==2.2.2
+scikit-learn==1.3.2
+numpy>=1.26
+# Torch is pulled automatically by sentence-transformers; pin CPU wheel if desired
+# The explicit '+cpu' build tag is not needed on PyPI — use plain version.
+torch==2.2.2

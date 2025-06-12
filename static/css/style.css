@@ -1020,7 +1020,7 @@ input:checked + .slider:before {
 
 /* ========== MAIN CONTENT ========== */
 .main-content {
-  padding: 2rem 2rem 1rem 5rem;
+  padding: 1rem 1rem 1rem 5rem;
   transition: margin-left 0.3s ease;
   width: 100% !important;
 }
