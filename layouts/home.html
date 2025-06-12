@@ -178,7 +178,7 @@
       .knowledge-section h2 {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
-        color: var(--theme-primary);
+        color: #ffffff;
       }
       
       .notes-grid {
@@ -636,13 +636,13 @@
       .info-panels{
         display:flex;gap:1rem;margin-top:0.5rem;flex-wrap:wrap}
       .panel{flex:1;min-width:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(var(--theme-border-rgb), 0.08);border-radius:12px;padding:1rem;transition:color .2s}
-      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:var(--theme-primary)}
+      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:#ffffff}
 
       /* latest notes list */
       .latest-panel ul{list-style:none;padding:0;margin:0}
       .latest-panel li{display:flex;justify-content:space-between;margin:.35rem 0;font-size:.85rem}
-      .note-title a{color:var(--theme-primary);text-decoration:none}
-      .note-title a:hover{color:var(--theme-accent);text-decoration:underline}
+      .note-title a{color:#ededff;text-decoration:none}
+      .note-title a:hover{color:#ffffff;text-decoration:underline}
       .note-age{color:var(--text-muted);font-size:.75rem;margin-left:.5rem}
 
       /* stats */
@@ -652,7 +652,9 @@
       .stat-col{flex:1;text-align:center;border-left:1px solid rgba(var(--theme-border-rgb),.05)}
       .stat-col:first-child{border-left:none}
       
-      .panel:hover .panel h3,.panel:hover .note-title a,.panel:hover .stat-big{color:var(--theme-accent)}
+      .panel h3:hover{color:var(--theme-accent)}
+      .latest-panel li:hover .note-title a{color:var(--theme-accent)}
+      .stat-col:hover .stat-big{color:var(--theme-accent)}
     </style>
     
     <script>

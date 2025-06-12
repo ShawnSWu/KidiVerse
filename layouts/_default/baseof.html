@@ -22,7 +22,7 @@
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">
   <div class="page-container">
-    {{ if ne .Layout "single" }}
+    {{ if ne .Kind "page" }}
     <div class="space-stars">
       <div class="star"></div>
       <div class="star"></div>
