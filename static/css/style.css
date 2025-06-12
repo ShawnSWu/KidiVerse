@@ -12,13 +12,7 @@
   --text-muted: #94a3b8;
 }
 
-body.theme-space-green {
-  --theme-primary: #11d3a8;
-  --theme-accent: #10b981;
-  --theme-primary-rgb: 17, 211, 168;
-  --theme-accent-rgb: 16, 185, 129;
-  --theme-border-rgb: 17, 211, 168;
-}
+/* 已移除綠色主題設定，只保留太空紫主題 */
 
 body {
     margin: 0;
@@ -345,50 +339,16 @@ strong {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.theme-toggle-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* 已移除主題切換按鈕相關的 CSS 樣式 */
+
+/* Ensure content doesn't get cut off by rounded corners */
+.sidebar-nav > *:first-child {
+  margin-top: 0;
 }
 
-.theme-toggle-btn {
-  background-color: rgba(var(--theme-primary-rgb), 0.15);
-  border: 1px solid rgba(var(--theme-primary-rgb), 0.3);
-  color: var(--theme-primary);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease;
-  padding: 0;
+.sidebar-nav > *:last-child {
+  margin-bottom: 0;
 }
-
-.theme-toggle-btn:hover {
-  background-color: rgba(var(--theme-primary-rgb), 0.25);
-  border-color: rgba(var(--theme-primary-rgb), 0.5);
-  transform: scale(1.1);
-}
-
-.theme-toggle-btn svg {
-  width: 20px;
-  height: 20px;
-}
-
-.moon-icon {
-  display: none; /* Initially hidden */
-}
-  
-  /* Ensure content doesn't get cut off by rounded corners */
-  .sidebar-nav > *:first-child {
-    margin-top: 0;
-  }
-  
-  .sidebar-nav > *:last-child {
-    margin-bottom: 0;
-  }
   
   .sidebar-nav::-webkit-scrollbar {
     width: 6px;
@@ -952,43 +912,6 @@ button {
   }
 }
 
-.theme-toggle {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--text-light);
-  transition: var(--transition);
-}
-
-.theme-toggle:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text);
-}
-
-.theme-toggle .sun,
-.theme-toggle .moon {
-  position: absolute;
-  transition: opacity 0.2s, transform 0.3s;
-}
-
-.theme-toggle .moon {
-  opacity: 0;
-  transform: rotate(90deg);
-}
-
-.dark-theme .theme-toggle .sun {
-  opacity: 0;
-  transform: rotate(-90deg);
-}
-
-.dark-theme .theme-toggle .moon {
-  opacity: 1;
-  transform: rotate(0);
-}
-
 .mobile-menu-toggle {
   display: flex;
   flex-direction: column;
@@ -1161,62 +1084,6 @@ button {
   padding: 1rem 1.5rem;
   border-top: 1px solid var(--border);
   margin-top: auto;
-}
-
-.theme-toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.theme-toggle-container span {
-  font-size: 0.875rem;
-  color: var(--text-light);
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 42px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--border);
-  transition: var(--transition);
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: var(--transition);
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: var(--kv-primary);
-}
-
-input:checked + .slider:before {
-  transform: translateX(18px);
 }
 
 /* ========== MAIN CONTENT ========== */

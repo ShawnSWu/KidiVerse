@@ -34,37 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Toggle theme
-  const themeToggle = document.querySelector('.theme-toggle');
-  const themeSwitch = document.querySelector('.theme-switch input');
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  // Check for saved user preference, if any, on load and set theme
-  const currentTheme = localStorage.getItem('theme');
-  
-  if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
-    document.body.classList.add('dark-theme');
-    if (themeSwitch) themeSwitch.checked = true;
-  }
-  
-  // Toggle theme when switch is clicked
-  if (themeSwitch) {
-    themeSwitch.addEventListener('change', function() {
-      const isDark = this.checked;
-      document.body.classList.toggle('dark-theme', isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-  }
-  
-  // Toggle theme when button is clicked
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function() {
-      const isDark = !document.body.classList.contains('dark-theme');
-      document.body.classList.toggle('dark-theme', isDark);
-      if (themeSwitch) themeSwitch.checked = isDark;
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-  }
+  // 已移除主題切換相關代碼，只保留太空紫主題
   
   // Handle folder toggles in sidebar with event delegation
   const initFolderToggles = (container = document) => {
