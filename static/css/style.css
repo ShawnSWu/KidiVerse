@@ -2408,9 +2408,9 @@ button {
   display: inline-block;
 }
 
-/* Page Content Stars Animation */
-.page-content .space-stars {
-  position: absolute;
+/* Page Container Stars Animation */
+.page-container .space-stars {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -2420,23 +2420,28 @@ button {
   z-index: 0; /* Behind other content but visible */
 }
 
-.page-content .star {
+.page-container .star {
   position: absolute;
   background: #fff;
   border-radius: 50%;
   animation: twinkle 5s infinite ease-in-out;
 }
 
-.page-content .star:nth-child(1) { width: 1px; height: 1px; top: 5%; left: 10%; animation-delay: 0s; }
-.page-content .star:nth-child(2) { width: 2px; height: 2px; top: 15%; left: 25%; animation-delay: 1s; }
-.page-content .star:nth-child(3) { width: 1.5px; height: 1.5px; top: 30%; left: 40%; animation-delay: 2s; }
-.page-content .star:nth-child(4) { width: 1px; height: 1px; top: 45%; left: 60%; animation-delay: 0.5s; }
-.page-content .star:nth-child(5) { width: 2px; height: 2px; top: 60%; left: 75%; animation-delay: 1.5s; }
-.page-content .star:nth-child(6) { width: 1px; height: 1px; top: 75%; left: 85%; animation-delay: 2.5s; }
-.page-content .star:nth-child(7) { width: 1.5px; height: 1.5px; top: 85%; left: 15%; animation-delay: 3s; }
-.page-content .star:nth-child(8) { width: 2px; height: 2px; top: 20%; left: 80%; animation-delay: 3.5s; }
-.page-content .star:nth-child(9) { width: 1px; height: 1px; top: 50%; left: 90%; animation-delay: 4s; }
-.page-content .star:nth-child(10) { width: 1.5px; height: 1.5px; top: 70%; left: 30%; animation-delay: 4.5s; }
+.page-container .star:nth-child(1) { width: 1px; height: 1px; top: 5%; left: 10%; animation-delay: 0s; }
+.page-container .star:nth-child(2) { width: 2px; height: 2px; top: 15%; left: 25%; animation-delay: 1s; }
+.page-container .star:nth-child(3) { width: 1.5px; height: 1.5px; top: 30%; left: 40%; animation-delay: 2s; }
+.page-container .star:nth-child(4) { width: 1px; height: 1px; top: 45%; left: 60%; animation-delay: 0.5s; }
+.page-container .star:nth-child(5) { width: 2px; height: 2px; top: 60%; left: 75%; animation-delay: 1.5s; }
+.page-container .star:nth-child(6) { width: 1px; height: 1px; top: 75%; left: 85%; animation-delay: 2.5s; }
+.page-container .star:nth-child(7) { width: 1.5px; height: 1.5px; top: 85%; left: 15%; animation-delay: 3s; }
+.page-container .star:nth-child(8) { width: 2px; height: 2px; top: 20%; left: 80%; animation-delay: 3.5s; }
+.page-container .star:nth-child(9) { width: 1px; height: 1px; top: 50%; left: 90%; animation-delay: 4s; }
+.page-container .star:nth-child(10) { width: 1.5px; height: 1.5px; top: 70%; left: 30%; animation-delay: 4.5s; }
+.page-container .star:nth-child(11) { width: 1px; height: 1px; top: 10%; left: 95%; animation-delay: 2.3s; }
+.page-container .star:nth-child(12) { width: 1.8px; height: 1.8px; top: 35%; left: 5%; animation-delay: 3.7s; }
+.page-container .star:nth-child(13) { width: 1.2px; height: 1.2px; top: 55%; left: 45%; animation-delay: 1.8s; }
+.page-container .star:nth-child(14) { width: 1.7px; height: 1.7px; top: 80%; left: 55%; animation-delay: 2.7s; }
+.page-container .star:nth-child(15) { width: 1px; height: 1px; top: 25%; left: 65%; animation-delay: 0.2s; }
 
 /* Homepage Space Hero Stars Animation */
 .space-hero {

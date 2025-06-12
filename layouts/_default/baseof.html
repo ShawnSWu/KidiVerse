@@ -22,19 +22,26 @@
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">
   <div class="page-container">
+    {{ if ne .Layout "single" }}
+    <div class="space-stars">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+    {{ end }}
     <div class="page-content">
-      <div class="space-stars">
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-      </div>
       <aside class="sidebar">
         {{ partial "sidebar.html" . }}
       </aside>
