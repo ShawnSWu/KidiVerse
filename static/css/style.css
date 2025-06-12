@@ -2408,88 +2408,67 @@ button {
   display: inline-block;
 }
 
-/* Homepage Space Hero Stars Animation */
-.is-homepage .space-hero {
-  position: relative; /* Ensure stars are positioned relative to the hero */
-  overflow: hidden; /* Optional: if stars go outside hero bounds */
-}
-
-.is-homepage .space-hero .space-stars {
+/* Page Content Stars Animation */
+.page-content .space-stars {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* So stars don't interfere with content */
-  z-index: -1; /* Ensure stars are behind hero content */
+  overflow: hidden;
+  pointer-events: none; /* Allow clicks to pass through */
+  z-index: 0; /* Behind other content but visible */
 }
 
-.is-homepage .space-hero .star {
+.page-content .star {
   position: absolute;
-  width: 2px;
-  height: 2px;
-  background-color: #FFFFFF;
+  background: #fff;
   border-radius: 50%;
-  opacity: 0; /* Start invisible, fade in with animation */
-  animation: twinkle 4s infinite ease-in-out;
-  box-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 15px #FFFFFF; /* Enhanced glow */
+  animation: twinkle 5s infinite ease-in-out;
 }
 
-/* Distribute stars - positions for 5 stars as in index.html */
-.is-homepage .space-hero .star:nth-child(1) {
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-  animation-duration: 3.5s; /* Varied duration */
-  width: 1px;
-  height: 1px;
+.page-content .star:nth-child(1) { width: 1px; height: 1px; top: 5%; left: 10%; animation-delay: 0s; }
+.page-content .star:nth-child(2) { width: 2px; height: 2px; top: 15%; left: 25%; animation-delay: 1s; }
+.page-content .star:nth-child(3) { width: 1.5px; height: 1.5px; top: 30%; left: 40%; animation-delay: 2s; }
+.page-content .star:nth-child(4) { width: 1px; height: 1px; top: 45%; left: 60%; animation-delay: 0.5s; }
+.page-content .star:nth-child(5) { width: 2px; height: 2px; top: 60%; left: 75%; animation-delay: 1.5s; }
+.page-content .star:nth-child(6) { width: 1px; height: 1px; top: 75%; left: 85%; animation-delay: 2.5s; }
+.page-content .star:nth-child(7) { width: 1.5px; height: 1.5px; top: 85%; left: 15%; animation-delay: 3s; }
+.page-content .star:nth-child(8) { width: 2px; height: 2px; top: 20%; left: 80%; animation-delay: 3.5s; }
+.page-content .star:nth-child(9) { width: 1px; height: 1px; top: 50%; left: 90%; animation-delay: 4s; }
+.page-content .star:nth-child(10) { width: 1.5px; height: 1.5px; top: 70%; left: 30%; animation-delay: 4.5s; }
+
+/* Homepage Space Hero Stars Animation */
+.space-hero {
+  position: relative; /* Ensure stars are positioned relative to the hero */
+  overflow: hidden; /* Optional: if stars go outside hero bounds */
 }
 
-.is-homepage .space-hero .star:nth-child(2) {
-  top: 50%;
-  left: 80%;
-  animation-delay: 0.5s;
-  animation-duration: 4.2s; /* Varied duration */
+.space-hero .space-stars {
+  position: fixed; /* Fixed position to cover viewport */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Viewport width */
+  height: 100vh; /* Viewport height */
+  overflow: hidden;
+  pointer-events: none; /* Allow clicks to pass through */
+  z-index: -1; /* Behind other content but above body background */
 }
 
-.is-homepage .space-hero .star:nth-child(3) {
-  top: 80%;
-  left: 30%;
-  animation-delay: 1s;
-  animation-duration: 2.8s; /* Varied duration */
-  width: 3px;
-  height: 3px;
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 5s infinite ease-in-out;
 }
 
-.is-homepage .space-hero .star:nth-child(4) {
-  top: 10%;
-  left: 90%;
-  animation-delay: 1.5s;
-  animation-duration: 3.8s; /* Varied duration */
-  width: 2px; 
-  height: 2px;
-}
-
-.is-homepage .space-hero .star:nth-child(5) {
-  top: 60%;
-  left: 50%;
-  animation-delay: 2s;
-  animation-duration: 4.5s; /* Varied duration */
-  width: 1px;
-  height: 1px;
-}
+.star:nth-child(1) { width: 1px; height: 1px; top: 15%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { width: 2px; height: 2px; top: 25%; left: 50%; animation-delay: 1s; }
+.star:nth-child(3) { width: 1.5px; height: 1.5px; top: 40%; left: 80%; animation-delay: 2s; }
+.star:nth-child(4) { width: 1px; height: 1px; top: 60%; left: 30%; animation-delay: 0.5s; }
+.star:nth-child(5) { width: 2px; height: 2px; top: 75%; left: 70%; animation-delay: 1.5s; }
 
 @keyframes twinkle {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  75% { 
-    opacity: 0.6; /* Varied opacity */
-    transform: scale(0.9);
-  }
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
