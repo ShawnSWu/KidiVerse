@@ -120,8 +120,9 @@
       /* Dashboard specific styles */
       :root{
         --kv-bg: #0a0f1a;
-        --kv-primary:#2dd4bf;
-        --kv-fg:#e5e7eb;
+        --kv-primary: #9d4edd; /* brand purple */
+        --kv-accent: #2dd4bf; /* mint accent */
+        --kv-fg: #e5e7eb;
       }
       
       body{background:var(--kv-bg);color:var(--kv-fg);font-family:"Inter",sans-serif;letter-spacing:.02em;}
@@ -243,10 +244,10 @@
       }
       
       /* graph minimalist */
-      .graph-node{fill:none;stroke:var(--kv-primary);stroke-width:2px;transition:opacity .2s}
-      .graph-node:hover{opacity:.7}
+      .graph-node{fill:none;stroke:var(--kv-primary);stroke-width:2px;transition:stroke .2s,opacity .2s}
+      .graph-node:hover{stroke:var(--kv-accent);opacity:.8}
       .graph-central-node{fill:var(--kv-primary);stroke:none;}
-      .graph-edge{stroke:var(--kv-primary);stroke-width:1px;stroke-dasharray:3 3;opacity:.6}
+      .graph-edge{stroke:var(--kv-primary);stroke-width:1px;stroke-dasharray:3 3;opacity:.4}
       
       .stats-row {
         display: grid;
@@ -271,7 +272,7 @@
       .stat-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #6f71f1;
+        color: var(--kv-accent);
       }
       
       /* Galaxy button styles */
@@ -572,23 +573,23 @@
       .info-panels{
         display:flex;gap:1rem;margin-top:0.5rem;flex-wrap:wrap}
       .panel{flex:1;min-width:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem;transition:color .2s}
-      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:var(--kv-fg)}
+      .panel h3{margin:0 0 .75rem;font-size:1.1rem;color:var(--kv-primary)}
 
       /* latest notes list */
       .latest-panel ul{list-style:none;padding:0;margin:0}
       .latest-panel li{display:flex;justify-content:space-between;margin:.35rem 0;font-size:.85rem}
-      .note-title a{color:var(--kv-fg);text-decoration:none}
-      .note-title a:hover{color:var(--kv-primary);text-decoration:underline}
+      .note-title a{color:var(--kv-primary);text-decoration:none}
+      .note-title a:hover{color:var(--kv-accent);text-decoration:underline}
       .note-age{color:var(--kv-fg);font-size:.75rem;margin-left:.5rem}
 
       /* stats */
       .stat-cols{display:flex;gap:1rem}
-      .stat-big{font-size:2.2rem;font-weight:700;color:var(--kv-primary);line-height:1}
+      .stat-big{font-size:2.2rem;font-weight:700;color:var(--kv-accent);line-height:1}
       .stat-label{font-size:.8rem;color:var(--kv-fg);margin-top:.25rem}
       .stat-col{flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.05)}
       .stat-col:first-child{border-left:none}
       
-      .panel:hover .panel h3,.panel:hover .note-title a,.panel:hover .stat-big{color:var(--kv-primary)}
+      .panel:hover .panel h3,.panel:hover .note-title a,.panel:hover .stat-big{color:var(--kv-accent)}
     </style>
     
     <script>
