@@ -534,23 +534,91 @@
       }
       
       .zoom-wrapper.zooming {
-        animation: zoomIntoSpace 1s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+        animation: zoomIntoSpace 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       
       @keyframes zoomIntoSpace {
-        0% {
-          transform: scale(1);
-          filter: brightness(1);
-          opacity: 1;
-        }
-        70% {
-          opacity: 0.7;
-        }
-        100% {
-          transform: scale(60);
-          filter: brightness(2);
-          opacity: 0;
-        }
+        0% { transform: scale(1); filter: brightness(1); opacity: 1; }
+        1.25% { transform: scale(1.125); opacity: 0.995; }
+        2.5% { transform: scale(1.25); opacity: 0.99; filter: brightness(1.0125); }
+        3.75% { transform: scale(1.375); opacity: 0.985; }
+        5% { transform: scale(1.5); opacity: 0.98; filter: brightness(1.025); }
+        6.25% { transform: scale(1.625); opacity: 0.975; }
+        7.5% { transform: scale(1.75); opacity: 0.97; filter: brightness(1.0375); }
+        8.75% { transform: scale(1.875); opacity: 0.965; }
+        10% { transform: scale(2); opacity: 0.96; filter: brightness(1.05); }
+        11.25% { transform: scale(2.125); opacity: 0.955; }
+        12.5% { transform: scale(2.25); opacity: 0.95; filter: brightness(1.0625); }
+        13.75% { transform: scale(2.375); opacity: 0.945; }
+        15% { transform: scale(2.5); opacity: 0.94; filter: brightness(1.075); }
+        16.25% { transform: scale(2.625); opacity: 0.935; }
+        17.5% { transform: scale(2.75); opacity: 0.93; filter: brightness(1.0875); }
+        18.75% { transform: scale(2.875); opacity: 0.925; }
+        20% { transform: scale(3); opacity: 0.92; filter: brightness(1.1); }
+        21.25% { transform: scale(3.5); opacity: 0.915; }
+        22.5% { transform: scale(4); opacity: 0.91; filter: brightness(1.125); }
+        23.75% { transform: scale(4.5); opacity: 0.905; }
+        25% { transform: scale(5); opacity: 0.9; filter: brightness(1.15); }
+        26.25% { transform: scale(5.5); opacity: 0.8875; }
+        27.5% { transform: scale(6); opacity: 0.875; filter: brightness(1.175); }
+        28.75% { transform: scale(6.5); opacity: 0.8625; }
+        30% { transform: scale(7); opacity: 0.85; filter: brightness(1.2); }
+        31.25% { transform: scale(7.5); opacity: 0.8375; }
+        32.5% { transform: scale(8); opacity: 0.825; filter: brightness(1.225); }
+        33.75% { transform: scale(8.5); opacity: 0.8125; }
+        35% { transform: scale(9); opacity: 0.8; filter: brightness(1.25); }
+        36.25% { transform: scale(9.75); opacity: 0.7875; }
+        37.5% { transform: scale(10.5); opacity: 0.775; filter: brightness(1.275); }
+        38.75% { transform: scale(11.25); opacity: 0.7625; }
+        40% { transform: scale(12); opacity: 0.75; filter: brightness(1.3); }
+        41.25% { transform: scale(12.5); opacity: 0.7425; }
+        42.5% { transform: scale(13); opacity: 0.735; filter: brightness(1.325); }
+        43.75% { transform: scale(13.5); opacity: 0.7275; }
+        45% { transform: scale(14); opacity: 0.72; filter: brightness(1.35); }
+        46.25% { transform: scale(14.5); opacity: 0.71; }
+        47.5% { transform: scale(15); opacity: 0.7; filter: brightness(1.375); }
+        48.75% { transform: scale(15.5); opacity: 0.69; }
+        50% { transform: scale(16); opacity: 0.68; filter: brightness(1.4); }
+        51.25% { transform: scale(17); opacity: 0.665; }
+        52.5% { transform: scale(18); opacity: 0.65; filter: brightness(1.425); }
+        53.75% { transform: scale(19); opacity: 0.635; }
+        55% { transform: scale(20); opacity: 0.62; filter: brightness(1.45); }
+        56.25% { transform: scale(21.25); opacity: 0.6025; }
+        57.5% { transform: scale(22.5); opacity: 0.585; filter: brightness(1.475); }
+        58.75% { transform: scale(23.75); opacity: 0.5675; }
+        60% { transform: scale(25); opacity: 0.55; filter: brightness(1.5); }
+        61.25% { transform: scale(26.25); opacity: 0.5325; }
+        62.5% { transform: scale(27.5); opacity: 0.515; filter: brightness(1.525); }
+        63.75% { transform: scale(28.75); opacity: 0.4975; }
+        65% { transform: scale(30); opacity: 0.48; filter: brightness(1.55); }
+        66.25% { transform: scale(31.25); opacity: 0.46; }
+        67.5% { transform: scale(32.5); opacity: 0.44; filter: brightness(1.575); }
+        68.75% { transform: scale(33.75); opacity: 0.42; }
+        70% { transform: scale(35); opacity: 0.4; filter: brightness(1.6); }
+        71.25% { transform: scale(36.25); opacity: 0.38; }
+        72.5% { transform: scale(37.5); opacity: 0.36; filter: brightness(1.625); }
+        73.75% { transform: scale(38.75); opacity: 0.34; }
+        75% { transform: scale(40); opacity: 0.32; filter: brightness(1.65); }
+        76.25% { transform: scale(41.25); opacity: 0.3025; }
+        77.5% { transform: scale(42.5); opacity: 0.285; filter: brightness(1.675); }
+        78.75% { transform: scale(43.75); opacity: 0.2675; }
+        80% { transform: scale(45); opacity: 0.25; filter: brightness(1.7); }
+        81.25% { transform: scale(46.25); opacity: 0.2325; }
+        82.5% { transform: scale(47.5); opacity: 0.215; filter: brightness(1.725); }
+        83.75% { transform: scale(48.75); opacity: 0.1975; }
+        85% { transform: scale(50); opacity: 0.18; filter: brightness(1.75); }
+        86.25% { transform: scale(50.75); opacity: 0.165; }
+        87.5% { transform: scale(51.5); opacity: 0.15; filter: brightness(1.775); }
+        88.75% { transform: scale(52.25); opacity: 0.135; }
+        90% { transform: scale(53); opacity: 0.12; filter: brightness(1.8); }
+        91.25% { transform: scale(54); opacity: 0.105; }
+        92.5% { transform: scale(55); opacity: 0.09; filter: brightness(1.85); }
+        93.75% { transform: scale(56); opacity: 0.075; }
+        95% { transform: scale(57); opacity: 0.06; filter: brightness(1.9); }
+        96.25% { transform: scale(57.75); opacity: 0.045; }
+        97.5% { transform: scale(58.5); opacity: 0.03; filter: brightness(1.95); }
+        98.75% { transform: scale(59.25); opacity: 0.015; }
+        100% { transform: scale(60); filter: brightness(2); opacity: 0; }
       }
       
       .overlay-active {
@@ -640,12 +708,12 @@
           // Activate overlay with slight delay
           setTimeout(() => {
             planetOverlay.classList.add('overlay-active');
-          }, 200);
+          }, 150);
           
           // After animation completes, navigate to the about page
           setTimeout(() => {
             window.location.href = '/about/';
-          }, 400);
+          }, 600);
         });
       });
     </script>
