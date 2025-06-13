@@ -78,40 +78,18 @@
           </div>
         </div>
         
-        <!-- Info panels row -->
-        <div class="info-panels">
-          <!-- Latest Notes panel -->
-          <div class="panel latest-panel">
-            <h3>Latest Notes</h3>
-            <ul>
-              {{ with $.Site.Data.dashboard }}
-                {{ range .recentNotes }}
-                  <li>
-                    <span class="note-title"><a href="{{ .url }}">{{ .title }}</a></span>
-                    <span class="note-age">{{ .timeAgo }}</span>
-                  </li>
-                {{ end }}
-              {{ end }}
-            </ul>
-          </div>
-
-          <!-- Stats panel -->
-          <div class="panel stats-panel">
-            <h3>Statistics</h3>
-            {{ with $.Site.Data.dashboard }}
-            <div class="stat-cols">
-              <div class="stat-col">
-                <div class="stat-big">{{ .stats.totalNotesCount }}</div>
-                <div class="stat-label">Total Notes</div>
-              </div>
-              <div class="stat-col">
-                <div class="stat-big">{{ .stats.recentNotesCount }}</div>
-                <div class="stat-label">Last 7 Days</div>
-              </div>
+        <!-- AI Assistant Chat Bubble -->
+        <div class="ai-assistant-chat">
+          <div class="chat-bubble">
+            <div class="assistant-avatar">
+              <img src="{{ (resources.Get "ai-avatar.png").RelPermalink }}" alt="AI Assistant" onerror="this.src='/images/default-avatar.png'" />
             </div>
-            {{ end }}
+            <div class="message-content">
+              <p class="assistant-name">KidiVerse Assistant</p>
+              <p>I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
+            </div>
           </div>
-        </div> <!-- end info-panels -->
+        </div> <!-- end ai-assistant-chat -->
       </div> <!-- end knowledge-section -->
 
     </div>
@@ -120,7 +98,29 @@
       /* Dashboard specific styles */
       /* 這些變數已經在全局 CSS 中定義，這裡移除以避免衝突 */
       
-      body{background:var(--theme-bg);color:var(--theme-text);font-family:"Inter",sans-serif;letter-spacing:.02em;}
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      
+      body {
+        background: var(--theme-bg);
+        color: var(--theme-text);
+        font-family: "Inter", sans-serif;
+        letter-spacing: .02em;
+        min-height: 100vh;
+      }
+      
+      .post-article {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .dashboard-content {
+        margin: 0;
+        padding-bottom: 0;
+      }
       
       /* Welcome section with avatar */
       .welcome-flex {
@@ -655,6 +655,48 @@
       .panel h3:hover{color:var(--theme-accent)}
       .latest-panel li:hover .note-title a{color:var(--theme-accent)}
       .stat-col:hover .stat-big{color:var(--theme-accent)}
+      
+      /* === AI Assistant Chat Bubble === */
+      .ai-assistant-chat {
+        margin-top: 1.5rem;
+      }
+      
+      .chat-bubble {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(var(--theme-border-rgb), 0.1);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      
+      .assistant-avatar {
+        flex-shrink: 0;
+      }
+      
+      .assistant-avatar img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid var(--theme-primary);
+        box-shadow: 0 0 6px rgba(var(--theme-primary-rgb), 0.35);
+        object-fit: cover;
+      }
+      
+      .assistant-name {
+        margin: 0 0 0.25rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--theme-accent);
+      }
+      
+      .message-content p {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
     </style>
     
     <script>
