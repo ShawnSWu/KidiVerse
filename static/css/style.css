@@ -1135,7 +1135,7 @@ button {
   height: 100vh; /* Viewport height */
   overflow: hidden;
   pointer-events: none; /* Allow clicks to pass through */
-  z-index: -1; /* Behind other content but above body background */
+  z-index: 0; /* Behind other content but above body background */
 }
 
 .star {
@@ -2457,7 +2457,7 @@ button {
   height: 100vh; /* Viewport height */
   overflow: hidden;
   pointer-events: none; /* Allow clicks to pass through */
-  z-index: -1; /* Behind other content but above body background */
+  z-index: 0; /* Behind other content but above body background */
 }
 
 .star {
@@ -2476,4 +2476,8 @@ button {
 @keyframes twinkle {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 1; }
+}
+
+.space-hero .star {
+  box-shadow: 0 0 4px rgba(255,255,255,0.8);
 }
