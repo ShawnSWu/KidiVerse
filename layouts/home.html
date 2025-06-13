@@ -86,7 +86,7 @@
             </div>
             <div class="message-content">
               <p class="assistant-name">KidiVerse Assistant</p>
-              <p>I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
+              <p class="assistant-msg typing">I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
             </div>
           </div>
         </div> <!-- end ai-assistant-chat -->
@@ -227,7 +227,7 @@
         border-radius: 12px;
         padding: 1rem;
         margin: 0 auto 1.5rem;
-        height: 60vh;
+        height: 75vh;
         min-height: 350px;
         border: 1px solid rgba(var(--theme-border-rgb), 0.25);
       }
@@ -687,15 +687,87 @@
       
       .assistant-name {
         margin: 0 0 0.25rem;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--theme-accent);
+        font-size: 1rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--theme-primary), var(--theme-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .assistant-msg {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-muted-light, #cbd5e1);
+        letter-spacing: 0.01em;
+      }
+      
+      .assistant-msg.typing {
+        overflow: hidden;
+        white-space: nowrap;
+        animation: typing 4s steps(60, end);
+        display: inline-block;
+        position: relative;
+      }
+      
+      .assistant-msg.typing::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0.65em;
+        height: 1.05em;
+        background: var(--theme-accent, #58e0ff); /* bright block cursor */
+        border-radius: 2px;
+        vertical-align: -0.15em; /* align to text baseline */
+        animation: blink-caret 0.75s step-end infinite;
+      }
+      
+      .assistant-msg.done::after {
+        animation: blink-caret 0.75s step-end infinite;
+      }
+      
+      @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+      }
+      
+      @keyframes blink-caret {
+        from, to { opacity: 0; }
+        50% { opacity: 1; }
+      }
+      
+      .message-content {
+        position: relative;
+        padding-left: 0.5rem;
+      }
+      
+      .message-content::before,
+      .message-content::after {
+        position: absolute;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--theme-primary-light);
+        opacity: 0.6;
+        line-height: 1;
+      }
+      .message-content::before {
+        content: "“";
+        left: -0.5rem;
+        top: -0.2rem;
+      }
+      .message-content::after {
+        content: "”";
+        right: -0.3rem;
+        bottom: -0.2rem;
       }
       
       .message-content p {
         margin: 0;
-        font-size: 0.9rem;
-        line-height: 1.45;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-muted-light, #cbd5e1);
+        letter-spacing: 0.01em;
       }
     </style>
     
