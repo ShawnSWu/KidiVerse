@@ -48,7 +48,7 @@ Docker enables developers to package applications into containers—standardized
 
 ###### Docker Installation
 
-```bash
+``` bash
 # On Ubuntu
 sudo apt update
 sudo apt install docker.io

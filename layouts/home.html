@@ -36,6 +36,19 @@
         </div>
       </div>
 
+      <!-- AI Assistant Chat Bubble -->
+      <div class="ai-assistant-chat">
+        <div class="chat-bubble">
+          <div class="assistant-avatar">
+            <img src="{{ (resources.Get "ai-avatar.png").RelPermalink }}" alt="AI Assistant" onerror="this.src='/images/default-avatar.png'" />
+          </div>
+          <div class="message-content">
+            <p class="assistant-name">KidiVerse Assistant</p>
+            <p class="assistant-msg typing">I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
+          </div>
+        </div>
+      </div> <!-- end ai-assistant-chat -->
+
       <!-- Knowledge Graph Section (Now the main focus) -->
       <div class="knowledge-section">
         <h2>Knowledge Graph</h2>
@@ -78,25 +91,13 @@
           </div>
         </div>
         
-        <!-- AI Assistant Chat Bubble -->
-        <div class="ai-assistant-chat">
-          <div class="chat-bubble">
-            <div class="assistant-avatar">
-              <img src="{{ (resources.Get "ai-avatar.png").RelPermalink }}" alt="AI Assistant" onerror="this.src='/images/default-avatar.png'" />
-            </div>
-            <div class="message-content">
-              <p class="assistant-name">KidiVerse Assistant</p>
-              <p class="assistant-msg typing">I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
-            </div>
-          </div>
-        </div> <!-- end ai-assistant-chat -->
+  
       </div> <!-- end knowledge-section -->
 
     </div>
 
     <style>
       /* Dashboard specific styles */
-      /* 這些變數已經在全局 CSS 中定義，這裡移除以避免衝突 */
       
       html, body {
         margin: 0;
@@ -658,7 +659,7 @@
       
       /* === AI Assistant Chat Bubble === */
       .ai-assistant-chat {
-        margin-top: 1.5rem;
+        margin: 1.5rem 0;
       }
       
       .chat-bubble {

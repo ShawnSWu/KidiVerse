@@ -2405,7 +2405,7 @@ button {
 }
 
 .markdown-area .highlight {
-  display: inline-block;
+  display: block;
 }
 
 /* Page Container Stars Animation */

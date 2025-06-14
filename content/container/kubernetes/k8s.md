@@ -57,11 +57,10 @@ Some components are optional but useful:
 
 ### Code Block
 
-```bash
+``` bash
 kubectl get pods -A
 kubectl describe node
 ```
-
 ### Inline Code
 
 Use `kubectl get svc` to list services.
