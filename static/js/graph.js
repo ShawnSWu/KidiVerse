@@ -9,35 +9,40 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // 自定義節點樣式設定
+    // 自定義節點樣式設定 - 宇宙風格
     const nodeStyles = {
         // 節點半徑
-        defaultRadius: 10,
-        hoverRadius: 15,
+        defaultRadius: 12,
+        hoverRadius: 18,
         
-        // 節點顏色 - 可以使用任何有效的CSS顏色
+        // 節點顏色 - 宇宙紫藍色系
         colors: [
-            '#FF6B6B', // 紅色
-            '#4ECDC4', // 青綠色
-            '#FFD166', // 黃色
-            '#6A0572', // 紫色
-            '#1A535C', // 深藍綠色
-            '#F0B67F', // 淡橘色
-            '#FE5F55', // 珍珠紅
-            '#457B9D', // 藍色
-            '#F07167', // 橙紅色
-            '#6D6875'  // 灰紫色
+            '#8A6BFF', // 主要紫色
+            '#6D5EE0', // 深紫色
+            '#9F87FF', // 淡紫色
+            '#7574D9', // 藍紫色
+            '#6A63F6', // 紫藍色
+            '#5E4FE0', // 深藍紫色
+            '#8362FF', // 明亮紫色
+            '#7C6EFF', // 中紫色
+            '#7F5AEB', // 紫羅蘭色
+            '#6B4FF6'  // 藍紫色
         ],
         
+        // 節點效果
+        opacity: 0.85,       // 半透明效果
+        glowStrength: '10px', // 發光效果強度
+        glowColor: 'rgba(138, 107, 255, 0.6)', // 發光顏色
+        
         // 節點邊框
-        stroke: '#8A3FFC',
-        strokeWidth: 2,
-        hoverStroke: '#333',
+        stroke: 'rgba(255, 255, 255, 0.3)', // 半透明白色邊框
+        strokeWidth: 1,
+        hoverStroke: 'rgba(255, 255, 255, 0.8)',
         
         // 文字樣式
-        fontSize: '10px',
-        fontColor: '#333',
-        hoverFontColor: '#000',
+        fontSize: '11px',
+        fontColor: '#ffffff', // 白色文字
+        hoverFontColor: '#ffffff',
         fontWeight: 'normal',
         hoverFontWeight: 'bold'
     };
@@ -83,15 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
             .force('center', d3.forceCenter(width / 2, height / 2)) // 居中力
             .force('collision', d3.forceCollide().radius(30)); // 防止節點重疊
 
-        // 創建連接線
+        // 創建連接線 - 宇宙風格
         const link = g.append('g')
-            .attr('stroke', '#999')
-            .attr('stroke-opacity', 0.6)
             .selectAll('line')
             .data(data.edges)
             .join('line')
-            .attr('stroke-width', d => d.score * 3) // 相似度越高，線越粗
-            .attr('stroke-opacity', d => d.score * 0.8); // 相似度越高，透明度越低
+            .attr('stroke', '#4F7BFF') // 藍色連線
+            .attr('stroke-opacity', 0.4)
+            .attr('stroke-width', d => d.score * 2) // 相似度越高，線越粗
+            .style('filter', 'drop-shadow(0 0 2px rgba(79, 123, 255, 0.5))');
 
         // 創建節點
         const node = g.append('g')
@@ -101,12 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr('class', 'node')
             .call(drag(simulation)); // 啟用拖拽功能
 
-        // 為每個節點添加圓形 - 使用自定義樣式
+        // 為每個節點添加圓形 - 使用宇宙風格
         node.append('circle')
             .attr('r', nodeStyles.defaultRadius)
             .attr('fill', d => nodeStyles.colors[d.id % nodeStyles.colors.length])
             .attr('stroke', nodeStyles.stroke)
-            .attr('stroke-width', nodeStyles.strokeWidth);
+            .attr('stroke-width', nodeStyles.strokeWidth)
+            .style('opacity', nodeStyles.opacity)
+            .style('filter', `drop-shadow(0 0 ${nodeStyles.glowStrength} ${nodeStyles.glowColor})`);
 
         // 為每個節點添加標籤 - 使用自定義樣式
         const labels = node.append('text')
@@ -128,10 +135,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 tooltip.style.top = (event.pageY - 10) + 'px';
             }
             
-            // 高亮相關連接
-            link.style('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#ff0000' : '#999')
-                .style('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.2)
-                .style('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? l.score * 5 : l.score * 1);
+            // 高亮相關連接 - 宇宙風格
+            link.style('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#A3BFFF' : '#4F7BFF')
+                .style('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 0.8 : 0.2)
+                .style('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? l.score * 4 : l.score * 1)
+                .style('filter', l => (l.source.id === d.id || l.target.id === d.id) ? 'drop-shadow(0 0 4px rgba(163, 191, 255, 0.8))' : 'drop-shadow(0 0 2px rgba(79, 123, 255, 0.5))');
                 
             // 高亮相關節點 - 使用自定義樣式
             node.selectAll('circle')
@@ -153,15 +161,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 tooltip.style.display = 'none';
             }
             
-            // 恢復連接樣式
-            link.style('stroke', '#999')
-                .style('stroke-opacity', 0.6)
-                .style('stroke-width', d => d.score * 3);
+            // 恢復連接樣式 - 宇宙風格
+            link.style('stroke', '#4F7BFF')
+                .style('stroke-opacity', 0.4)
+                .style('stroke-width', d => d.score * 2)
+                .style('filter', 'drop-shadow(0 0 2px rgba(79, 123, 255, 0.5))');
                 
-            // 恢復節點樣式
-            node.select('circle')
-                .style('fill', d => color(d.id % 10))
-                .style('r', 10);
+            // 恢復節點樣式 - 宇宙風格
+            node.selectAll('circle')
+                .style('fill', d => nodeStyles.colors[d.id % nodeStyles.colors.length])
+                .style('r', nodeStyles.defaultRadius)
+                .style('stroke', nodeStyles.stroke)
+                .style('stroke-width', nodeStyles.strokeWidth)
+                .style('opacity', nodeStyles.opacity)
+                .style('filter', `drop-shadow(0 0 ${nodeStyles.glowStrength} ${nodeStyles.glowColor})`);
+                
+            // 恢復文字樣式
+            node.selectAll('text')
+                .style('font-weight', nodeStyles.fontWeight)
+                .style('fill', nodeStyles.fontColor);
         })
         .on('click', function(event, d) {
             // 點擊節點時的行為 - 可以在這裡添加打開文件的功能
