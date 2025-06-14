@@ -10,7 +10,7 @@ on:
       - 'scripts/build_graph.py'
       - 'requirements.txt'
   schedule:
-    - cron: '0 2 * * *' # 每日 02:00 UTC 自動重建
+    - cron: '0 2 * * *'
 
 jobs:
   build-graph:
