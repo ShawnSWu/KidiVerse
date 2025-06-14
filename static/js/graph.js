@@ -9,6 +9,39 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // 自定義節點樣式設定
+    const nodeStyles = {
+        // 節點半徑
+        defaultRadius: 10,
+        hoverRadius: 15,
+        
+        // 節點顏色 - 可以使用任何有效的CSS顏色
+        colors: [
+            '#FF6B6B', // 紅色
+            '#4ECDC4', // 青綠色
+            '#FFD166', // 黃色
+            '#6A0572', // 紫色
+            '#1A535C', // 深藍綠色
+            '#F0B67F', // 淡橘色
+            '#FE5F55', // 珍珠紅
+            '#457B9D', // 藍色
+            '#F07167', // 橙紅色
+            '#6D6875'  // 灰紫色
+        ],
+        
+        // 節點邊框
+        stroke: '#8A3FFC',
+        strokeWidth: 2,
+        hoverStroke: '#333',
+        
+        // 文字樣式
+        fontSize: '10px',
+        fontColor: '#333',
+        hoverFontColor: '#000',
+        fontWeight: 'normal',
+        hoverFontWeight: 'bold'
+    };
+    
     const tooltip = document.querySelector('.tooltip');
     // tooltip 可能不存在，這是可以接受的
     // 若容器尚未正確計算尺寸，提供回退值
@@ -26,8 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 使用已有的 SVG 元素
     const svg = d3.select('.graph-visualization svg')
-        .attr('width', width)
-        .attr('height', height)
+        // 保留 SVG 的 100% 寬度和高度，並從 viewBox 設定中使用計算的尺寸
         .attr('viewBox', [0, 0, width, height])
         .call(d3.zoom().on('zoom', (event) => {
             g.attr('transform', event.transform);
@@ -69,21 +101,22 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr('class', 'node')
             .call(drag(simulation)); // 啟用拖拽功能
 
-        // 為每個節點添加圓形
+        // 為每個節點添加圓形 - 使用自定義樣式
         node.append('circle')
-            .attr('r', 10)
-            .attr('fill', d => color(d.id % 10))
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 1.5);
+            .attr('r', nodeStyles.defaultRadius)
+            .attr('fill', d => nodeStyles.colors[d.id % nodeStyles.colors.length])
+            .attr('stroke', nodeStyles.stroke)
+            .attr('stroke-width', nodeStyles.strokeWidth);
 
-        // 為每個節點添加標籤
+        // 為每個節點添加標籤 - 使用自定義樣式
         const labels = node.append('text')
             .text(d => d.title)
             .attr('x', 12)
             .attr('y', 4)
-            .style('font-size', '10px')
+            .style('font-size', nodeStyles.fontSize)
+            .style('font-weight', nodeStyles.fontWeight)
             .style('pointer-events', 'none')
-            .style('fill', '#333');
+            .style('fill', nodeStyles.fontColor);
 
         // 添加節點懸停效果
         node.on('mouseover', function(event, d) {
@@ -100,10 +133,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 .style('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.2)
                 .style('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? l.score * 5 : l.score * 1);
                 
-            // 高亮相關節點
-            node.select('circle')
-                .style('fill', n => (n.id === d.id || isConnected(n, d)) ? color(n.id % 10) : '#ddd')
-                .style('r', n => (n.id === d.id) ? 15 : 10);
+            // 高亮相關節點 - 使用自定義樣式
+            node.selectAll('circle')
+                .style('fill', n => (n.id === d.id || isConnected(n, d)) 
+                    ? nodeStyles.colors[n.id % nodeStyles.colors.length] 
+                    : '#ccc')
+                .style('stroke', n => (n.id === d.id) ? nodeStyles.hoverStroke : nodeStyles.stroke)
+                .style('stroke-width', n => (n.id === d.id) ? nodeStyles.strokeWidth * 1.5 : nodeStyles.strokeWidth)
+                .style('r', n => (n.id === d.id) ? nodeStyles.hoverRadius : nodeStyles.defaultRadius);
+                
+            // 高亮文字
+            node.selectAll('text')
+                .style('font-weight', n => (n.id === d.id || isConnected(n, d)) ? nodeStyles.hoverFontWeight : nodeStyles.fontWeight)
+                .style('fill', n => (n.id === d.id || isConnected(n, d)) ? nodeStyles.hoverFontColor : nodeStyles.fontColor);
         })
         .on('mouseout', function() {
             // 隱藏工具提示（如果存在）
