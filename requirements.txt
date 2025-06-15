@@ -7,3 +7,4 @@ huggingface_hub==0.16.4
 # Torch is pulled automatically by sentence-transformers; pin CPU wheel if desired
 # The explicit '+cpu' build tag is not needed on PyPI — use plain version.
 torch==2.2.2
+setuptools>=68
