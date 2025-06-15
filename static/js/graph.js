@@ -82,9 +82,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const simulation = d3.forceSimulation(data.nodes)
             .force('link', d3.forceLink(data.edges)
                 .id(d => d.id)
-                .distance(d => 100 * (1 - d.score)) // 相似度越高，距離越近
+                .distance(d => 180 * (1 - d.score) + 40) // 調高基礎距離，讓節點更分散
                 .strength(d => d.score * 0.7)) // 相似度越高，連接強度越大
-            .force('charge', d3.forceManyBody().strength(-200)) // 節點間的排斥力
+            .force('charge', d3.forceManyBody().strength(-400)) // 增加排斥力，避免過度擁擠
             .force('center', d3.forceCenter(width / 2, height / 2)) // 居中力
             .force('collision', d3.forceCollide().radius(30)); // 防止節點重疊
 

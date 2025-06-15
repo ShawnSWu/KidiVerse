@@ -83,7 +83,7 @@ def main() -> None:
         logging.error("Notes directory %s not found", notes_root)
         sys.exit(1)
 
-    md_files = sorted(notes_root.rglob("*.md"))
+    md_files = [fp for fp in sorted(notes_root.rglob("*.md")) if fp.name != "_index.md"]
     if not md_files:
         logging.warning("No markdown files under %s", notes_root)
         sys.exit(0)
