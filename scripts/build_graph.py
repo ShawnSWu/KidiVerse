@@ -129,12 +129,12 @@ def main() -> None:
     nodes: List[Dict[str, Any]] = []
     edges: List[Dict[str, Any]] = []
     for i, meta in enumerate(metadata):
-        nodes.append({"id": i, **meta})
+        nodes.append({"id": int(i), **meta})
         for dist, j in zip(distances[i][1:], indices[i][1:]):  # skip self index 0
             sim = 1.0 - dist
             if sim < args.min_sim or i >= j:
                 continue  # only store undirected edge once
-            edges.append({"source": i, "target": j, "score": round(float(sim), 4)})
+            edges.append({"source": int(i), "target": int(j), "score": round(float(sim), 4)})
 
     graph = {
         "nodes": nodes,
