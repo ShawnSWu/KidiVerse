@@ -9,7 +9,7 @@ and writes a JSON knowledge graph that the Hugo front-end can visualise.
 Outputs (relative to project root):
 #   data/embeddings.npy            – NumPy array of shape (N, dim)
 #   data/embeddings_index.json     – list[dict] with path & title matching rows
-  data/notes_graph.json          – {nodes, edges, embeddingModel}
+  static/data/notes_graph.json          – {nodes, edges, embeddingModel}
 
 Typical usage:
     python scripts/build_graph.py --notes-dir content
@@ -42,9 +42,9 @@ except ImportError as exc:  # pragma: no cover
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Build semantic knowledge graph for KidiVerse")
     p.add_argument("--notes-dir", default="content", help="Directory containing markdown notes")
-    p.add_argument("--output-json", default="data/notes_graph.json", help="Graph JSON output path")
-    # p.add_argument("--embedding-file", default="data/embeddings.npy", help="Embeddings .npy output")
-    # p.add_argument("--index-file", default="data/embeddings_index.json", help="Embeddings metadata index")
+    p.add_argument("--output-json", default="static/data/notes_graph.json", help="Graph JSON output path")
+    p.add_argument("--embedding-file", default="static/data/embeddings.npy", help="Embeddings .npy output")
+    p.add_argument("--index-file", default="static/data/embeddings_index.json", help="Embeddings metadata index")
     p.add_argument("--model", default="sentence-transformers/all-MiniLM-L6-v2", help="SentenceTransformer model id")
     p.add_argument("--top-k", type=int, default=10, help="Nearest neighbours per note to keep")
     p.add_argument("--min-sim", type=float, default=0.25, help="Cosine similarity threshold for an edge")
@@ -100,9 +100,13 @@ def main() -> None:
     for fp in md_files:
         body = strip_front_matter(fp.read_text(encoding="utf-8", errors="ignore")).strip()
         texts.append(body)
+        # Determine group by top-level directory under notes_root, e.g. "content/kubernetes/..." -> "kubernetes"
+        rel_parts = fp.relative_to(notes_root).parts
+        group = rel_parts[0] if len(rel_parts) > 1 else notes_root.name
         metadata.append({
             "path": fp.as_posix(),
             "title": extract_title(body, fp.stem),
+            "group": group,
         })
 
     # Encode to embeddings

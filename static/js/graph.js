@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 為每個節點添加圓形 - 使用宇宙風格
         node.append('circle')
             .attr('r', nodeStyles.defaultRadius)
-            .attr('fill', d => nodeStyles.colors[d.id % nodeStyles.colors.length])
+            .attr('fill', d => color(d.group))
             .attr('stroke', nodeStyles.stroke)
             .attr('stroke-width', nodeStyles.strokeWidth)
             .style('opacity', nodeStyles.opacity)
