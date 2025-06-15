@@ -62,9 +62,9 @@ strong {
 .page-content {
   display: flex;
   flex: 1;
-  width: 100%;
-  margin: 0;
-  padding: 1rem 0rem 1rem 2rem;
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  padding: 1rem 2rem;
   box-sizing: border-box;
   gap: 0;
 }
@@ -80,14 +80,14 @@ strong {
   .page-content {
     flex-direction: column;
     padding: 1rem;
+    margin-left: 240px;
   }
   
   .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    max-height: 60vh;
-    margin-bottom: 1.5rem;
+    position: fixed;
+    width: 240px;
+    height: 100vh;
+    margin-bottom: 0;
   }
 }
 
@@ -106,22 +106,25 @@ strong {
   --sidebar-width: 240px;
   width: var(--sidebar-width);
   flex: 0 0 var(--sidebar-width);
-  position: sticky;
-  top: 8rem;
-  height: calc(100vh - 7rem); 
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
   overflow: hidden;
   z-index: 10;
-  padding: 1rem 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  border-right: 1px solid rgba(var(--theme-border-rgb), 0.25);
 }
 
 .sidebar-container {
-  background-color: linear-gradient(180deg, rgba(var(--theme-primary-rgb),0.05), rgba(255,255,255,0.01));
-  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(var(--theme-primary-rgb),0.05), rgba(255,255,255,0.01));
+  border-radius: 0;
   border: 1px solid rgba(var(--theme-border-rgb), 0.25);
   box-shadow: inset 0 0 6px rgba(var(--theme-primary-rgb), 0.1),
               0 0 12px rgba(var(--theme-primary-rgb), 0.05);
   width: 100%;
-  height: 60vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -150,9 +153,8 @@ strong {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0 0.5rem;
-
   display: block;
-  font-size: 4.5rem;
+  font-size: 1.8rem;
   background: linear-gradient(90deg, var(--theme-primary), var(--theme-accent));
   -webkit-background-clip: text;
   background-clip: text;
@@ -162,6 +164,12 @@ strong {
   text-shadow: 0 0 20px rgba(var(--theme-primary-rgb), 0.3);
 }
 
+.sidebar-home-link {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
@@ -169,9 +177,10 @@ strong {
   margin: 0;
   width: 100%;
   max-height: 100%;
-  /* Add padding to prevent content from being hidden behind scrollbar */
   padding-right: 0.5rem;
   margin-right: -0.5rem;
+  color: var(--text-color);
+  background-color: transparent;
 }
 
 /* Custom scrollbar */
@@ -219,15 +228,19 @@ strong {
 
 .sidebar-folder-toggle:hover {
   background: rgba(255, 255, 255, 0.05);
+  opacity: 0.8;
 }
 
 .folder-icon, .file-icon {
   flex-shrink: 0;
   margin-right: 0.5rem;
+  transition: all 0.2s ease;
+  fill: none;
   width: 14px;
   height: 14px;
   stroke: currentColor;
   stroke-width: 1.75;
+  opacity: 1;
 }
 
 .chevron {
@@ -245,6 +258,9 @@ strong {
 .sidebar-folder-content {
   padding-left: 1rem;
   margin: 0 0 0 0.5rem;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+  max-width: 100%;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -255,11 +271,16 @@ strong {
   display: flex;
   align-items: center;
   padding: 0.4rem 0.75rem 0.4rem 1.75rem;
+  margin: 0.05rem 0;
   border-radius: 4px;
   transition: all 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: transparent;
+  position: relative;
+  line-height: 1.2;
+  min-height: 28px;
 }
 
 .sidebar-item a:hover {
@@ -349,199 +370,22 @@ strong {
 .sidebar-nav > *:last-child {
   margin-bottom: 0;
 }
+
+.sidebar-item a:focus,
+.sidebar-item a:hover {
+  background-color: rgba(var(--theme-primary-rgb), 0.1);
+  color: var(--theme-primary);
+  outline: none;
+}
   
-  .sidebar-nav::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .sidebar-nav::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-  }
-  
-  .sidebar-nav::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  /* Sidebar List */
-  .sidebar-nav {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .sidebar-title {
-    margin: 0 0 1.5rem 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  
-  .sidebar-list {
-    list-style: none;
-    padding-left: 0;
-    margin: 0.3rem 0 1rem;
-  }
-  
-  .sidebar-item {
-    margin-bottom: 0.5rem;
-    position: relative;
-  }
-  
-  .sidebar-folder {
-    position: relative;
-  }
-  
-  .sidebar-folder-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    padding: 0.25rem 0;
-    width: 100%;
-  }
-  
-  .sidebar-folder-toggle {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 0.88rem;
-    font-weight: 500;
-    text-align: left;
-    padding: 0.4rem 0.75rem;
-    margin: 0.05rem 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
-    transition: all 0.15s ease;
-    position: relative;
-    min-height: 28px;
-  }
-  
-  .sidebar-folder-toggle:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
-  
-  .sidebar-folder-toggle:hover {
-    opacity: 0.8;
-  }
-  
-  .folder-icon,
-  .file-icon {
-    flex-shrink: 0;
-    margin-right: 0.5rem;
-    transition: all 0.2s ease;
-    fill: none;
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-    stroke-width: 1.75;
-  }
-  
-  .chevron {
-    margin-left: auto;
-    transition: transform 0.2s ease;
-    opacity: 0.6;
-    width: 12px;
-    height: 12px;
-  }
-  
-  .sidebar-folder[open] .chevron {
-    transform: rotate(90deg);
-  }
-  
-  .sidebar-folder-header .sidebar-folder-toggle {
-    color: var(--theme-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s ease;
-    display: inline-block;
-  }
-  
-  .sidebar-folder-title:hover,
-  .sidebar-link:hover {
-    color: var(--theme-accent);
-  }
-  
-  .sidebar-sublist {
-    padding-left: 1rem;
-    margin: 0 0 0 0.5rem;
-    overflow: hidden;
-    transition: max-height 0.25s ease-out;
-    max-width: 100%;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Active state for current page */
-  .sidebar-item a.active {
-    background: rgba(var(--theme-primary-rgb), 0.15);
-    color: var(--theme-primary);
-    font-weight: 500;
-  }
-  
-  .sidebar-item a.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--theme-primary);
-    border-radius: 0 2px 2px 0;
-  }
-  
-  .sidebar-sublist .sidebar-sublist {
-    padding-left: 1rem;
-  }
-  
-  .sidebar-item {
-    position: relative;
-    margin-bottom: 0.25rem;
-  }
-  
-  .sidebar-item a {
-    color: #e2e8f0;
-    text-decoration: none;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    padding: 0.4rem 0.75rem 0.4rem 1.75rem;
-    margin: 0.05rem 0;
-    border-radius: 4px;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    background: transparent;
-    position: relative;
-    line-height: 1.2;
-    min-height: 28px;
-  }
-  
-  .sidebar-item a:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-  }
-  
-  .sidebar-item a:focus,
-  .sidebar-item a:hover {
-    background-color: rgba(var(--theme-primary-rgb), 0.1);
-    color: var(--theme-primary);
-    outline: none;
-  }
-  
-  .sidebar-item a.active,
-  .sidebar-item a.active:hover,
-  .sidebar-item a:active,
-  .sidebar-item a:focus {
-    background-color: rgba(var(--theme-primary-rgb), 0.25);
-    color: var(--theme-primary);
-    font-weight: 500;
-    position: relative;
-  }
+.sidebar-item a.active,
+.sidebar-item a.active:hover,
+.sidebar-item a:active {
+  background-color: rgba(var(--theme-primary-rgb), 0.25);
+  color: var(--theme-primary);
+  font-weight: 500;
+  position: relative;
+}
   
   .sidebar-item a.active::before {
     content: '';
@@ -780,6 +624,53 @@ button {
 
 .cta-button.secondary:hover {
   background: rgba(var(--theme-primary-rgb), 0.1);
+}
+
+/* ========== TABS ========== */
+.tab-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  margin-right: 0.25rem;
+  background-color: var(--bg-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+}
+
+.tab.active {
+  background-color: var(--card-bg);
+  color: var(--theme-primary);
+  border-color: var(--theme-primary);
+  border-bottom-color: var(--card-bg);
+  margin-bottom: -1px;
+}
+
+/* Ensure the tab content takes full width */
+.tab-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
 }
 
 /* ========== HEADER ========== */
