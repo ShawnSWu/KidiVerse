@@ -20,7 +20,7 @@ In modern distributed systems, different services or applications often need to 
       "phone": "555-1234"
     }
     ```
-    In this example, even though only the `name` field was updated, the entire object structure (including unchanged `age`, `skill`, etc.) must be serialized, transmitted, and deserialized. In high-traffic or latency-sensitive systems, this redundancy consumes unnecessary network bandwidth and processing resources.
+    In this example, even though only the `name` field was updated, the entire object structure (including unchanged `age`, `skill`, etc.) must be serialized, transmitted, and deserialized. In high-traffic or latency-sensitive systems, this redundancy consumes unnecessary network bandwidth and processing resources. 
 
 *   **Performance Overhead:** Parsing and serializing text-based formats are more time-consuming than binary formats.
 
