@@ -24,7 +24,7 @@ import logging
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set
 
 try:
     import numpy as np
@@ -48,11 +48,23 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default="sentence-transformers/all-MiniLM-L6-v2", help="SentenceTransformer model id")
     p.add_argument("--top-k", type=int, default=10, help="Nearest neighbours per note to keep")
     p.add_argument("--min-sim", type=float, default=0.25, help="Cosine similarity threshold for an edge")
+    p.add_argument("--min-jaccard", type=float, default=0.05, help="Minimum Jaccard token overlap for an edge")
     return p.parse_args()
 
 
 # ---------------------------------------------------------------------------
 # Helpers
+
+# Basic English stopword list to avoid spurious token matches
+STOPWORDS: Set[str] = {
+    "the","and","for","with","that","this","from","are","into","such","will","each","when","then","than","where","what","which","while","who","whom","your","about","above","after","again","against","all","any","both","can","did","does","doing","down","during","few","further","had","has","have","having","here","how","its","out","our","should","some","there","they","their","them","these","those","too","via","was","were","why","you","but","not","use","used","using","into","other","one","two","also","may","via","per"
+}
+
+def token_set(text: str) -> Set[str]:
+    """Return set of lowercase alphabetic tokens (>2 chars) excluding stopwords."""
+    tokens = re.findall(r"[a-zA-Z]{3,}", text.lower())
+    return {tok for tok in tokens if tok not in STOPWORDS}
+
 # ---------------------------------------------------------------------------
 
 def strip_front_matter(text: str) -> str:
@@ -97,9 +109,11 @@ def main() -> None:
     # Read files & gather metadata
     texts: List[str] = []
     metadata: List[Dict[str, str]] = []
+    token_sets: List[Set[str]] = []
     for fp in md_files:
         body = strip_front_matter(fp.read_text(encoding="utf-8", errors="ignore")).strip()
         texts.append(body)
+        token_sets.append(token_set(body))
         # Determine group by top-level directory under notes_root, e.g. "content/kubernetes/..." -> "kubernetes"
         rel_parts = fp.relative_to(notes_root).parts
         group = rel_parts[0] if len(rel_parts) > 1 else notes_root.name
@@ -132,7 +146,9 @@ def main() -> None:
         nodes.append({"id": int(i), **meta})
         for dist, j in zip(distances[i][1:], indices[i][1:]):  # skip self index 0
             sim = 1.0 - dist
-            if sim < args.min_sim or i >= j:
+            # Additional filter: ensure textual token overlap is meaningful
+            jaccard = len(token_sets[i] & token_sets[j]) / max(1, len(token_sets[i] | token_sets[j]))
+            if sim < args.min_sim or jaccard < args.min_jaccard or i >= j:
                 continue  # only store undirected edge once
             edges.append({"source": int(i), "target": int(j), "score": round(float(sim), 4)})
 
