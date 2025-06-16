@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const simulation = d3.forceSimulation(data.nodes)
             .force('link', d3.forceLink(data.edges)
                 .id(d => d.id)
-                .distance(d => 120 * (1 - d.score) + 20) // 調整距離，降低不同群組間間隔
+                .distance(d => (120 * (1 - d.score) + 20) * 5) // 將距離放大 10 倍，增加視覺間隔
                 .strength(d => d.score * 0.7)) // 相似度越高，連接強度越大
             .force('charge', d3.forceManyBody().strength(-250)) // 適度排斥，縮小群組間距離
             .force('center', d3.forceCenter(width / 2, height / 2)) // 居中力
