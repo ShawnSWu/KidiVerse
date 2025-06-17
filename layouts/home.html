@@ -33,21 +33,20 @@
             <h1>{{ with $.Site.Data.dashboard }}{{ .welcomeMessage }}, {{ .userName }}{{ end }}</h1>
             <p class="welcome-tagline">{{ .Site.Params.description | default "Explore my knowledge universe" }}</p>
           </div>
+          <!-- Knowledge Statistics Box -->
+          <div class="stats-box">
+            <div class="stats-item">
+              <div class="stats-label">Total Notes</div>
+              <div class="stats-value" id="total-notes-count">--</div>
+            </div>
+            <div class="stats-item">
+              <div class="stats-label">Total Topics</div>
+              <div class="stats-value" id="total-topics-count">--</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- AI Assistant Chat Bubble -->
-      <div class="ai-assistant-chat">
-        <div class="chat-bubble">
-          <div class="assistant-avatar">
-            <img src="{{ (resources.Get "ai-avatar.png").RelPermalink }}" alt="AI Assistant" onerror="this.src='/images/default-avatar.png'" />
-          </div>
-          <div class="message-content">
-            <p class="assistant-name">KidiVerse Assistant</p>
-            <p class="assistant-msg typing">I noticed you've been working on quantum physics notes. Would you like me to suggest related concepts to explore?</p>
-          </div>
-        </div>
-      </div> <!-- end ai-assistant-chat -->
 
       <!-- Knowledge Graph Section (Now the main focus) -->
       <div class="knowledge-section">
@@ -129,9 +128,10 @@
       .welcome-flex {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        justify-content: space-between;
+        position: relative;
         margin-bottom: 1rem;
-      }
+      }  
       
       .avatar-container {
         flex-shrink: 0;
@@ -147,7 +147,8 @@
       }
       
       .welcome-text {
-        flex-grow: 1;
+        margin-left: 1rem;
+        flex: 1;
       }
       
       .welcome-header h1 {
@@ -656,124 +657,65 @@
       .stat-col{flex:1;text-align:center;border-left:1px solid rgba(var(--theme-border-rgb),.05)}
       .stat-col:first-child{border-left:none}
       
+      /* Knowledge Statistics Box Styles */
+      .stats-box {
+        display: flex;
+        padding: 0.75rem 1.25rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.1);
+        margin-left: 1.5rem;
+        margin-right: 80px; /* Add space to avoid overlap with galaxy button */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1; /* Ensure proper layering */
+      }
+      
+      .stats-item {
+        padding: 0 1rem;
+        text-align: center;
+        position: relative;
+      }
+      
+      .stats-item:not(:last-child):after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 20%;
+        height: 60%;
+        width: 1px;
+        background: rgba(255,255,255,0.1);
+      }
+      
+      .stats-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 0.25rem;
+      }
+      
+      .stats-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--theme-primary);
+      }
+      
+      @media (max-width: 768px) {
+        .welcome-flex {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .stats-box {
+          margin-left: 0;
+          margin-top: 1rem;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+      
       .panel h3:hover{color:var(--theme-accent)}
       .latest-panel li:hover .note-title a{color:var(--theme-accent)}
       .stat-col:hover .stat-big{color:var(--theme-accent)}
-      
-      /* === AI Assistant Chat Bubble === */
-      .ai-assistant-chat {
-        margin: 1.5rem 0;
-      }
-      
-      .chat-bubble {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(var(--theme-border-rgb), 0.1);
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-      }
-      
-      .assistant-avatar {
-        flex-shrink: 0;
-      }
-      
-      .assistant-avatar img {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: 2px solid var(--theme-primary);
-        box-shadow: 0 0 6px rgba(var(--theme-primary-rgb), 0.35);
-        object-fit: cover;
-      }
-      
-      .assistant-name {
-        margin: 0 0 0.25rem;
-        font-size: 1rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, var(--theme-primary), var(--theme-accent));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      
-      .assistant-msg {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: var(--text-muted-light, #cbd5e1);
-        letter-spacing: 0.01em;
-      }
-      
-      .assistant-msg.typing {
-        overflow: hidden;
-        white-space: nowrap;
-        animation: typing 4s steps(60, end);
-        display: inline-block;
-        position: relative;
-      }
-      
-      .assistant-msg.typing::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 0.65em;
-        height: 1.05em;
-        background: var(--theme-accent, #58e0ff); /* bright block cursor */
-        border-radius: 2px;
-        vertical-align: -0.15em; /* align to text baseline */
-        animation: blink-caret 0.75s step-end infinite;
-      }
-      
-      .assistant-msg.done::after {
-        animation: blink-caret 0.75s step-end infinite;
-      }
-      
-      @keyframes typing {
-        from { width: 0; }
-        to { width: 100%; }
-      }
-      
-      @keyframes blink-caret {
-        from, to { opacity: 0; }
-        50% { opacity: 1; }
-      }
-      
-      .message-content {
-        position: relative;
-        padding-left: 0.5rem;
-      }
-      
-      .message-content::before,
-      .message-content::after {
-        position: absolute;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--theme-primary-light);
-        opacity: 0.6;
-        line-height: 1;
-      }
-      .message-content::before {
-        content: "“";
-        left: -0.5rem;
-        top: -0.2rem;
-      }
-      .message-content::after {
-        content: "”";
-        right: -0.3rem;
-        bottom: -0.2rem;
-      }
-      
-      .message-content p {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: var(--text-muted-light, #cbd5e1);
-        letter-spacing: 0.01em;
-      }
+    
     </style>
     
     <script>

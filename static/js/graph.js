@@ -1,5 +1,14 @@
 // 知識圖譜視覺化 - 使用D3.js實現力導向圖
 document.addEventListener('DOMContentLoaded', function() {
+    // 添加效能調整參數 - 僅用於內部優化，不展示UI元素
+    const performanceSettings = {
+        // 高效能模式標記
+        highPerformanceMode: false,
+        // 節點臨界值：當節點超過此數時，自動開啟高效能模式
+        nodeTreshold: 50,
+        // 標籤顯示參數 - 系統內部使用
+        labelsAlwaysVisible: true
+    };
     // 獲取容器元素和尺寸
     const container = document.querySelector('.graph-visualization');
     
@@ -75,18 +84,64 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 定義顏色比例尺 - 基於節點ID分配不同顏色
     const color = d3.scaleOrdinal(d3.schemeCategory10);
+    
+    // 計算和更新統計信息的函數
+    function updateStatsDisplay(data) {
+        // 獲取總筆記數
+        const totalNotes = data.nodes.length;
+        
+        // 獲取獨特的主題（組別）數
+        // 使用 Set 數據結構來計算獨特的 group 值數量
+        const uniqueTopics = new Set();
+        data.nodes.forEach(node => {
+            if (node.group) { // 確保 group 屬性存在
+                uniqueTopics.add(node.group);
+            }
+        });
+        const totalTopics = uniqueTopics.size;
+        
+        // 更新 DOM 中的統計數字
+        const totalNotesElement = document.getElementById('total-notes-count');
+        const totalTopicsElement = document.getElementById('total-topics-count');
+        
+        if (totalNotesElement) {
+            totalNotesElement.textContent = totalNotes;
+        }
+        
+        if (totalTopicsElement) {
+            totalTopicsElement.textContent = totalTopics;
+        }
+        
+        console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
+    }
 
     // 加載數據
     d3.json('/data/notes_graph.json').then(data => {
+        // 計算統計信息：總筆記數和獨立主題（組別）數
+        updateStatsDisplay(data);
+        // 根據節點數自動調整效能模式但不顯示UI元素
+        if (data.nodes.length > performanceSettings.nodeTreshold) {
+            performanceSettings.highPerformanceMode = true;
+            console.log(`啟用高效能模式：${data.nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
+        }
         // 創建力導向模擬
         const simulation = d3.forceSimulation(data.nodes)
             .force('link', d3.forceLink(data.edges)
                 .id(d => d.id)
-                .distance(d => (120 * (1 - d.score) + 20) * 8) // 將距離放大 10 倍，增加視覺間隔
-                .strength(d => d.score * 0.7)) // 相似度越高，連接強度越大
-            .force('charge', d3.forceManyBody().strength(-400)) // 適度排斥，縮小群組間距離
+                // 優化距離計算：減少倍數，使視覺布局更緊湊，節省計算量
+                .distance(d => (120 * (1 - d.score) + 20) * 3) 
+                .strength(d => Math.min(d.score * 0.8, 0.9))) // 增強連接強度，更快達到穩定
+            // 減少排斥力強度，降低計算成本
+            .force('charge', d3.forceManyBody()
+                .strength(-200)
+                .theta(0.9) // 增加theta值以改進Barnes-Hut近似演算法效率
+                .distanceMax(300)) // 限制排斥力最大距離
             .force('center', d3.forceCenter(width / 2, height / 2)) // 居中力
-            .force('collision', d3.forceCollide().radius(40)); // 防止節點重疊
+            // 減小碰撞偵測半徑，降低計算量
+            .force('collision', d3.forceCollide().radius(24).strength(0.7));
+            
+            // 設置衰減率，讓模擬更快達到穩定狀態
+            simulation.alphaDecay(0.028); // 增加衰減率（默認值是0.0228）
 
         // 創建連接線 - 宇宙風格
         const link = g.append('g')
@@ -95,8 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .join('line')
             .attr('stroke', '#4F7BFF') // 藍色連線
             .attr('stroke-opacity', 0.4)
-            .attr('stroke-width', d => d.score * 2) // 相似度越高，線越粗
-            .style('filter', 'drop-shadow(0 0 2px rgba(79, 123, 255, 0.5))');
+            .attr('stroke-width', d => d.score * 2); // 相似度越高，線越粗
 
         // 創建節點
         const node = g.append('g')
@@ -106,36 +160,59 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr('class', 'node')
             .call(drag(simulation)); // 啟用拖拽功能
 
-        // 為每個節點添加圓形 - 使用宇宙風格
+        // 為每個節點添加圓形 - 根據效能模式調整視覺效果
         node.append('circle')
             .attr('r', nodeStyles.defaultRadius)
             .attr('fill', d => color(d.group))
             .attr('stroke', nodeStyles.stroke)
-            .attr('stroke-width', nodeStyles.strokeWidth)
+            .attr('stroke-width', performanceSettings.highPerformanceMode ? 0.5 : nodeStyles.strokeWidth)
             .style('opacity', nodeStyles.opacity)
-            .style('filter', `drop-shadow(0 0 ${nodeStyles.glowStrength} ${nodeStyles.glowColor})`);
+            // 高效能模式下移除昂貴的drop-shadow效果，改用更輕量的CSS
+            .style('filter', performanceSettings.highPerformanceMode ? 'none' : `drop-shadow(0 0 ${nodeStyles.glowStrength} ${nodeStyles.glowColor})`);
 
-        // 為每個節點添加標籤 - 使用自定義樣式
+        // 為每個節點添加標籤 - 使用自定義樣式，根據效能模式調整
         const labels = node.append('text')
             .text(d => d.title)
             .attr('x', 12)
-            .attr('y', 4)
+            .attr('y', 3)
             .style('font-size', nodeStyles.fontSize)
             .style('font-weight', nodeStyles.fontWeight)
             .style('pointer-events', 'none')
-            .style('fill', nodeStyles.fontColor);
+            .style('fill', nodeStyles.fontColor)
+            .style('display', 'block'); // 始終顯示標籤
 
         // 添加節點懸停效果
         node.on('mouseover', function(event, d) {
             // 顯示工具提示（如果存在）
             if (tooltip) {
                 tooltip.style.display = 'block';
-                tooltip.innerHTML = `<strong>${d.title}</strong><br>${d.path}`;
+                tooltip.innerHTML = `
+                    <div class="tooltip-title">${d.title}</div>
+                    <div class="tooltip-group">${d.group}</div>
+                    <div class="tooltip-path">${d.path}</div>
+                `;
                 tooltip.style.left = (event.pageX + 10) + 'px';
                 tooltip.style.top = (event.pageY - 10) + 'px';
             }
             
-            // 高亮相關連接 - 宇宙風格
+            // 高效能模式下簡化滑鼠互動效果
+            if (performanceSettings.highPerformanceMode) {
+                // 僅對當前節點和直接連接的節點進行簡單高亮
+                d3.select(this).select('circle')
+                    .transition().duration(100)
+                    .attr('r', nodeStyles.defaultRadius * 1.3)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 2);
+                    
+                // 顯示當前節點的標籤
+                d3.select(this).select('text')
+                    .style('display', 'block')
+                    .style('font-weight', 'bold');
+                    
+                return; // 不執行下面更複雜的高亮效果
+            }
+                
+            // 標準模式下的完整高亮效果宇宙風格
             link.style('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#A3BFFF' : '#4F7BFF')
                 .style('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 0.8 : 0.2)
                 .style('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? l.score * 4 : l.score * 1)
@@ -161,7 +238,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 tooltip.style.display = 'none';
             }
             
-            // 恢復連接樣式 - 宇宙風格
+            // 高效能模式下的簡化還原
+            if (performanceSettings.highPerformanceMode) {
+                // 只還原當前節點
+                d3.select(this).select('circle')
+                    .transition().duration(100)
+                    .attr('r', nodeStyles.defaultRadius)
+                    .attr('stroke', nodeStyles.stroke)
+                    .attr('stroke-width', 0.5);
+                    
+                // 標籤始終顯示
+                d3.select(this).select('text').style('display', 'block');
+                
+                return; // 不執行下面更複雜的還原效果
+            }
+            
+            // 標準模式下的完整樣式還原
             link.style('stroke', '#4F7BFF')
                 .style('stroke-opacity', 0.4)
                 .style('stroke-width', d => d.score * 2)
@@ -186,8 +278,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('點擊節點:', d.title, d.path);
         });
 
-        // 添加模擬的tick事件處理
+        // 優化tick事件處理，減少DOM操作
+        let tickCounter = 0;
         simulation.on('tick', () => {
+            // 限制更新頻率，不是每一個tick都更新DOM，降低渲染負擔
+            tickCounter++;
+            if (tickCounter % 3 !== 0) return; // 只在每3個tick更新一次
+            
             link
                 .attr('x1', d => d.source.x)
                 .attr('y1', d => d.source.y)
@@ -195,6 +292,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 .attr('y2', d => d.target.y);
 
             node.attr('transform', d => `translate(${d.x},${d.y})`);
+            
+            // 當模擬達到一定穩定性時停止，節省CPU資源
+            if (simulation.alpha() < 0.01) {
+                simulation.stop();
+                console.log('模擬已穩定，已停止進一步計算');
+            }
         });
 
         // 在力導向圖穩定後，自動縮放以涵蓋所有節點
