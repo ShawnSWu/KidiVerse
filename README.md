@@ -2,7 +2,7 @@
 
 KidiVerse is a **Hugo static-site theme for Obsidian-style Markdown notebooks**.
 It respects the typical Obsidian convention where **images live in an `attachments/` sub-folder** next to each note, and automatically resolves those links.
-On top of a clean two-column dark layout, it ships with an **AI-powered semantic knowledge graph** that lets you explore relationships between notes visually.
+It offers a clean two-column dark layout that mirrors your folder structure and scales gracefully from small personal wikis to large knowledge gardens.
 
 ---
 
@@ -54,6 +54,26 @@ Open <http://localhost:1313> and enjoy!
 
 ---
 
+## 🧩 Obsidian Compatibility
+
+Already keeping your notes in an Obsidian vault? Just copy them into `content/` and you’re ready to go:
+
+1. **Drag-and-drop folders** – every folder becomes a sidebar section.
+2. **Add an `_index.md`** in each folder so Hugo can render the section landing page & sidebar entry. A minimal example:
+
+   ```markdown
+   ---
+   title: "Git"   # folder label in sidebar
+   weight: 2       # optional ordering (lower = higher)
+   ---
+   ```
+
+   (You can create these quickly with a script or your file manager.)
+3. Keep images in the folder’s `attachments/` sub-directory – the theme will resolve links like `![diagram](diagram.png)` automatically.
+4. Start `hugo server ‑D` and enjoy the same Obsidian structure with a searchable website + AI knowledge graph.
+
+---
+
 ## ⚙️ Configuration
 
 ```toml
@@ -78,61 +98,9 @@ title = "My Knowledge Garden"
 * **Front-end:** `static/js/graph.js` renders an interactive force graph with D3.
 
 ### GitHub Action
-A ready-made workflow (`.github/workflows/build-graph.yml`) runs the script on every push / deploy:
-
-```yaml
-autocomplete: false
-name: Build semantic graph
-on:
-  push:
-    branches: [ "main", "development" ]
-jobs:
-  graph:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-      - name: Install deps
-        run: pip install -r requirements.txt
-      - name: Build graph
-        run: python scripts/build_graph.py
-      - name: Upload artifact (optional)
-        uses: actions/upload-artifact@v3
-        with:
-          name: graph
-          path: static/data/notes_graph.json
-```
+A ready-made workflow (`.github/workflows/knowledge-graph.yml`) runs the script on every push / deploy:
 
 Feel free to adapt – e.g. commit the JSON back, deploy to Netlify, etc.
-
----
-
-## 📦 Packaging for Hugo Themes Gallery
-
-If you wish to list KidiVerse (or your fork) on [themes.gohugo.io](https://themes.gohugo.io/):
-
-1. **Open-source licence** – add `LICENSE` (MIT / Apache-2.0 …)
-2. **`theme.toml`** – minimal metadata example:
-   ```toml
-   name = "KidiVerse"
-   license = "MIT"
-   licenselink = "https://github.com/YourAccount/kidiverse/blob/master/LICENSE"
-   description = "AI-powered knowledge-base theme for Hugo"
-   homepage = "https://github.com/YourAccount/kidiverse"
-   tags = ["docs", "knowledge", "graph", "dark", "responsive"]
-   features = ["semantic graph", "obsidian attachments", "dark mode"]
-   min_version = "0.110.0"
-
-   [author]
-     name = "Your Name"
-     homepage = "https://yourdomain.com"
-   ```
-3. **Screenshots** – place `images/screenshot.png` (≥1500×1000) and `images/tn.png` (≥900×600).
-4. Optionally include an `exampleSite/` folder for quick-start.
-5. Fork `gohugoio/hugoThemes`, add your repo to `themes.txt`, open a PR.
 
 ---
 
