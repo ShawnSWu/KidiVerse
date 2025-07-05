@@ -19,32 +19,6 @@ It offers a clean two-column dark layout that mirrors your folder structure and 
 
 ---
 
-## 🚀 Quick Start
-
-```bash
-# 1. Install Hugo Extended ≥ 0.110.0
-#    https://gohugo.io/getting-started/installing/
-
-# 2. Create a new site (or use an existing one)
-hugo new site my-notes && cd my-notes
-
-# 3. Add theme as a git submodule
-git submodule add https://github.com/YourAccount/kidiverse.git themes/kidiverse
-
-# 4. Enable the theme
-echo 'theme = "kidiverse"' >> hugo.toml
-
-# 5. Copy example config / content (optional)
-cp -a themes/kidiverse/exampleSite/. .
-
-# 6. Start the dev server
-hugo server -D
-```
-
-Open <http://localhost:1313> and enjoy!
-
----
-
 ## 📝 Note-Taking Conventions
 
 1. **Directory = Topic** – organise notes under `content/<topic>/<Note>.md`
