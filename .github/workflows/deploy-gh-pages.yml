@@ -1,0 +1,39 @@
+# Deploy Hugo site to GitHub Pages
+# Builds on every push to development (or manual dispatch)
+# and publishes the generated `public/` folder to the `gh-pages` branch.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "development" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow the action to push to gh-pages
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # required for .GitInfo and full history
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true
