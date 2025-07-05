@@ -1,4 +1,4 @@
-# Why Docker?
+# Docker?
 
 - **Consistent environments** – “It works on my machine” becomes a thing of the past.  
 - **Lightweight isolation** – share the host kernel yet run apps in separate sandboxes.  

@@ -1,4 +1,4 @@
-# Ingress 101
+# Ingress
 
 An **Ingress** acts like an application-layer (Layer-7) router.  
 It watches your cluster for Ingress resources and programs the underlying load balancer (NGINX, Traefik, etc.) to map hostnames + paths → cluster Services.

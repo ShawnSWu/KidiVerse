@@ -1,4 +1,4 @@
-# Hello, Pod! 
+# Pod! 
 
 A **Pod** is the smallest deployable unit in Kubernetes.  
 Think of it as a wrapper that holds one or more tightly-coupled containers sharing:

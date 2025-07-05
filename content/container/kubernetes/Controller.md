@@ -1,4 +1,4 @@
-# What Is a Controller?
+# ontroller?
 
 A **controller** is a control-loop process running in the Kubernetes control plane (or outside, for custom controllers) that:
 

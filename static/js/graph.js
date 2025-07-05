@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalTopics = uniqueTopics.size;
         
         // 更新 DOM 中的統計數字
-        const totalNotesElement = document.getElementById('total-notes-count');
+        const totalNotesElement = document.getElementById('total-graph-count');
         const totalTopicsElement = document.getElementById('total-topics-count');
         
         if (totalNotesElement) {
