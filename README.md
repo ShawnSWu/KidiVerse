@@ -5,6 +5,9 @@ It respects the typical Obsidian convention where **images live in an `attachmen
 It offers a clean two-column dark layout that mirrors your folder structure and scales gracefully from small personal wikis to large knowledge gardens.
 
 ---
+![image](https://github.com/user-attachments/assets/aa1ba180-094a-4e77-b560-58b6144f6e3b)
+![image](https://github.com/user-attachments/assets/d963cf72-7331-4439-b9e1-12f58ac1ff73)
+
 
 ## ✨ Features
 
