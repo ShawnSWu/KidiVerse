@@ -1,0 +1,51 @@
+name: Build Knowledge Graph
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'content/**/*.md'
+      - 'scripts/build_graph.py'
+      - 'requirements.txt'
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  build-graph:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip & model files
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+            ~/.cache/torch
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build knowledge graph
+        run: python scripts/build_graph.py
+
+      - name: Commit graph if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(graph): update notes_graph.json'
+          file_pattern: static/data/notes_graph.json

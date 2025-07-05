@@ -1,0 +1,12 @@
+{{/* themes/KidiVerse/layouts/_default/term.html */}}
+{{ define "main" }}
+  <section class="term-section" style="padding:1rem;">
+    <h2>標籤：{{ .Title }}</h2>
+    <ul>
+      {{ range .Pages.ByDate.Reverse }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+    <p><a href="{{ "/" | relURL }}">← 回首頁</a></p>
+  </section>
+{{ end }}

@@ -1,0 +1,9 @@
+# Production base URL – required for GitHub Pages links
+baseURL = "https://shawnswu.github.io/KidiVerse/"
+languageCode = "zh-tw"
+canonifyURLs = true
+title = "KidiVerse"
+
+[params]
+  description = "Hi Here is KidiVerse"
+  author = "Shawn Wu"
