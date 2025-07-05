@@ -1,62 +1,37 @@
-# Ingress
+# Ingress 101
 
-Ingress 又可稱作 Ingress Resource，它「只定義」路由規則，它本身並不會直接處理流量(它是抽象的)。它只是告訴 Kubernetes：「當有流量進來時，根據這些規則將流量轉發到 ingressClassName: XXX 的 Ingress controller 上」。
+An **Ingress** acts like an application-layer (Layer-7) router.  
+It watches your cluster for Ingress resources and programs the underlying load balancer (NGINX, Traefik, etc.) to map hostnames + paths → cluster Services.
 
-## 作用
+![Ingress](Ingress.png)
 
-- 讓 **外部使用者** 可以透過 **域名 (URL) + 路由** 訪問 Kubernetes 內部的 Service
-- 允許**一個 IP (Ingress) 負責多個 Service**，類似反向代理
-- 支持**HTTPS、流量轉發、負載均衡、Rewrite** 等功能
+---
 
-## 主要特性
-
-- **路由規則**：根據域名或路徑將流量導向不同服務
-- **負載均衡**：整合外部負載均衡器（如 Nginx、Traefik）
-- **SSL 支援**：通過 TLS 配置實現安全通信
-
-## 基本範例
+## Minimal HTTPS Ingress
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: my-ingress
+  name: web-ingress
+  annotations:
+    # Force HTTPS and redirect HTTP → HTTPS (NGINX example)
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
+  ingressClassName: nginx               # which controller should handle this
+  tls:
+  - hosts:
+    - demo.example.com
+    secretName: demo-tls                # pre-created TLS secret (kubectl create secret tls …)
+
   rules:
-    - host: myapp.example.com
-      http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: api-service
-                port:
-                  number: 80
-          - path: /web
-            pathType: Prefix
-            backend:
-              service:
-                name: web-service
-                port:
-                  number: 80
-    - host: admin.example.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: admin-service
-                port:
-                  number: 80
-```
-
-## 路由規則說明
-
-1. **第一個 Host (`myapp.example.com`)**
-   - `/api` → 轉發到 **`api-service`**
-   - `/web` → 轉發到 **`web-service`**
-
-2. **第二個 Host (`admin.example.com`)**
-   - `/` (根路徑) → 轉發到 **`admin-service`**
+  - host: demo.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-svc
+            port:
+              number: 80

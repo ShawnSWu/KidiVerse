@@ -1,21 +1,24 @@
-# Pod
+# Hello, Pod! 
 
-- Pod 是 Kubernetes 中最小的部署單元。
-- 一個 Pod 可以包含一個或多個 Container，這些 Container 共享儲存和網路資源。
+A **Pod** is the smallest deployable unit in Kubernetes.  
+Think of it as a wrapper that holds one or more tightly-coupled containers sharing:
 
-Pod 通常用來運行單一應用或服務。
+- **Network namespace** – they all see the same `localhost`.
+- **Storage volumes** – optional persistent or ephemeral volumes.
+- **Lifecycle** – scheduled, started, and stopped together.
 
-## 主要特性
-- **共享資源**：Pod 內的容器共享 IP 地址和儲存卷（Volume）。
-- **生命週期**：Pod 是一次性的，當它被刪除時不會自動重建，需要依賴控制器（如 Deployment）。
-- **調度單位**：Kubernetes 以 Pod 為單位進行調度和部署。
-## 基本範例
+---
+
+## Minimal Pod Manifest
+
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: example-pod
+  name: hello-pod
 spec:
   containers:
-  - name: nginx
-    image: nginx:latest
+  - name: app
+    image: nginx:1.27-alpine
+    ports:
+    - containerPort: 80
