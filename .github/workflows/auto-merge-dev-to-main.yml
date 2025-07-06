@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write  # Needed to trigger other workflows
 
 jobs:
   merge-development-to-main:
@@ -42,9 +43,15 @@ jobs:
           git merge --no-ff --no-edit development
           
           # Push the merge commit back to main
+          # This will automatically trigger the knowledge-graph workflow
+          # due to the push to main branch
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT || github.token }}
+      
+      # The knowledge-graph workflow will be automatically triggered by the push to main
+      # and the deploy-gh-pages workflow will run after knowledge-graph completes
+      # due to the workflow_run trigger in deploy-gh-pages.yml
 
       - name: Show merge result
         run: git log -1 --oneline
