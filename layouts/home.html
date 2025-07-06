@@ -865,6 +865,7 @@
     
     <!-- Custom Scripts -->
     {{ $scripts := slice "js/main.js" "js/graph.js" "js/cosmic-background.js" "js/obsidian-images.js" }}
+    {{ $isProduction := eq (getenv "HUGO_ENV") "production" }}
     {{ range $script := $scripts }}
       {{ $js := resources.Get $script }}
       {{ if $js }}
@@ -872,7 +873,7 @@
         <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
       {{ else }}
         {{ $scriptPath := $script }}
-        {{ if eq .Site.Params.env "production" }}
+        {{ if $isProduction }}
           {{ $scriptPath = printf "/KidiVerse/%s" $script }}
         {{ end }}
         <script src="{{ $scriptPath }}" defer></script>
