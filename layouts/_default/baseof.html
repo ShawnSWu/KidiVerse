@@ -1,6 +1,6 @@
 {{/* themes/KidiVerse/layouts/_default/baseof.html */}}
 <!DOCTYPE html>
-<html lang="zh-TW" class="scroll-smooth">
+<html lang="zh-TW" class="scroll-smooth" data-base-path="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,17 +17,19 @@
     {{ $style = $style | resources.Minify | resources.Fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
   {{ else }}
-    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+    <link rel="stylesheet" href="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}/css/style.css">
   {{ end }}
   
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="{{ "images/logo.svg" | relURL }}">
+  <link rel="icon" type="image/svg+xml" href="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}/images/logo.svg">
   
   <!-- Preload critical assets -->
   {{ $mainJS := resources.Get "js/main.js" }}
   {{ if $mainJS }}
     {{ $mainJS = $mainJS | resources.Minify | resources.Fingerprint }}
     <link rel="preload" href="{{ $mainJS.RelPermalink }}" as="script" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous">
+  {{ else }}
+    <link rel="preload" href="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}/js/main.js" as="script">
   {{ end }}
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">

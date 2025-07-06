@@ -787,13 +787,20 @@
 
     <!-- Load graph data using fetch -->
     <script>
+      // Helper function to safely access array elements
+      function safeSlice(array, start = 0, end = 3) {
+        if (!Array.isArray(array)) return [];
+        return array.slice(start, end);
+      }
+
       async function loadGraphData() {
         try {
-          // Determine if we're in development or production
+          // Get base path from data attribute or use default
+          const basePath = document.documentElement.dataset.basePath || '';
           const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
           
           // Use the correct path based on environment
-          let dataPath = isLocal ? '/data/notes_graph.json' : '/KidiVerse/data/notes_graph.json';
+          let dataPath = isLocal ? '/data/notes_graph.json' : `${basePath}/data/notes_graph.json`;
           
           // Make sure the path is absolute
           if (!dataPath.startsWith('http')) {
@@ -820,13 +827,13 @@
           
           // Log the first few nodes and links for debugging
           console.log('Graph data loaded successfully');
-          console.log('Sample nodes:', data.nodes.slice(0, 3));
-          console.log('Sample links:', data.links.slice(0, 3));
+          console.log('Sample nodes:', safeSlice(data?.nodes));
+          console.log('Sample links:', safeSlice(data?.links));
           
           // Store the data in a global variable for the graph to use
           window.graphData = {
-            nodes: Array.isArray(data.nodes) ? data.nodes : [],
-            links: Array.isArray(data.links) ? data.links : []
+            nodes: Array.isArray(data?.nodes) ? data.nodes : [],
+            links: Array.isArray(data?.links) ? data.links : []
           };
           
           // Initialize the graph after loading data
@@ -856,12 +863,15 @@
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
-    <!-- Custom Graph Script -->
-    {{ $graphJS := resources.Get "js/graph.js" }}
-    {{ if $graphJS }}
-      {{ $graphJS = $graphJS | resources.Minify | resources.Fingerprint }}
-      <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
-    {{ else }}
-      <script src="{{ "js/graph.js" | relURL }}" defer></script>
+    <!-- Custom Scripts -->
+    {{ $scripts := slice "js/main.js" "js/graph.js" "js/cosmic-background.js" "js/obsidian-images.js" }}
+    {{ range $script := $scripts }}
+      {{ $js := resources.Get $script }}
+      {{ if $js }}
+        {{ $js = $js | resources.Minify | resources.Fingerprint }}
+        <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{ else }}
+        <script src="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}/{{ $script }}" defer></script>
+      {{ end }}
     {{ end }}
 {{ end }}
