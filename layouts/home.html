@@ -823,18 +823,32 @@
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           
-          const data = await response.json();
+          const responseData = await response.json();
+          
+          // Ensure we have valid data
+          const data = responseData || {};
+          const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+          const links = Array.isArray(data.links) ? data.links : [];
           
           // Log the first few nodes and links for debugging
           console.log('Graph data loaded successfully');
-          console.log('Sample nodes:', safeSlice(data?.nodes));
-          console.log('Sample links:', safeSlice(data?.links));
+          console.log('Nodes count:', nodes.length);
+          console.log('Links count:', links.length);
+          
+          if (nodes.length > 0) {
+            console.log('Sample nodes:', nodes.slice(0, 3));
+          } else {
+            console.warn('No nodes found in graph data');
+          }
+          
+          if (links.length > 0) {
+            console.log('Sample links:', links.slice(0, 3));
+          } else {
+            console.warn('No links found in graph data');
+          }
           
           // Store the data in a global variable for the graph to use
-          window.graphData = {
-            nodes: Array.isArray(data?.nodes) ? data.nodes : [],
-            links: Array.isArray(data?.links) ? data.links : []
-          };
+          window.graphData = { nodes, links };
           
           // Initialize the graph after loading data
           if (typeof initGraph === 'function') {
