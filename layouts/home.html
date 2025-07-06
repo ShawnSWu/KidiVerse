@@ -789,8 +789,8 @@
     <script>
       async function loadGraphData() {
         try {
-          console.log('Loading graph data from {{ "/data/notes_graph.json" | relURL }}...');
-          const response = await fetch('{{ "/data/notes_graph.json" | relURL }}');
+          console.log('Loading graph data from {{ "/data/notes_graph.json" | absURL }}...');
+          const response = await fetch('{{ "/data/notes_graph.json" | absURL }}');
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
