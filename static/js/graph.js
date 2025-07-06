@@ -373,8 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .on('drag', dragged)
                 .on('end', dragended);
         }
-    }).catch(error => {
-        console.error('加載數據時出錯:', error);
-        // 僅在控制台顯示錯誤信息，不在頁面上添加錯誤信息
+        
+        // 應用拖拽行為到節點
+        node.call(drag(simulation));
     });
-});
