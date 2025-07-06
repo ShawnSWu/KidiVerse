@@ -795,20 +795,9 @@
 
       async function loadGraphData() {
         try {
-
-          const dataPath = '{{ "/data/notes_graph.json" | absURL }}';
-          // Get base path from data attribute or use default
-          const basePath = document.documentElement.dataset.basePath || '';
-          const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-          
-          // Use the correct path based on environment
-          let dataPath = isLocal ? '/data/notes_graph.json' : `${basePath}/data/notes_graph.json`;
-          
-          // Make sure the path is absolute
-          if (!dataPath.startsWith('http')) {
-            dataPath = new URL(dataPath, window.location.origin).href;
-          }
-
+          // Use the correct path for GitHub Pages - prepend the repository name
+          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
+          console.log('Loading graph data from:', dataPath);
           
           const response = await fetch(dataPath, {
             cache: 'no-cache',
