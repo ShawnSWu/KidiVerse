@@ -5,3 +5,10 @@ title = "KidiVerse"
 [params]
   description = "Hi Here is KidiVerse"
   author = "Shawn Wu"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    identifier = "about"
+    url = "/about/"
+    weight = 10
