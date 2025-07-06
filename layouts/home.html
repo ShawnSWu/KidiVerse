@@ -787,6 +787,12 @@
 
     <!-- Load graph data using fetch -->
     <script>
+      // Helper function to safely access array elements
+      function safeSlice(array, start = 0, end = 3) {
+        if (!Array.isArray(array)) return [];
+        return array.slice(start, end);
+      }
+
       async function loadGraphData() {
         try {
           // Use the correct path for GitHub Pages - prepend the repository name
@@ -795,6 +801,7 @@
           
           const response = await fetch(dataPath, {
             cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
               'Pragma': 'no-cache',
@@ -806,21 +813,32 @@
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           
-          const graphData = await response.json();
+          const responseData = await response.json();
+          
+          // Ensure we have valid data
+          const data = responseData || {};
+          const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+          const links = Array.isArray(data.links) ? data.links : [];
+          
+          // Log the first few nodes and links for debugging
           console.log('Graph data loaded successfully');
+          console.log('Nodes count:', nodes.length);
+          console.log('Links count:', links.length);
           
-          // Make graph data available globally with proper structure
-          window.graphData = {
-            nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
-            links: Array.isArray(graphData.links) ? graphData.links : []
-          };
+          if (nodes.length > 0) {
+            console.log('Sample nodes:', nodes.slice(0, 3));
+          } else {
+            console.warn('No nodes found in graph data');
+          }
           
-          console.log('Processed graph data:', { 
-            nodes: window.graphData.nodes.length,
-            links: window.graphData.links.length,
-            sampleNode: window.graphData.nodes[0],
-            sampleLink: window.graphData.links[0]
-          });
+          if (links.length > 0) {
+            console.log('Sample links:', links.slice(0, 3));
+          } else {
+            console.warn('No links found in graph data');
+          }
+          
+          // Store the data in a global variable for the graph to use
+          window.graphData = { nodes, links };
           
           // Initialize the graph after loading data
           if (typeof initGraph === 'function') {
@@ -849,12 +867,20 @@
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
-    <!-- Custom Graph Script -->
-    {{ $graphJS := resources.Get "js/graph.js" }}
-    {{ if $graphJS }}
-      {{ $graphJS = $graphJS | resources.Minify | resources.Fingerprint }}
-      <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
-    {{ else }}
-      <script src="{{ "js/graph.js" | relURL }}" defer></script>
+    <!-- Custom Scripts -->
+    {{ $scripts := slice "js/main.js" "js/graph.js" "js/cosmic-background.js" "js/obsidian-images.js" }}
+    {{ $isProduction := eq (getenv "HUGO_ENV") "production" }}
+    {{ range $script := $scripts }}
+      {{ $js := resources.Get $script }}
+      {{ if $js }}
+        {{ $js = $js | resources.Minify | resources.Fingerprint }}
+        <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{ else }}
+        {{ $scriptPath := $script }}
+        {{ if $isProduction }}
+          {{ $scriptPath = printf "/KidiVerse/%s" $script }}
+        {{ end }}
+        <script src="{{ $scriptPath }}" defer></script>
+      {{ end }}
     {{ end }}
 {{ end }}

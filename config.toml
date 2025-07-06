@@ -1,9 +1,11 @@
 # Base URL configuration
-baseURL = "https://shawnswu.github.io/KidiVerse/"  # Default to production URL
+baseURL = "http://localhost:1313/"  # Default to local development
 
-# Override for local development
+# Environment-specific configurations
 [development]
   baseURL = "http://localhost:1313/"
+  [development.params]
+    env = "development"
   [development.menu]
     [[development.menu.main]]
       name = "About"
@@ -12,6 +14,8 @@ baseURL = "https://shawnswu.github.io/KidiVerse/"  # Default to production URL
 
 [production]
   baseURL = "https://shawnswu.github.io/KidiVerse/"
+  [production.params]
+    env = "production"
   [production.menu]
     [[production.menu.main]]
       name = "About"
