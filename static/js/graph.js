@@ -146,14 +146,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 處理數據
     try {
+        // 確保 nodes 是數組
+        const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+        
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
         
         // 根據節點數自動調整效能模式但不顯示UI元素
-        if (data.nodes.length > performanceSettings.nodeTreshold) {
+        if (nodes.length > performanceSettings.nodeTreshold) {
             performanceSettings.highPerformanceMode = true;
-            console.log(`啟用高效能模式：${data.nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
+            console.log(`啟用高效能模式：${nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
         }
+        
         // 創建力導向模擬
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(Array.isArray(data.links) ? data.links : [])
@@ -183,9 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr('stroke-opacity', 0.4)
             .attr('stroke-width', d => d.score ? d.score * 2 : 1); // 相似度越高，線越粗，預設為1
 
-        // 確保 nodes 是數組
-        const nodes = Array.isArray(data.nodes) ? data.nodes : [];
-        
         // 創建顏色比例尺
         let color;
         try {
