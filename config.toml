@@ -1,35 +1,6 @@
-# Base URL configuration
-baseURL = "http://localhost:1313/"  # Default to local development
-
-# Environment-specific configurations
-[development]
-  baseURL = "http://localhost:1313/"
-  [development.params]
-    env = "development"
-  [development.menu]
-    [[development.menu.main]]
-      name = "About"
-      url = "/about/"
-      weight = 10
-
-[production]
-  baseURL = "https://shawnswu.github.io/KidiVerse/"
-  [production.params]
-    env = "production"
-  [production.menu]
-    [[production.menu.main]]
-      name = "About"
-      url = "/KidiVerse/about/"
-      weight = 10
-
+baseURL = "https://shawnswu.github.io/KidiVerse/"
 languageCode = "zh-tw"
 title = "KidiVerse"
-
-[menu]
-  [[menu.main]]
-    name = "About"
-    url = "/about/"
-    weight = 10
 
 [params]
   description = "Hi Here is KidiVerse"
