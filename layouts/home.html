@@ -65,7 +65,11 @@
       async function loadGraphData() {
         const dataPath = '{{ "data/notes_graph.json" | absURL }}';
         try {
-          const response = await fetch(dataPath);
+          const dataUrl = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
+          console.log('Loading graph data from', dataUrl);
+          const response = await fetch(dataUrl);
+          
+
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
