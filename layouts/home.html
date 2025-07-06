@@ -789,7 +789,8 @@
     <script>
       async function loadGraphData() {
         try {
-          const dataPath = '{{ "/data/notes_graph.json" | absURL }}';
+          // Use the correct path for GitHub Pages - prepend the repository name
+          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
           console.log('Loading graph data from:', dataPath);
           
           const response = await fetch(dataPath, {
