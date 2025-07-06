@@ -789,14 +789,28 @@
     {{ $graphData := resources.Get "data/notes_graph.json" }}
     {{ if $graphData }}
     <script>
-      // Make graph data available globally
-      window.graphData = {{ $graphData.Content | safeJS }} || { nodes: [], links: [] };
+      try {
+        // Parse the JSON data properly
+        const graphData = JSON.parse(`{{ $graphData.Content | safeJS }}`);
+        // Make graph data available globally with proper structure
+        window.graphData = {
+          nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
+          links: Array.isArray(graphData.links) ? graphData.links : []
+        };
+        console.log('Graph data loaded successfully', { 
+          nodes: window.graphData.nodes.length,
+          links: window.graphData.links.length 
+        });
+      } catch (error) {
+        console.error('Error parsing graph data:', error);
+        window.graphData = { nodes: [], links: [] };
+      }
     </script>
     {{ else }}
     <script>
       // Fallback empty graph data
       window.graphData = { nodes: [], links: [] };
-      console.warn('Failed to load graph data');
+      console.warn('Failed to load graph data file');
     </script>
     {{ end }}
     

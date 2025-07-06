@@ -117,12 +117,32 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
     }
 
-    // 使用全局變量加載圖表數據
-    const data = window.graphData || { nodes: [], links: [] };
+    // 使用全局變量加載圖表數據並確保數據結構正確
+    let data = { nodes: [], links: [] };
+    
+    try {
+        if (window.graphData) {
+            // 確保數據結構正確
+            data = {
+                nodes: Array.isArray(window.graphData.nodes) ? window.graphData.nodes : [],
+                links: Array.isArray(window.graphData.links) ? window.graphData.links : []
+            };
+            console.log('成功加載圖表數據:', { 
+                nodes: data.nodes.length,
+                links: data.links.length 
+            });
+        } else {
+            console.warn('未找到圖表數據，使用空數據集');
+        }
+    } catch (error) {
+        console.error('加載圖表數據時出錯:', error);
+    }
     
     // 處理數據
+    try {
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
+        
         // 根據節點數自動調整效能模式但不顯示UI元素
         if (data.nodes.length > performanceSettings.nodeTreshold) {
             performanceSettings.highPerformanceMode = true;
@@ -376,4 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 應用拖拽行為到節點
         node.call(drag(simulation));
-    });
+    } catch (error) {
+        console.error('Error initializing graph:', error);
+    }
+});
