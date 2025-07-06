@@ -32,7 +32,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify --environment production --baseURL=https://shawnswu.github.io/ --bind=0.0.0.0 --port=1313
+        run: hugo --minify --environment production --baseURL=https://shawnswu.github.io/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
