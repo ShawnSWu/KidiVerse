@@ -785,48 +785,56 @@
 
 
 
-    <!-- Load graph data first -->
-    {{ $graphData := resources.Get "data/notes_graph.json" }}
-    {{ if $graphData }}
+    <!-- Load graph data using fetch -->
     <script>
-      console.log('Graph data file found, processing...');
-      try {
-        const jsonString = `{{ $graphData.Content | safeJS }}`;
-        console.log('Raw JSON string length:', jsonString.length);
-        
-        // Parse the JSON data properly
-        const graphData = JSON.parse(jsonString);
-        console.log('Parsed graph data:', graphData);
-        
-        // Make graph data available globally with proper structure
-        window.graphData = {
-          nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
-          links: Array.isArray(graphData.links) ? graphData.links : []
-        };
-        
-        console.log('Graph data loaded successfully', { 
-          nodes: window.graphData.nodes.length,
-          links: window.graphData.links.length,
-          sampleNode: window.graphData.nodes[0],
-          sampleLink: window.graphData.links[0]
-        });
-      } catch (error) {
-        console.error('Error parsing graph data:', error);
-        console.error('Error details:', {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        });
-        window.graphData = { nodes: [], links: [] };
+      async function loadGraphData() {
+        try {
+          console.log('Loading graph data from /data/notes_graph.json...');
+          const response = await fetch('/data/notes_graph.json');
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const graphData = await response.json();
+          console.log('Graph data loaded successfully:', graphData);
+          
+          // Make graph data available globally with proper structure
+          window.graphData = {
+            nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
+            links: Array.isArray(graphData.links) ? graphData.links : []
+          };
+          
+          console.log('Processed graph data:', { 
+            nodes: window.graphData.nodes.length,
+            links: window.graphData.links.length,
+            sampleNode: window.graphData.nodes[0],
+            sampleLink: window.graphData.links[0]
+          });
+          
+          // Initialize the graph after loading data
+          if (typeof initGraph === 'function') {
+            initGraph();
+          }
+        } catch (error) {
+          console.error('Error loading graph data:', error);
+          console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+          });
+          window.graphData = { nodes: [], links: [] };
+          
+          // Still try to initialize with empty data
+          if (typeof initGraph === 'function') {
+            initGraph();
+          }
+        }
       }
+      
+      // Start loading the graph data
+      document.addEventListener('DOMContentLoaded', loadGraphData);
     </script>
-    {{ else }}
-    <script>
-      // Fallback empty graph data
-      window.graphData = { nodes: [], links: [] };
-      console.warn('Failed to load graph data file');
-    </script>
-    {{ end }}
     
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>

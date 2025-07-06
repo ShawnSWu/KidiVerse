@@ -1,5 +1,31 @@
 // 知識圖譜視覺化 - 使用D3.js實現力導向圖
-document.addEventListener('DOMContentLoaded', function() {
+function initGraph() {
+    console.log('Initializing graph...');
+    
+    // 確保 window.graphData 存在
+    if (!window.graphData) {
+        console.warn('Graph data not available, using empty data');
+        window.graphData = { nodes: [], links: [] };
+    }
+    
+    // 使用全局變量加載圖表數據並確保數據結構正確
+    const data = {
+        nodes: Array.isArray(window.graphData.nodes) ? window.graphData.nodes : [],
+        links: Array.isArray(window.graphData.links) ? window.graphData.links : []
+    };
+    
+    console.log('Graph data:', {
+        nodes: data.nodes.length,
+        links: data.links.length,
+        sampleNode: data.nodes[0],
+        sampleLink: data.links[0]
+    });
+    
+    // 如果沒有節點數據，顯示警告
+    if (data.nodes.length === 0) {
+        console.warn('No nodes found in graph data');
+    }
+    
     // 添加效能調整參數 - 僅用於內部優化，不展示UI元素
     const performanceSettings = {
         // 高效能模式標記
@@ -117,34 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
     }
 
-    // 使用全局變量加載圖表數據並確保數據結構正確
-    let data = { nodes: [], links: [] };
-    
-    try {
-        // 調試日誌：輸出 window.graphData 的類型和內容
-        console.log('window.graphData:', window.graphData);
-        console.log('window.graphData type:', typeof window.graphData);
-        
-        if (window.graphData) {
-            // 確保數據結構正確
-            data = {
-                nodes: Array.isArray(window.graphData.nodes) ? window.graphData.nodes : [],
-                links: Array.isArray(window.graphData.links) ? window.graphData.links : []
-            };
-            console.log('成功加載圖表數據:', { 
-                nodes: data.nodes.length,
-                links: data.links.length,
-                firstNode: data.nodes[0],
-                firstLink: data.links[0]
-            });
-        } else {
-            console.warn('未找到圖表數據，使用空數據集');
-        }
-    } catch (error) {
-        console.error('加載圖表數據時出錯:', error);
-    }
+    // 數據已經在函數開始時加載
     
     // 處理數據
+    console.log('Initializing graph with data:', data);
     try {
         // 確保 nodes 是數組
         const nodes = Array.isArray(data.nodes) ? data.nodes : [];
@@ -401,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 輔助函數：檢查兩個節點是否相連
         function isConnected(a, b) {
-            return data.edges.some(l => 
+            return data.links.some(l => 
                 (l.source.id === a.id && l.target.id === b.id) || 
                 (l.source.id === b.id && l.target.id === a.id)
             );
@@ -434,7 +436,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 應用拖拽行為到節點
         node.call(drag(simulation));
+        
+        // 返回模擬對象以便外部訪問
+        return simulation;
     } catch (error) {
         console.error('Error initializing graph:', error);
+        return null;
     }
-});
+}
