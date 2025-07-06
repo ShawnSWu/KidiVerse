@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 加載數據
-    d3.json('/data/notes_graph.json').then(data => {
+    d3.json('{{ "data/notes_graph.json" | relURL }}').then(data => {
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
         // 根據節點數自動調整效能模式但不顯示UI元素
