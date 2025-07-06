@@ -121,6 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let data = { nodes: [], links: [] };
     
     try {
+        // 調試日誌：輸出 window.graphData 的類型和內容
+        console.log('window.graphData:', window.graphData);
+        console.log('window.graphData type:', typeof window.graphData);
+        
         if (window.graphData) {
             // 確保數據結構正確
             data = {
@@ -129,7 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('成功加載圖表數據:', { 
                 nodes: data.nodes.length,
-                links: data.links.length 
+                links: data.links.length,
+                firstNode: data.nodes[0],
+                firstLink: data.links[0]
             });
         } else {
             console.warn('未找到圖表數據，使用空數據集');
@@ -149,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(`啟用高效能模式：${data.nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
         }
         // 創建力導向模擬
-        const simulation = d3.forceSimulation(data.nodes)
-            .force('link', d3.forceLink(data.edges)
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(Array.isArray(data.links) ? data.links : [])
                 .id(d => d.id)
                 // 優化距離計算：減少倍數，使視覺布局更緊湊，節省計算量
                 .distance(d => (120 * (1 - d.score) + 20) * 3) 
@@ -170,16 +176,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // 創建連接線 - 宇宙風格
         const link = g.append('g')
             .selectAll('line')
-            .data(data.edges)
+            // 使用 links 而不是 edges 來匹配數據結構
+            .data(Array.isArray(data.links) ? data.links : [])
             .join('line')
             .attr('stroke', '#4F7BFF') // 藍色連線
             .attr('stroke-opacity', 0.4)
-            .attr('stroke-width', d => d.score * 2); // 相似度越高，線越粗
+            .attr('stroke-width', d => d.score ? d.score * 2 : 1); // 相似度越高，線越粗，預設為1
 
+        // 確保 nodes 是數組
+        const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+        
+        // 創建顏色比例尺
+        let color;
+        try {
+            // 確保有節點且有group屬性
+            const groups = nodes.length > 0 && nodes[0].group !== undefined ? 
+                [...new Set(nodes.map(d => d.group || 'default'))] : ['default'];
+                
+            color = d3.scaleOrdinal()
+                .domain(groups)
+                .range(nodeStyles.colors);
+        } catch (error) {
+            console.error('Error initializing color scale:', error);
+            // 提供默認顏色比例尺
+            color = d3.scaleOrdinal()
+                .domain(['default'])
+                .range(['#8A6BFF']);
+        }
+        
         // 創建節點
         const node = g.append('g')
             .selectAll('.node')
-            .data(data.nodes)
+            .data(nodes, d => d.id) // 使用唯一ID作為鍵
             .join('g')
             .attr('class', 'node')
             .call(drag(simulation)); // 啟用拖拽功能
