@@ -789,12 +789,22 @@
     <script>
       async function loadGraphData() {
         try {
-          // Use the correct path for GitHub Pages - prepend the repository name
-          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
+          // Determine if we're in development or production
+          const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+          
+          // Use the correct path based on environment
+          let dataPath = isLocal ? '/data/notes_graph.json' : '/KidiVerse/data/notes_graph.json';
+          
+          // Make sure the path is absolute
+          if (!dataPath.startsWith('http')) {
+            dataPath = new URL(dataPath, window.location.origin).href;
+          }
+          
           console.log('Loading graph data from:', dataPath);
           
           const response = await fetch(dataPath, {
             cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
               'Pragma': 'no-cache',
@@ -806,21 +816,18 @@
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           
-          const graphData = await response.json();
+          const data = await response.json();
+          
+          // Log the first few nodes and links for debugging
           console.log('Graph data loaded successfully');
+          console.log('Sample nodes:', data.nodes.slice(0, 3));
+          console.log('Sample links:', data.links.slice(0, 3));
           
-          // Make graph data available globally with proper structure
+          // Store the data in a global variable for the graph to use
           window.graphData = {
-            nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
-            links: Array.isArray(graphData.links) ? graphData.links : []
+            nodes: Array.isArray(data.nodes) ? data.nodes : [],
+            links: Array.isArray(data.links) ? data.links : []
           };
-          
-          console.log('Processed graph data:', { 
-            nodes: window.graphData.nodes.length,
-            links: window.graphData.links.length,
-            sampleNode: window.graphData.nodes[0],
-            sampleLink: window.graphData.links[0]
-          });
           
           // Initialize the graph after loading data
           if (typeof initGraph === 'function') {
