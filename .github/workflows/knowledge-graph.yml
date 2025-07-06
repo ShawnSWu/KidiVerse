@@ -7,8 +7,6 @@ on:
       - 'content/**/*.md'
       - 'scripts/build_graph.py'
       - 'requirements.txt'
-  schedule:
-    - cron: '0 2 * * *'
 
 jobs:
   build-graph:
