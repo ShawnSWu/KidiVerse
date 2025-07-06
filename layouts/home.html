@@ -2,7 +2,7 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
-      <a href="/about/" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
+      <a href="{{ "/about/" | relURL }}" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
         <div class="galaxy-arms">
           <div class="arm arm1"></div>
           <div class="arm arm2"></div>
@@ -789,8 +789,7 @@
     <script>
       async function loadGraphData() {
         try {
-          // Use the correct path for GitHub Pages - prepend the repository name
-          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
+          const dataPath = '{{ "/data/notes_graph.json" | absURL }}';
           console.log('Loading graph data from:', dataPath);
           
           const response = await fetch(dataPath, {
