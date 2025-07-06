@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write  # Needed to trigger other workflows
 
 jobs:
   merge-development-to-main:
@@ -42,9 +43,22 @@ jobs:
           git merge --no-ff --no-edit development
           
           # Push the merge commit back to main
+          # This will automatically trigger the knowledge-graph workflow
+          # due to the push to main branch
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT || github.token }}
+      
+      - name: Wait for knowledge-graph workflow to complete
+        if: success()
+        uses: fountainhead/action-wait-for-check@v1.0.2
+        id: wait-for-graph
+        with:
+          token: ${{ secrets.PAT || github.token }}
+          checkName: 'Build Knowledge Graph'
+          ref: 'main'
+          timeoutSeconds: 600  # 10 minutes timeout
+          intervalSeconds: 10  # Check every 10 seconds
 
       - name: Show merge result
         run: git log -1 --oneline
