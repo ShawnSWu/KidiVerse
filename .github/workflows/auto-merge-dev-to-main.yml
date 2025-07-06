@@ -5,6 +5,11 @@ on:
     branches: [development]
   workflow_dispatch:
 
+# These permissions are needed to interact with GitHub's API and push to the repository
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   merge-development-to-main:
     runs-on: ubuntu-latest
@@ -13,6 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.PAT || github.token }}
 
       - name: Set up Git identity
         run: |
@@ -21,10 +27,16 @@ jobs:
 
       - name: Merge development into main
         run: |
-          # Ensure we're on the main branch
+          # Ensure we have the latest changes
+          git fetch origin
+          
+          # Checkout main branch
           git checkout main
           
-          # Merge development into main
+          # Pull the latest changes from main
+          git pull origin main
+          
+          # Try to merge development into main
           # Use --no-edit to use the default merge message
           # Use --no-ff to always create a merge commit
           git merge --no-ff --no-edit development
@@ -32,7 +44,7 @@ jobs:
           # Push the merge commit back to main
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT || github.token }}
 
       - name: Show merge result
         run: git log -1 --oneline
