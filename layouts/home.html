@@ -871,7 +871,11 @@
         {{ $js = $js | resources.Minify | resources.Fingerprint }}
         <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
       {{ else }}
-        <script src="{{ if eq .Site.Params.env "production" }}/KidiVerse{{ end }}/{{ $script }}" defer></script>
+        {{ $scriptPath := $script }}
+        {{ if eq .Site.Params.env "production" }}
+          {{ $scriptPath = printf "/KidiVerse/%s" $script }}
+        {{ end }}
+        <script src="{{ $scriptPath }}" defer></script>
       {{ end }}
     {{ end }}
 {{ end }}
