@@ -775,7 +775,8 @@
           
           // After animation completes, navigate to the about page
           setTimeout(() => {
-            window.location.href = '/about/';
+            const baseURL = '{{ if eq (getenv "HUGO_ENV") "production" }}{{ .Site.BaseURL }}{{ end }}';
+            window.location.href = baseURL + 'about/';
           }, 600);
         });
       });
@@ -784,8 +785,17 @@
 
 
 
+    <!-- Load graph data first -->
+    {{ $graphData := resources.Get "data/notes_graph.json" | resources.ExecuteAsTemplate "js/graphData.js" . }}
+    <script>
+      // Make graph data available globally
+      window.graphData = {{ $graphData.Content | safeJS }};
+    </script>
+    
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    
     <!-- Custom Graph Script -->
-    <script src="{{ "js/graph.js" | absURL }}"></script> 
+    {{ $graphJS := resources.Get "js/graph.js" | resources.Minify | resources.Fingerprint }}
+    <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 {{ end }}
