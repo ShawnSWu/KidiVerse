@@ -149,6 +149,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // 確保 nodes 是數組
         const nodes = Array.isArray(data.nodes) ? data.nodes : [];
         
+        console.log('Nodes loaded:', nodes);
+        console.log('Links loaded:', data.links);
+        
+        if (nodes.length === 0) {
+            console.warn('No nodes found in graph data');
+        } else {
+            console.log(`Loaded ${nodes.length} nodes and ${data.links ? data.links.length : 0} links`);
+        }
+        
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
         
