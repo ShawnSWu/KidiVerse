@@ -786,16 +786,29 @@
 
 
     <!-- Load graph data first -->
-    {{ $graphData := resources.Get "data/notes_graph.json" | resources.ExecuteAsTemplate "js/graphData.js" . }}
+    {{ $graphData := resources.Get "data/notes_graph.json" }}
+    {{ if $graphData }}
     <script>
       // Make graph data available globally
-      window.graphData = {{ $graphData.Content | safeJS }};
+      window.graphData = {{ $graphData.Content | safeJS }} || { nodes: [], links: [] };
     </script>
+    {{ else }}
+    <script>
+      // Fallback empty graph data
+      window.graphData = { nodes: [], links: [] };
+      console.warn('Failed to load graph data');
+    </script>
+    {{ end }}
     
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
     <!-- Custom Graph Script -->
-    {{ $graphJS := resources.Get "js/graph.js" | resources.Minify | resources.Fingerprint }}
-    <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ $graphJS := resources.Get "js/graph.js" }}
+    {{ if $graphJS }}
+      {{ $graphJS = $graphJS | resources.Minify | resources.Fingerprint }}
+      <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ else }}
+      <script src="{{ "js/graph.js" | relURL }}" defer></script>
+    {{ end }}
 {{ end }}
