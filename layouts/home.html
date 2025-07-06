@@ -2,7 +2,7 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
-      <a href="/about/" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
+      <a href="{{ "/about/" | relURL }}" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
         <div class="galaxy-arms">
           <div class="arm arm1"></div>
           <div class="arm arm2"></div>
@@ -795,6 +795,8 @@
 
       async function loadGraphData() {
         try {
+
+          const dataPath = '{{ "/data/notes_graph.json" | absURL }}';
           // Get base path from data attribute or use default
           const basePath = document.documentElement.dataset.basePath || '';
           const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -806,8 +808,7 @@
           if (!dataPath.startsWith('http')) {
             dataPath = new URL(dataPath, window.location.origin).href;
           }
-          
-          console.log('Loading graph data from:', dataPath);
+
           
           const response = await fetch(dataPath, {
             cache: 'no-cache',
