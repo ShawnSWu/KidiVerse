@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 計算和更新統計信息的函數
     function updateStatsDisplay(data) {
+        // 使用全局變量加載圖表數據
+        const graphData = window.graphData || {};       
         // 獲取總筆記數
         const totalNotes = data.nodes.length;
         
@@ -115,8 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
     }
 
-    // 加載數據
-    d3.json('{{ "data/notes_graph.json" | relURL }}').then(data => {
+    // 使用全局變量加載圖表數據
+    const data = window.graphData || { nodes: [], links: [] };
+    
+    // 處理數據
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
         // 根據節點數自動調整效能模式但不顯示UI元素

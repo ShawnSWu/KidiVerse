@@ -12,13 +12,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}?v={{ now.Unix }}">
+  {{ $style := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ "images/logo.svg" | relURL }}">
   
   <!-- Preload critical assets -->
-  <link rel="preload" href="{{ "js/main.js" | relURL }}" as="script">
+  {{ $mainJS := resources.Get "js/main.js" | resources.Minify | resources.Fingerprint }}
+  <link rel="preload" href="{{ $mainJS.RelPermalink }}" as="script" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous">
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">
   <div class="page-container">
@@ -53,8 +55,11 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="{{ "js/main.js" | relURL }}" defer></script>
-  <script src="{{ `/js/cosmic-background.js` | relURL }}" defer></script>
-  <script src="{{ "js/obsidian-images.js" | relURL }}" defer></script>
+  {{ $cosmicJS := resources.Get "js/cosmic-background.js" | resources.Minify | resources.Fingerprint }}
+  {{ $obsidianJS := resources.Get "js/obsidian-images.js" | resources.Minify | resources.Fingerprint }}
+  
+  <script src="{{ $mainJS.RelPermalink }}" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  <script src="{{ $cosmicJS.RelPermalink }}" integrity="{{ $cosmicJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  <script src="{{ $obsidianJS.RelPermalink }}" integrity="{{ $obsidianJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 </body>
 </html>
