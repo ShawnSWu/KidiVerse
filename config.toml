@@ -2,11 +2,10 @@
 projectName = "KidiVerse"
 
 # Base URL configuration
-baseURL = "https://shawnswu.github.io/{{ projectName }}/"  # Default to production URL
-
+baseURL = "https://shawnswu.github.io/KidiVerse/"
 # Override for local development
 [development]
-  baseURL = "http://localhost:1313/{{ projectName }}/"
+  baseURL = "http://localhost:1313/KidiVerse/"
   [development.menu]
     [[development.menu.main]]
       name = "About"
@@ -14,11 +13,11 @@ baseURL = "https://shawnswu.github.io/{{ projectName }}/"  # Default to producti
       weight = 10
 
 [production]
-  baseURL = "https://shawnswu.github.io/{{ projectName }}/"
+  baseURL = "https://shawnswu.github.io/KidiVerse/"
   [production.menu]
     [[production.menu.main]]
       name = "About"
-      url = "/{{ projectName }}/about/"
+      url = "/KidiVerse/about/"
       weight = 10
 
 languageCode = "zh-tw"
