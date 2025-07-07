@@ -9,20 +9,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  {{/* CSS: Get, minify, and fingerprint */}}
+  <!-- CSS -->
   {{ $style := resources.Get "css/style.css" }}
   {{ if $style }}
     {{ $style = $style | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+  {{ else }}
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
   {{ end }}
   
   <link rel="icon" type="image/svg+xml" href="{{ "images/logo.svg" | relURL }}">
   
-  {{/* JS: Preload main.js */}}
+  <!-- Preload critical assets -->
   {{ $mainJS := resources.Get "js/main.js" }}
   {{ if $mainJS }}
     {{ $mainJS = $mainJS | resources.Minify | resources.Fingerprint }}
-    <link rel="preload" href="{{ $mainJS.RelPermalink }}" as="script">
+    <link rel="preload" href="{{ $mainJS.RelPermalink }}" as="script" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous">
+
   {{ end }}
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">
@@ -38,21 +42,29 @@
     </div>
   </div>
 
-  {{/* JavaScript: Load all scripts defer */}}
-  {{ if $mainJS }}
-    <script src="{{ $mainJS.RelPermalink }}" integrity="{{ $mainJS.Data.Integrity }}" defer></script>
-  {{ end }}
-
+  <!-- JavaScript -->
   {{ $cosmicJS := resources.Get "js/cosmic-background.js" }}
+  {{ $obsidianJS := resources.Get "js/obsidian-images.js" }}
+  
+  {{ if $mainJS }}
+    <script src="{{ $mainJS.RelPermalink }}" {{ if $mainJS.Data.Integrity }}integrity="{{ $mainJS.Data.Integrity }}"{{ end }} crossorigin="anonymous" defer></script>
+  {{ else }}
+    <script src="{{ "js/main.js" | relURL }}" defer></script>
+  {{ end }}
+  
   {{ if $cosmicJS }}
     {{ $cosmicJS = $cosmicJS | resources.Minify | resources.Fingerprint }}
-    <script src="{{ $cosmicJS.RelPermalink }}" integrity="{{ $cosmicJS.Data.Integrity }}" defer></script>
+    <script src="{{ $cosmicJS.RelPermalink }}" integrity="{{ $cosmicJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ else }}
+    <script src="{{ "js/cosmic-background.js" | relURL }}" defer></script>
   {{ end }}
-
-  {{ $obsidianJS := resources.Get "js/obsidian-images.js" }}
+  
   {{ if $obsidianJS }}
     {{ $obsidianJS = $obsidianJS | resources.Minify | resources.Fingerprint }}
-    <script src="{{ $obsidianJS.RelPermalink }}" integrity="{{ $obsidianJS.Data.Integrity }}" defer></script>
+    <script src="{{ $obsidianJS.RelPermalink }}" integrity="{{ $obsidianJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ else }}
+    <script src="{{ "js/obsidian-images.js" | relURL }}" defer></script>
+
   {{ end }}
 </body>
 </html>
