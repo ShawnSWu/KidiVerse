@@ -4,6 +4,7 @@ projectName = "KidiVerse"
 # Base URL configuration
 baseURL = "https://shawnswu.github.io/KidiVerse/"
 canonifyURLs = true
+relativeURLs = true
 
 # Override for local development
 [development]
