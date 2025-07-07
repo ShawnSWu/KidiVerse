@@ -1,7 +1,8 @@
 # Kafka
 
-Apache Kafka is a **distributed, append-only commit log** designed for high-throughput, fault-tolerant event streaming.
+Apache Kafka is a distributed streaming platform designed for high-throughput, fault-tolerant, and scalable data processing. It excels at handling real-time data feeds, making it a powerful tool for applications requiring low-latency data pipelines. Kafka’s architecture, with its publish-subscribe model, can integrate with systems like Blockchain, as noted in [Understanding Blockchain Technology](#blockchain.md), to stream transaction data for validation or to support consensus mechanisms by ensuring rapid data propagation across nodes.
 
+For deployment, Kafka clusters benefit from o
 ## Key Building Blocks
 
 | Term           | What It Means                                           |
