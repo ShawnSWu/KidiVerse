@@ -1,4 +1,26 @@
-baseURL = "https://shawnswu.github.io/KidiVerse/"
+# Project configuration
+projectName = "KidiVerse"
+
+# Base URL configuration
+baseURL = "https://shawnswu.github.io/{{ .Site.Params.projectName }}/"  # Default to production URL
+
+# Override for local development
+[development]
+  baseURL = "http://localhost:1313/{{ .Site.Params.projectName }}/"
+  [development.menu]
+    [[development.menu.main]]
+      name = "About"
+      url = "/about/"
+      weight = 10
+
+[production]
+  baseURL = "https://shawnswu.github.io/{{ .Site.Params.projectName }}/"
+  [production.menu]
+    [[production.menu.main]]
+      name = "About"
+      url = "/KidiVerse/about/"
+      weight = 10
+
 languageCode = "zh-tw"
 title = "KidiVerse"
 
