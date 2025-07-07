@@ -1,5 +1,31 @@
 // 知識圖譜視覺化 - 使用D3.js實現力導向圖
-document.addEventListener('DOMContentLoaded', function() {
+function initGraph() {
+    console.log('Initializing graph...');
+    
+    // 確保 window.graphData 存在
+    if (!window.graphData) {
+        console.warn('Graph data not available, using empty data');
+        window.graphData = { nodes: [], links: [] };
+    }
+    
+    // 使用全局變量加載圖表數據並確保數據結構正確
+    const data = {
+        nodes: Array.isArray(window.graphData.nodes) ? window.graphData.nodes : [],
+        links: Array.isArray(window.graphData.links) ? window.graphData.links : []
+    };
+    
+    console.log('Graph data:', {
+        nodes: data.nodes.length,
+        links: data.links.length,
+        sampleNode: data.nodes[0],
+        sampleLink: data.links[0]
+    });
+    
+    // 如果沒有節點數據，顯示警告
+    if (data.nodes.length === 0) {
+        console.warn('No nodes found in graph data');
+    }
+    
     // 添加效能調整參數 - 僅用於內部優化，不展示UI元素
     const performanceSettings = {
         // 高效能模式標記
@@ -87,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 計算和更新統計信息的函數
     function updateStatsDisplay(data) {
+        // 使用全局變量加載圖表數據
+        const graphData = window.graphData || {};       
         // 獲取總筆記數
         const totalNotes = data.nodes.length;
         
@@ -115,18 +143,35 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
     }
 
-    // 加載數據
-    d3.json('/data/notes_graph.json').then(data => {
+    // 數據已經在函數開始時加載
+    
+    // 處理數據
+    console.log('Initializing graph with data:', data);
+    try {
+        // 確保 nodes 是數組
+        const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+        
+        console.log('Nodes loaded:', nodes);
+        console.log('Links loaded:', data.links);
+        
+        if (nodes.length === 0) {
+            console.warn('No nodes found in graph data');
+        } else {
+            console.log(`Loaded ${nodes.length} nodes and ${data.links ? data.links.length : 0} links`);
+        }
+        
         // 計算統計信息：總筆記數和獨立主題（組別）數
         updateStatsDisplay(data);
+        
         // 根據節點數自動調整效能模式但不顯示UI元素
-        if (data.nodes.length > performanceSettings.nodeTreshold) {
+        if (nodes.length > performanceSettings.nodeTreshold) {
             performanceSettings.highPerformanceMode = true;
-            console.log(`啟用高效能模式：${data.nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
+            console.log(`啟用高效能模式：${nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
         }
+        
         // 創建力導向模擬
-        const simulation = d3.forceSimulation(data.nodes)
-            .force('link', d3.forceLink(data.edges)
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(Array.isArray(data.links) ? data.links : [])
                 .id(d => d.id)
                 // 優化距離計算：減少倍數，使視覺布局更緊湊，節省計算量
                 .distance(d => (120 * (1 - d.score) + 20) * 3) 
@@ -146,16 +191,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // 創建連接線 - 宇宙風格
         const link = g.append('g')
             .selectAll('line')
-            .data(data.edges)
+            .data(Array.isArray(data.links) ? data.links : [], d => `${d.source}-${d.target}`) // 使用 source-target 作為唯一鍵
             .join('line')
             .attr('stroke', '#4F7BFF') // 藍色連線
             .attr('stroke-opacity', 0.4)
-            .attr('stroke-width', d => d.score * 2); // 相似度越高，線越粗
+            .attr('stroke-width', d => d.score ? d.score * 2 : 1) // 相似度越高，線越粗，預設為1
+            .attr('x1', d => d.source.x || 0)
+            .attr('y1', d => d.source.y || 0)
+            .attr('x2', d => d.target.x || 0)
+            .attr('y2', d => d.target.y || 0);
 
+        // 創建顏色比例尺
+        let color;
+        try {
+            // 確保有節點且有group屬性
+            const groups = nodes.length > 0 && nodes[0].group !== undefined ? 
+                [...new Set(nodes.map(d => d.group || 'default'))] : ['default'];
+                
+            color = d3.scaleOrdinal()
+                .domain(groups)
+                .range(nodeStyles.colors);
+        } catch (error) {
+            console.error('Error initializing color scale:', error);
+            // 提供默認顏色比例尺
+            color = d3.scaleOrdinal()
+                .domain(['default'])
+                .range(['#8A6BFF']);
+        }
+        
         // 創建節點
         const node = g.append('g')
             .selectAll('.node')
-            .data(data.nodes)
+            .data(nodes, d => d.id) // 使用唯一ID作為鍵
             .join('g')
             .attr('class', 'node')
             .call(drag(simulation)); // 啟用拖拽功能
@@ -274,8 +341,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 .style('fill', nodeStyles.fontColor);
         })
         .on('click', function(event, d) {
-            // 點擊節點時的行為 - 可以在這裡添加打開文件的功能
-            console.log('點擊節點:', d.title, d.path);
         });
 
         // 優化tick事件處理，減少DOM操作
@@ -285,13 +350,15 @@ document.addEventListener('DOMContentLoaded', function() {
             tickCounter++;
             if (tickCounter % 3 !== 0) return; // 只在每3個tick更新一次
             
+            // 更新連線位置
             link
-                .attr('x1', d => d.source.x)
-                .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
+                .attr('x1', d => d.source.x || 0)
+                .attr('y1', d => d.source.y || 0)
+                .attr('x2', d => d.target.x || 0)
+                .attr('y2', d => d.target.y || 0);
 
-            node.attr('transform', d => `translate(${d.x},${d.y})`);
+            // 更新節點位置
+            node.attr('transform', d => `translate(${d.x || 0},${d.y || 0})`);
             
             // 當模擬達到一定穩定性時停止，節省CPU資源
             if (simulation.alpha() < 0.01) {
@@ -339,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 輔助函數：檢查兩個節點是否相連
         function isConnected(a, b) {
-            return data.edges.some(l => 
+            return data.links.some(l => 
                 (l.source.id === a.id && l.target.id === b.id) || 
                 (l.source.id === b.id && l.target.id === a.id)
             );
@@ -369,8 +436,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 .on('drag', dragged)
                 .on('end', dragended);
         }
-    }).catch(error => {
-        console.error('加載數據時出錯:', error);
-        // 僅在控制台顯示錯誤信息，不在頁面上添加錯誤信息
-    });
-});
+        
+        // 應用拖拽行為到節點
+        node.call(drag(simulation));
+        
+        // 返回模擬對象以便外部訪問
+        return simulation;
+    } catch (error) {
+        console.error('Error initializing graph:', error);
+        return null;
+    }
+}
