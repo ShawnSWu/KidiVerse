@@ -2,7 +2,7 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
-      <a href="/about/" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
+      <a href="{{ "about/" | relURL }}" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
         <div class="galaxy-arms">
           <div class="arm arm1"></div>
           <div class="arm arm2"></div>
@@ -27,7 +27,7 @@
       <div class="welcome-header">
         <div class="welcome-flex">
           <div class="avatar-container">
-            <img src="{{ (resources.Get "astronaut-icon.png").RelPermalink }}" alt="Astronaut avatar" class="avatar-image">
+            <img src="{{ "/images/astronaut-icon.png" | relURL }}" alt="Astronaut avatar" class="avatar-image">
           </div>
           <div class="welcome-text">
             <h1>{{ with $.Site.Data.dashboard }}{{ .welcomeMessage }}, {{ .userName }}{{ end }}</h1>
