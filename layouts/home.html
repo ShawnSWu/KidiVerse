@@ -789,9 +789,8 @@
     <script>
       async function loadGraphData() {
         try {
-          const dataUrl = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
-          console.log('Loading graph data from', dataUrl);
-          const response = await fetch(dataUrl);
+          console.log('Loading graph data from {{ "/data/notes_graph.json" | absURL }}...');
+          const response = await fetch('{{ "/data/notes_graph.json" | absURL }}');
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
