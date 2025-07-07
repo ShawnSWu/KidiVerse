@@ -1,10 +1,5 @@
 [
   {
-    "path": "content/BDD/BDD.md",
-    "title": "Behavior Driven Development (BDD)",
-    "group": "BDD"
-  },
-  {
     "path": "content/Blockchain/blockchain-overview.md",
     "title": "Blockchain",
     "group": "Blockchain"
