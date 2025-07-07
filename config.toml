@@ -6,30 +6,81 @@ baseURL = "https://shawnswu.github.io/KidiVerse/"
 canonifyURLs = true
 relativeURLs = true
 
-# Override for local development
+# Base Configuration
+languageCode = "zh-tw"
+title = "KidiVerse"
+
+# Build Settings
+[build]
+  noJSConfigInAssets = true  # Prevents Hugo from creating _headers files that might interfere with GitHub Pages
+
+# Site Parameters
+[params]
+  description = "Hi Here is KidiVerse"
+  author = "Shawn Wu"
+  env = "production"  # Default to production
+  basePath = "/KidiVerse/"
+
+# Development Environment Overrides
 [development]
   baseURL = "http://localhost:1313/KidiVerse/"
-  [development.menu]
-    [[development.menu.main]]
+  [params]
+    env = "development"
+  
+  [server]
+    [[server.headers]]
+      for = "/*"
+      [server.headers.values]
+        Access-Control-Allow-Origin = "*"
+        Access-Control-Allow-Methods = "GET, OPTIONS"
+        Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+
+  [menu]
+    [[menu.main]]
       name = "About"
       url = "/about/"
       weight = 10
 
+# Production Environment Overrides
 [production]
   baseURL = "https://shawnswu.github.io/KidiVerse/"
-  [production.menu]
-    [[production.menu.main]]
+  [params]
+    env = "production"
+
+  [menu]
+    [[menu.main]]
       name = "About"
       url = "/KidiVerse/about/"
       weight = 10
 
-languageCode = "zh-tw"
-title = "KidiVerse"
+# Markup Settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
-[params]
-  description = "Hi Here is KidiVerse"
-  author = "Shawn Wu"
+# Output Configuration
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
+# Media Types
+[mediaTypes]
+  [mediaTypes."text/plain"]
+    suffixes = ["txt", "md"]
+
+# Output Formats
+[outputFormats]
+  [outputFormats.JSON]
+    mediaType = "application/json"
+    isPlainText = true
+
+# URL Structure
+[permalinks]
+  posts = "/:year/:month/:day/:slug/"
+  tags = "/tags/:slug/"
+  categories = "/categories/:slug/"
+
+# Menu Configuration
 [menu]
   [[menu.main]]
     name = "About"
