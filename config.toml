@@ -25,12 +25,13 @@ canonifyURLs = true
 languageCode = "zh-tw"
 title = "KidiVerse"
 
-[menu]
-  [[menu.main]]
-    name = "About"
-    url = "/about/"
-    weight = 10
-
 [params]
   description = "Hi Here is KidiVerse"
   author = "Shawn Wu"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    identifier = "about"
+    url = "/about/"
+    weight = 10

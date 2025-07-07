@@ -32,7 +32,6 @@ jobs:
         run: rm -rf public
 
       - name: Build with production config
-        run: hugo --minify --environment production --baseURL "https://shawnswu.github.io/KidiVerse/"
 
       - name: Add .nojekyll
         run: touch public/.nojekyll
