@@ -16,9 +16,7 @@
       <div class="welcome-header">
         <div class="welcome-flex">
           <div class="avatar-container">
-            {{ with resources.Get "astronaut-icon.png" }}
-              <img src="{{ .RelPermalink }}" alt="Astronaut avatar" class="avatar-image">
-            {{ end }}
+            <img src="{{ "/images/astronaut-icon.png" | relURL }}" alt="Astronaut avatar" class="avatar-image">
           </div>
           <div class="welcome-text">
             <h1>{{ .Site.Params.welcomeMessage | default "Welcome," }} {{ .Site.Params.userName | default "Explorer" }}</h1>
