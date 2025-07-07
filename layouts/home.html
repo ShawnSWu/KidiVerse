@@ -789,15 +789,25 @@
     <script>
       async function loadGraphData() {
         try {
-          console.log('Loading graph data from {{ "/data/notes_graph.json" | absURL }}...');
-          const response = await fetch('{{ "/data/notes_graph.json" | absURL }}');
+          // Use the correct path for GitHub Pages - prepend the repository name
+          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
+          console.log('Loading graph data from:', dataPath);
+          
+          const response = await fetch(dataPath, {
+            cache: 'no-cache',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          });
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           
           const graphData = await response.json();
-          console.log('Graph data loaded successfully:', graphData);
+          console.log('Graph data loaded successfully');
           
           // Make graph data available globally with proper structure
           window.graphData = {
