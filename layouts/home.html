@@ -789,53 +789,91 @@
     <script>
       async function loadGraphData() {
         try {
-          // Use the correct path for GitHub Pages - prepend the repository name
-          const dataPath = '{{ "/KidiVerse/data/notes_graph.json" | absURL }}';
-          console.log('Loading graph data from:', dataPath);
+          // 嘗試多種可能的路徑，確保在開發和生產環境都能找到檔案
+          const possiblePaths = [
+            '/KidiVerse/data/notes_graph.json',  // GitHub Pages 路徑
+            '/data/notes_graph.json',            // 根目錄路徑
+            'data/notes_graph.json',             // 相對路徑
+            '{{ "data/notes_graph.json" | absURL }}'  // 使用 Hugo 的 absURL 函數
+          ];
           
-          const response = await fetch(dataPath, {
-            cache: 'no-cache',
-            headers: {
-              'Cache-Control': 'no-cache, no-store, must-revalidate',
-              'Pragma': 'no-cache',
-              'Expires': '0'
+          let lastError = null;
+          
+          // 嘗試每個可能的路徑，直到成功為止
+          for (const path of possiblePaths) {
+            try {
+              console.log('Attempting to load graph data from:', path);
+              const response = await fetch(path, {
+                cache: 'no-cache',
+                headers: {
+                  'Cache-Control': 'no-cache, no-store, must-revalidate',
+                  'Pragma': 'no-cache',
+                  'Expires': '0'
+                }
+              });
+              
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              
+              const graphData = await response.json();
+              console.log('Graph data loaded successfully from:', path);
+              
+              // 確保資料格式正確
+              window.graphData = {
+                nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
+                links: Array.isArray(graphData.links) ? graphData.links : []
+              };
+              
+              console.log('Processed graph data:', { 
+                nodes: window.graphData.nodes.length,
+                links: window.graphData.links.length,
+                sampleNode: window.graphData.nodes[0],
+                sampleLink: window.graphData.links[0]
+              });
+              
+              // 初始化圖表
+              if (typeof initGraph === 'function') {
+                initGraph();
+              }
+              
+              return; // 如果成功載入，則直接返回
+              
+            } catch (error) {
+              console.warn(`Failed to load from ${path}:`, error.message);
+              lastError = error;
+              continue; // 嘗試下一個路徑
             }
-          });
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
           }
           
-          const graphData = await response.json();
-          console.log('Graph data loaded successfully');
+          // 如果所有路徑都失敗，拋出最後一個錯誤
+          throw lastError || new Error('No valid path found for graph data');
           
-          // Make graph data available globally with proper structure
-          window.graphData = {
-            nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
-            links: Array.isArray(graphData.links) ? graphData.links : []
-          };
-          
-          console.log('Processed graph data:', { 
-            nodes: window.graphData.nodes.length,
-            links: window.graphData.links.length,
-            sampleNode: window.graphData.nodes[0],
-            sampleLink: window.graphData.links[0]
-          });
-          
-          // Initialize the graph after loading data
-          if (typeof initGraph === 'function') {
-            initGraph();
-          }
         } catch (error) {
           console.error('Error loading graph data:', error);
-          console.error('Error details:', {
-            name: error.name,
-            message: error.message,
-            stack: error.stack
-          });
-          window.graphData = { nodes: [], links: [] };
           
-          // Still try to initialize with empty data
+          // 顯示用戶友好的錯誤訊息
+          const errorContainer = document.createElement('div');
+          errorContainer.style.padding = '1rem';
+          errorContainer.style.backgroundColor = '#ffebee';
+          errorContainer.style.borderLeft = '4px solid #f44336';
+          errorContainer.style.margin = '1rem 0';
+          errorContainer.innerHTML = `
+            <h3 style="margin: 0 0 0.5rem 0; color: #d32f2f;">無法載入知識圖譜</h3>
+            <p style="margin: 0;">錯誤: ${error.message}</p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.9em; color: #666;">
+              請稍後再試，或聯絡管理員。
+            </p>
+          `;
+          
+          // 將錯誤訊息插入到圖表容器中
+          const graphContainer = document.querySelector('.graph-container');
+          if (graphContainer) {
+            graphContainer.prepend(errorContainer);
+          }
+          
+          // 使用空資料初始化圖表
+          window.graphData = { nodes: [], links: [] };
           if (typeof initGraph === 'function') {
             initGraph();
           }
