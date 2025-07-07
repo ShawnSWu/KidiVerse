@@ -3,12 +3,7 @@ name: Build Knowledge Graph
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'content/**/*.md'
-      - 'scripts/build_graph.py'
-      - 'requirements.txt'
-  schedule:
-    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   build-graph:
@@ -43,6 +38,15 @@ jobs:
 
       - name: Build knowledge graph
         run: python scripts/build_graph.py
+
+      - name: Setup Hugo for site build
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Build site with updated graph
+        run: hugo --minify --environment production
 
       - name: Commit graph if changed
         uses: stefanzweifel/git-auto-commit-action@v5

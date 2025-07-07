@@ -775,7 +775,8 @@
           
           // After animation completes, navigate to the about page
           setTimeout(() => {
-            window.location.href = '/about/';
+            const baseURL = '{{ if eq (getenv "HUGO_ENV") "production" }}{{ .Site.BaseURL }}{{ end }}';
+            window.location.href = baseURL + 'about/';
           }, 600);
         });
       });
@@ -784,8 +785,66 @@
 
 
 
+    <!-- Load graph data using fetch -->
+    <script>
+      async function loadGraphData() {
+        try {
+          console.log('Loading graph data from {{ "/data/notes_graph.json" | absURL }}...');
+          const response = await fetch('{{ "/data/notes_graph.json" | absURL }}');
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const graphData = await response.json();
+          console.log('Graph data loaded successfully:', graphData);
+          
+          // Make graph data available globally with proper structure
+          window.graphData = {
+            nodes: Array.isArray(graphData.nodes) ? graphData.nodes : [],
+            links: Array.isArray(graphData.links) ? graphData.links : []
+          };
+          
+          console.log('Processed graph data:', { 
+            nodes: window.graphData.nodes.length,
+            links: window.graphData.links.length,
+            sampleNode: window.graphData.nodes[0],
+            sampleLink: window.graphData.links[0]
+          });
+          
+          // Initialize the graph after loading data
+          if (typeof initGraph === 'function') {
+            initGraph();
+          }
+        } catch (error) {
+          console.error('Error loading graph data:', error);
+          console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+          });
+          window.graphData = { nodes: [], links: [] };
+          
+          // Still try to initialize with empty data
+          if (typeof initGraph === 'function') {
+            initGraph();
+          }
+        }
+      }
+      
+      // Start loading the graph data
+      document.addEventListener('DOMContentLoaded', loadGraphData);
+    </script>
+    
     <!-- D3.js Library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    
     <!-- Custom Graph Script -->
-    <script src="{{ "js/graph.js" | absURL }}"></script> 
+    {{ $graphJS := resources.Get "js/graph.js" }}
+    {{ if $graphJS }}
+      {{ $graphJS = $graphJS | resources.Minify | resources.Fingerprint }}
+      <script src="{{ $graphJS.RelPermalink }}" integrity="{{ $graphJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ else }}
+      <script src="{{ "js/graph.js" | relURL }}" defer></script>
+    {{ end }}
 {{ end }}
