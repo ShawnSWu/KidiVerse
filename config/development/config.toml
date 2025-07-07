@@ -1,0 +1,7 @@
+baseURL = "http://localhost:1313/KidiVerse/"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 10

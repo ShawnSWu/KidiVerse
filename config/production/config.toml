@@ -1,0 +1,7 @@
+baseURL = "https://shawnswu.github.io/KidiVerse/"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/KidiVerse/about/"
+    weight = 10

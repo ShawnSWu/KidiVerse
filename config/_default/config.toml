@@ -1,0 +1,13 @@
+languageCode = "zh-tw"
+title = "KidiVerse"
+
+[params]
+  projectName = "KidiVerse"
+  description = "Hi Here is KidiVerse"
+  author = "Shawn Wu"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 10
