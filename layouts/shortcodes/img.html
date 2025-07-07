@@ -1,0 +1,7 @@
+{{- $filename := .Get 0 -}}
+{{- $alt := .Get 1 | default $filename -}}
+{{- with .Page.Resources.GetMatch (printf "attachments/%s" $filename) -}}
+  <img src="{{ .Permalink }}" alt="{{ $alt }}">
+{{- else -}}
+  {{- warnf "Image not found in attachments: %s" $filename -}}
+{{- end -}}

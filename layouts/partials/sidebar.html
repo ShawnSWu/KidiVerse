@@ -1,0 +1,109 @@
+{{/* themes/KidiVerse/layouts/partials/sidebar.html */}}
+<aside class="sidebar">
+  <div class="sidebar-container">
+    <header class="sidebar-header">
+      <h2 class="sidebar-title"><a href="/" class="sidebar-home-link">KIDIVERSE</a></h2>
+    </header>
+    
+    <nav class="sidebar-nav">
+      {{ $currentPage := . }}
+      {{ range $index, $section := .Site.Sections.ByTitle }}
+        {{ $pages := .Pages }}
+        {{ if gt (len $pages) 0 }}
+          <div class="sidebar-folder" data-folder-id="section-{{ $index }}">
+            <button class="sidebar-folder-toggle" aria-expanded="false">
+              <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="folder-title">
+                {{- if .Title -}}
+                  {{ .Title | title }}
+                {{- else -}}
+                  {{- with .File -}}
+                    {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                  {{- else -}}
+                    {{ .Name | humanize | title }}
+                  {{- end -}}
+                {{- end -}}
+              </span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="sidebar-folder-content">
+              {{ template "listPagesRecursively" (dict "currentPage" $currentPage "pages" .Pages) }}
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+    </nav>
+    
+    <div class="sidebar-footer">
+      <!-- 已移除主題切換按鈕 -->
+    </div>
+  </div>
+</aside>
+
+{{ define "listPagesRecursively" }}
+  {{ $currentPage := .currentPage }}
+  {{ $pages := .pages }}
+  {{ if $pages }}
+    <ul class="sidebar-sublist">
+      {{ range $index, $page := $pages.ByTitle }}
+        {{ if .IsSection }}
+          {{ $subpages := .Pages }}
+          {{ if gt (len $subpages) 0 }}
+            <li class="sidebar-item">
+              <div class="sidebar-folder" data-folder-id="folder-{{ with $page.File }}{{ .UniqueID }}{{ else }}{{ $index }}{{ end }}">
+                <button class="sidebar-folder-toggle" aria-expanded="false">
+                  <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span class="folder-title">
+                    {{- if .Title -}}
+                      {{ .Title | title }}
+                    {{- else -}}
+                      {{- with .File -}}
+                        {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                      {{- else -}}
+                        {{ .Name | humanize | title }}
+                      {{- end -}}
+                    {{- end -}}
+                  </span>
+                  <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+                <div class="sidebar-folder-content">
+                  {{ template "listPagesRecursively" (dict "currentPage" $currentPage "pages" .Pages) }}
+                </div>
+              </div>
+            </li>
+          {{ end }}
+        {{ else }}
+          <li class="sidebar-item">
+            <a href="{{ .RelPermalink }}" class="sidebar-link{{ if eq .RelPermalink $currentPage.RelPermalink }} active{{ end }}">
+              <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+              </svg>
+              <span class="link-text">
+                {{- if .Title -}}
+                  {{ .Title | title }}
+                {{- else -}}
+                  {{- with .File -}}
+                    {{ path.Base .Path | replaceRE "_index\\.md$" "" | replaceRE "\\.md$" "" | humanize | title }}
+                  {{- else -}}
+                    {{ .Name | humanize | title }}
+                  {{- end -}}
+                {{- end -}}
+              </span>
+            </a>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  {{ end }}
+{{ end }}
+
+<!-- 已移除主題切換相關的 JavaScript 代碼 -->

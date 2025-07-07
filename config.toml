@@ -1,0 +1,32 @@
+# Base URL configuration
+baseURL = "https://shawnswu.github.io/KidiVerse/"  # Default to production URL
+
+# Override for local development
+[development]
+  baseURL = "http://localhost:1313/"
+  [development.menu]
+    [[development.menu.main]]
+      name = "About"
+      url = "/about/"
+      weight = 10
+
+[production]
+  baseURL = "https://shawnswu.github.io/KidiVerse/"
+  [production.menu]
+    [[production.menu.main]]
+      name = "About"
+      url = "/KidiVerse/about/"
+      weight = 10
+
+languageCode = "zh-tw"
+title = "KidiVerse"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 10
+
+[params]
+  description = "Hi Here is KidiVerse"
+  author = "Shawn Wu"

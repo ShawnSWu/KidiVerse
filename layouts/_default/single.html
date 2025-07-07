@@ -1,0 +1,16 @@
+{{/* themes/KidiVerse/layouts/_default/single.html */}}
+{{ define "main" }}
+  <article class="post-article">
+    {{ $canvas := .Resources.GetMatch "*.html" }}
+    {{ if $canvas }}
+      <div class="canvas-area">
+        {{ $canvas.Content | safeHTML }}
+      </div>
+    {{ else }}
+      <div class="markdown-area">
+        {{ .Content }}
+      </div>
+    {{ end }}
+
+  </article>
+{{ end }}

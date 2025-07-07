@@ -1,0 +1,6 @@
+{{- $filename := .Get 0 -}}
+{{- with $.Page.Resources.GetMatch (printf "attachments/%s" $filename) -}}
+  <img src="{{ .Permalink }}" alt="{{ $filename }}">
+{{- else -}}
+  <span style="color:red">圖片不存在: {{ $filename }}</span>
+{{- end -}}

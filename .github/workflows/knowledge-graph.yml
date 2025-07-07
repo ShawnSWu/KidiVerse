@@ -1,0 +1,74 @@
+name: Build Knowledge Graph
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-graph:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip & model files
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+            ~/.cache/torch
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build knowledge graph
+        run: python scripts/build_graph.py
+
+      - name: Setup Hugo for site build
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Build site with updated graph
+        run: hugo --minify --environment production
+
+      - name: Commit and push changes
+        if: success()
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+          # Add all generated files
+          git add static/data/notes_graph.json
+          git add static/data/embeddings.npy
+          git add static/data/embeddings_index.json
+          
+          # Check if there are any changes to commit
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Update knowledge graph and embeddings [skip ci]"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Commit graph if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(graph): update notes_graph.json'
+          file_pattern: static/data/notes_graph.json
