@@ -191,12 +191,15 @@ function initGraph() {
         // 創建連接線 - 宇宙風格
         const link = g.append('g')
             .selectAll('line')
-            // 使用 links 而不是 edges 來匹配數據結構
-            .data(Array.isArray(data.links) ? data.links : [])
+            .data(Array.isArray(data.links) ? data.links : [], d => `${d.source}-${d.target}`) // 使用 source-target 作為唯一鍵
             .join('line')
             .attr('stroke', '#4F7BFF') // 藍色連線
             .attr('stroke-opacity', 0.4)
-            .attr('stroke-width', d => d.score ? d.score * 2 : 1); // 相似度越高，線越粗，預設為1
+            .attr('stroke-width', d => d.score ? d.score * 2 : 1) // 相似度越高，線越粗，預設為1
+            .attr('x1', d => d.source.x || 0)
+            .attr('y1', d => d.source.y || 0)
+            .attr('x2', d => d.target.x || 0)
+            .attr('y2', d => d.target.y || 0);
 
         // 創建顏色比例尺
         let color;
@@ -338,8 +341,6 @@ function initGraph() {
                 .style('fill', nodeStyles.fontColor);
         })
         .on('click', function(event, d) {
-            // 點擊節點時的行為 - 可以在這裡添加打開文件的功能
-            console.log('點擊節點:', d.title, d.path);
         });
 
         // 優化tick事件處理，減少DOM操作
@@ -349,13 +350,15 @@ function initGraph() {
             tickCounter++;
             if (tickCounter % 3 !== 0) return; // 只在每3個tick更新一次
             
+            // 更新連線位置
             link
-                .attr('x1', d => d.source.x)
-                .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
+                .attr('x1', d => d.source.x || 0)
+                .attr('y1', d => d.source.y || 0)
+                .attr('x2', d => d.target.x || 0)
+                .attr('y2', d => d.target.y || 0);
 
-            node.attr('transform', d => `translate(${d.x},${d.y})`);
+            // 更新節點位置
+            node.attr('transform', d => `translate(${d.x || 0},${d.y || 0})`);
             
             // 當模擬達到一定穩定性時停止，節省CPU資源
             if (simulation.alpha() < 0.01) {
