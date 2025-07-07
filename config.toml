@@ -3,6 +3,8 @@ projectName = "KidiVerse"
 
 # Base URL configuration
 baseURL = "https://shawnswu.github.io/KidiVerse/"
+canonifyURLs = true
+
 # Override for local development
 [development]
   baseURL = "http://localhost:1313/KidiVerse/"
