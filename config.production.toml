@@ -1,0 +1,10 @@
+baseURL = "https://shawnswu.github.io/KidiVerse/"
+languageCode = "zh-tw"
+title = "KidiVerse"
+
+[params]
+  description = "示例：Hugo 雙欄深色佈局，左側自動讀取 content 目錄結構"
+  author = "Shawn Wu"
+
+[build]
+  noJSConfigInAssets = true  # This prevents Hugo from creating _headers files that might interfere with GitHub Pages
