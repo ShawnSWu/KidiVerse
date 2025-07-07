@@ -1,0 +1,27 @@
+baseURL = "https://shawnswu.github.io/KidiVerse/"
+
+[params]
+  env = "production"
+  basePath = "/KidiVerse/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[mediaTypes]
+  [mediaTypes."text/plain"]
+    suffixes = ["txt", "md"]
+
+[outputFormats]
+  [outputFormats.JSON]
+    mediaType = "application/json"
+    isPlainText = true
+
+[permalinks]
+  posts = "/:year/:month/:day/:slug/"
+  tags = "/tags/:slug/"
+  categories = "/categories/:slug/"

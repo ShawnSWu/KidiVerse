@@ -1,0 +1,82 @@
+[
+  {
+    "path": "content/Blockchain/blockchain-overview.md",
+    "title": "Blockchain",
+    "group": "Blockchain"
+  },
+  {
+    "path": "content/Blockchain/consensus.md",
+    "title": "Consensus Mechanisms",
+    "group": "Blockchain"
+  },
+  {
+    "path": "content/Blockchain/smart-contracts.md",
+    "title": "Smart Contracts",
+    "group": "Blockchain"
+  },
+  {
+    "path": "content/Git/git-basics.md",
+    "title": "🧬 Git Basics Guide",
+    "group": "Git"
+  },
+  {
+    "path": "content/Kafka/Kafka.md",
+    "title": "Kafka",
+    "group": "Kafka"
+  },
+  {
+    "path": "content/Kafka/broker.md",
+    "title": "broker",
+    "group": "Kafka"
+  },
+  {
+    "path": "content/Kafka/consumer.md",
+    "title": "Consumer",
+    "group": "Kafka"
+  },
+  {
+    "path": "content/Kafka/producers.md",
+    "title": "Producers",
+    "group": "Kafka"
+  },
+  {
+    "path": "content/LLM/llm-architecture.md",
+    "title": "Large Language Models",
+    "group": "LLM"
+  },
+  {
+    "path": "content/LLM/rag_guide.md",
+    "title": "Retrieval‑Augmented Generation (RAG)",
+    "group": "LLM"
+  },
+  {
+    "path": "content/container/Docker.md",
+    "title": "Docker?",
+    "group": "container"
+  },
+  {
+    "path": "content/container/kubernetes/Controller.md",
+    "title": "ontroller?",
+    "group": "container"
+  },
+  {
+    "path": "content/container/kubernetes/Ingress.md",
+    "title": "Ingress",
+    "group": "container"
+  },
+  {
+    "path": "content/container/kubernetes/Pod.md",
+    "title": "Pod!",
+    "group": "container"
+  },
+  {
+    "path": "content/gRPC vs GraphQL/GraphQL.md",
+    "title": "GraphQL",
+    "group": "gRPC vs GraphQL"
+  },
+  {
+    "path": "content/gRPC vs GraphQL/gRPC.md",
+    "title": "1. Why gRPC?",
+    "group": "gRPC vs GraphQL"
+  }
+]
