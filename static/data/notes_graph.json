@@ -2,48 +2,96 @@
   "nodes": [
     {
       "id": 0,
+      "path": "content/Blockchain/blockchain-overview.md",
+      "title": "Blockchain",
+      "group": "Blockchain"
+    },
+    {
+      "id": 1,
+      "path": "content/Blockchain/consensus.md",
+      "title": "Consensus Mechanisms",
+      "group": "Blockchain"
+    },
+    {
+      "id": 2,
+      "path": "content/Blockchain/smart-contracts.md",
+      "title": "Smart Contracts",
+      "group": "Blockchain"
+    },
+    {
+      "id": 3,
       "path": "content/Git/git-basics.md",
       "title": "🧬 Git Basics Guide",
       "group": "Git"
     },
     {
-      "id": 1,
-      "path": "content/about.md",
-      "title": "about",
-      "group": "content"
-    },
-    {
-      "id": 2,
-      "path": "content/container/Docker.md",
-      "title": "Why Docker?",
-      "group": "container"
-    },
-    {
-      "id": 3,
-      "path": "content/container/kubernetes/Controller.md",
-      "title": "What Is a Controller?",
-      "group": "container"
-    },
-    {
       "id": 4,
-      "path": "content/container/kubernetes/Ingress.md",
-      "title": "Ingress 101",
-      "group": "container"
+      "path": "content/Kafka/Kafka.md",
+      "title": "Kafka",
+      "group": "Kafka"
     },
     {
       "id": 5,
-      "path": "content/container/kubernetes/Pod.md",
-      "title": "Hello, Pod!",
-      "group": "container"
+      "path": "content/Kafka/broker.md",
+      "title": "broker",
+      "group": "Kafka"
     },
     {
       "id": 6,
+      "path": "content/Kafka/consumer.md",
+      "title": "Consumer",
+      "group": "Kafka"
+    },
+    {
+      "id": 7,
+      "path": "content/Kafka/producers.md",
+      "title": "Producers",
+      "group": "Kafka"
+    },
+    {
+      "id": 8,
+      "path": "content/LLM/llm-architecture.md",
+      "title": "Large Language Models",
+      "group": "LLM"
+    },
+    {
+      "id": 9,
+      "path": "content/LLM/rag_guide.md",
+      "title": "Retrieval‑Augmented Generation (RAG)",
+      "group": "LLM"
+    },
+    {
+      "id": 10,
+      "path": "content/container/Docker.md",
+      "title": "Docker?",
+      "group": "container"
+    },
+    {
+      "id": 11,
+      "path": "content/container/kubernetes/Controller.md",
+      "title": "ontroller?",
+      "group": "container"
+    },
+    {
+      "id": 12,
+      "path": "content/container/kubernetes/Ingress.md",
+      "title": "Ingress",
+      "group": "container"
+    },
+    {
+      "id": 13,
+      "path": "content/container/kubernetes/Pod.md",
+      "title": "Pod!",
+      "group": "container"
+    },
+    {
+      "id": 14,
       "path": "content/gRPC vs GraphQL/GraphQL.md",
       "title": "GraphQL",
       "group": "gRPC vs GraphQL"
     },
     {
-      "id": 7,
+      "id": 15,
       "path": "content/gRPC vs GraphQL/gRPC.md",
       "title": "1. Why gRPC?",
       "group": "gRPC vs GraphQL"
@@ -51,23 +99,63 @@
   ],
   "edges": [
     {
-      "source": 2,
-      "target": 5,
-      "score": 0.5639
+      "source": 0,
+      "target": 1,
+      "score": 0.4592
     },
     {
-      "source": 3,
+      "source": 0,
       "target": 4,
-      "score": 0.404
+      "score": 0.4376
     },
     {
       "source": 4,
       "target": 5,
-      "score": 0.4961
+      "score": 0.7077
+    },
+    {
+      "source": 4,
+      "target": 7,
+      "score": 0.637
+    },
+    {
+      "source": 4,
+      "target": 6,
+      "score": 0.5318
+    },
+    {
+      "source": 5,
+      "target": 6,
+      "score": 0.5511
     },
     {
       "source": 6,
       "target": 7,
+      "score": 0.7096
+    },
+    {
+      "source": 8,
+      "target": 9,
+      "score": 0.4197
+    },
+    {
+      "source": 10,
+      "target": 13,
+      "score": 0.5676
+    },
+    {
+      "source": 11,
+      "target": 12,
+      "score": 0.4408
+    },
+    {
+      "source": 12,
+      "target": 13,
+      "score": 0.4951
+    },
+    {
+      "source": 14,
+      "target": 15,
       "score": 0.3993
     }
   ],

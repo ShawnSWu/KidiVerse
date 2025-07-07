@@ -1,46 +1,32 @@
-{{/* themes/KidiVerse/layouts/_default/baseof.html */}}
 <!DOCTYPE html>
-<html lang="zh-TW" class="scroll-smooth">
+<html lang="{{ .Site.LanguageCode }}" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ .Site.Title }}{{ if not .IsHome }} | {{ .Title }}{{ end }}</title>
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}?v={{ now.Unix }}">
+  {{/* CSS: Get, minify, and fingerprint */}}
+  {{ $style := resources.Get "css/style.css" }}
+  {{ if $style }}
+    {{ $style = $style | resources.Minify | resources.Fingerprint }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+  {{ end }}
   
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ "images/logo.svg" | relURL }}">
   
-  <!-- Preload critical assets -->
-  <link rel="preload" href="{{ "js/main.js" | relURL }}" as="script">
+  {{/* JS: Preload main.js */}}
+  {{ $mainJS := resources.Get "js/main.js" }}
+  {{ if $mainJS }}
+    {{ $mainJS = $mainJS | resources.Minify | resources.Fingerprint }}
+    <link rel="preload" href="{{ $mainJS.RelPermalink }}" as="script">
+  {{ end }}
 </head>
 <body class="{{ if .IsHome }}is-homepage{{ end }}">
   <div class="page-container">
-    {{ if ne .Kind "page" }}
-    <div class="space-stars">
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-    </div>
-    {{ end }}
     <div class="page-content">
       <aside class="sidebar">
         {{ partial "sidebar.html" . }}
@@ -52,9 +38,21 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
-  <script src="{{ "js/main.js" | relURL }}" defer></script>
-  <script src="{{ `/js/cosmic-background.js` | relURL }}" defer></script>
-  <script src="{{ "js/obsidian-images.js" | relURL }}" defer></script>
+  {{/* JavaScript: Load all scripts defer */}}
+  {{ if $mainJS }}
+    <script src="{{ $mainJS.RelPermalink }}" integrity="{{ $mainJS.Data.Integrity }}" defer></script>
+  {{ end }}
+
+  {{ $cosmicJS := resources.Get "js/cosmic-background.js" }}
+  {{ if $cosmicJS }}
+    {{ $cosmicJS = $cosmicJS | resources.Minify | resources.Fingerprint }}
+    <script src="{{ $cosmicJS.RelPermalink }}" integrity="{{ $cosmicJS.Data.Integrity }}" defer></script>
+  {{ end }}
+
+  {{ $obsidianJS := resources.Get "js/obsidian-images.js" }}
+  {{ if $obsidianJS }}
+    {{ $obsidianJS = $obsidianJS | resources.Minify | resources.Fingerprint }}
+    <script src="{{ $obsidianJS.RelPermalink }}" integrity="{{ $obsidianJS.Data.Integrity }}" defer></script>
+  {{ end }}
 </body>
 </html>
