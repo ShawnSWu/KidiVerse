@@ -1,3 +1,7 @@
+# Deploy Hugo site to GitHub Pages
+# Builds on every push to development (or manual dispatch)
+# and publishes the generated `public/` folder to the `gh-pages` branch.
+
 name: Deploy to GitHub Pages
 
 on:
@@ -10,16 +14,16 @@ on:
     branches: ["main"]
 
 permissions:
-  contents: write
+  contents: write   # allow the action to push to gh-pages
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # required for .GitInfo and full history
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -27,50 +31,8 @@ jobs:
           hugo-version: "latest"
           extended: true
 
-      - name: List files before build
-        run: |
-          echo "=== Files before build ==="
-          find . -type f | sort
-          echo "======================="
-
-      - name: Build with production config
-        run: |
-          # Clean previous build
-          rm -rf public
-          
-          # Build with production settings
-          hugo --minify --environment production --baseURL "https://shawnswu.github.io/KidiVerse/"
-          
-          # Verify build output
-          echo "=== Build output structure ==="
-          find public -type f | sort
-          
-          echo "\n=== CSS Files ==="
-          find public -name "*.css" -o -name "*.map" | xargs ls -la
-          
-          echo "\n=== JS Files ==="
-          find public -name "*.js" | xargs ls -la
-          
-          echo "\n=== Image Files ==="
-          find public -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.svg" | xargs ls -la
-          
-          # Verify CSS file exists and has content
-          CSS_FILE=$(find public -name "*.css" | head -1)
-          if [ -f "$CSS_FILE" ]; then
-            echo "\n=== CSS File Content (first 10 lines) ==="
-            head -n 10 "$CSS_FILE"
-          else
-            echo "\n❌ ERROR: No CSS file found in build output!"
-            exit 1
-          fi
-      - name: Add .nojekyll
-        run: touch public/.nojekyll
-
-      - name: List files before deploy
-        run: |
-          echo "=== Files to be deployed ==="
-          find public -type f | sort
-          echo "=========================="
+      - name: Build
+        run: hugo --minify --environment production
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -79,11 +41,3 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
-          full_commit_message: "Deploy: Build ${{ github.sha }} [skip ci]"
-          commit_message: "Deploy: Build ${{ github.sha }} [skip ci]"
-          empty_commit: false
-          keep_files: false
-          enable_jekyll: false
-          allow_empty_commit: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
