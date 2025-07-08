@@ -133,7 +133,7 @@ function initGraph() {
         const totalTopicsElement = document.getElementById('total-topics-count');
         
         if (totalNotesElement) {
-            totalNotesElement.textContent = totalNotes;
+            totalNotesElement.textContent = totalNotes - 1;
         }
         
         if (totalTopicsElement) {
