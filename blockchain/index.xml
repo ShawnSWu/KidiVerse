@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blockchain on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/blockchain/</link><description>Recent content in Blockchain on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/blockchain/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/blockchain-overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/blockchain-overview/</guid><description>&lt;h1 id="blockchain">Blockchain&lt;/h1>
+&lt;h2 id="what-is-a-blockchain-">What Is a Blockchain? 🔗&lt;/h2>
+&lt;p>Blockchain is a decentralized, distributed ledger technology that ensures secure, transparent, and immutable record-keeping. It underpins cryptocurrencies like Bitcoin and Ethereum but has broader applications in supply chain management, smart contracts, and more. At its core, blockchain relies on a &lt;strong>consensus mechanism&lt;/strong> to validate transactions across nodes, ensuring trust without a central authority. For instance, Kafka, a distributed streaming platform, can complement blockchain by handling high-throughput data feeds for real-time transaction processing, as discussed in &lt;a href="#kafka.md">Apache Kafka: Real-Time Data Streaming&lt;/a>.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/consensus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/consensus/</guid><description>&lt;h1 id="consensus-mechanisms">Consensus Mechanisms&lt;/h1>
+&lt;h2 id="why-consensus">Why Consensus?&lt;/h2>
+&lt;p>In a trustless network, a &lt;strong>consensus algorithm&lt;/strong> decides which block becomes the canonical next block, preventing double‑spends and fork inflation.&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Mechanism&lt;/th>
+ &lt;th>Core Idea&lt;/th>
+ &lt;th>Pros&lt;/th>
+ &lt;th>Cons&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>PoW&lt;/strong>&lt;/td>
+ &lt;td>Hash puzzle; highest hash‑rate wins&lt;/td>
+ &lt;td>Battle‑tested security&lt;/td>
+ &lt;td>Energy‑intensive, low TPS&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>PoS&lt;/strong>&lt;/td>
+ &lt;td>Stake‑weighted random selection&lt;/td>
+ &lt;td>Eco‑friendly, high TPS&lt;/td>
+ &lt;td>“Rich‑get‑richer,” complex&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>dPoS&lt;/strong>&lt;/td>
+ &lt;td>Token holders elect delegates&lt;/td>
+ &lt;td>Second‑level scalability&lt;/td>
+ &lt;td>Potential centralization&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>PBFT / Tendermint&lt;/strong>&lt;/td>
+ &lt;td>3‑phase voting, ≤⅓ faulty ok&lt;/td>
+ &lt;td>Low latency, finality&lt;/td>
+ &lt;td>Hard to scale &amp;gt; 100 nodes&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="1proof-of-work-pow">1 Proof of Work (PoW)&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Goal: find nonce s.t. block_hash &amp;lt; difficulty_target
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Difficulty retarget: every 2 016 blocks (Bitcoin)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="51-attack-cost">51 % Attack Cost&lt;/h3>
+&lt;p>Gaining &amp;gt;50 % of global hash power is astronomically expensive—economic incentives keep attackers honest.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/smart-contracts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/smart-contracts/</guid><description>&lt;h1 id="smart-contracts">Smart Contracts&lt;/h1>
+&lt;p>Self‑executing code stored immutably on the blockchain.&lt;/p>
+&lt;h2 id="1hello-solidity">1 Hello, Solidity&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-solidity" data-lang="solidity">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// SPDX-License-Identifier: MIT
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">pragma solidity&lt;/span> &lt;span style="color:#f92672">^&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>.&lt;span style="color:#ae81ff">8&lt;/span>.&lt;span style="color:#ae81ff">25&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">contract&lt;/span> &lt;span style="color:#a6e22e">SimpleToken&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">mapping&lt;/span>(&lt;span style="color:#66d9ef">address&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">uint256&lt;/span>) &lt;span style="color:#66d9ef">public&lt;/span> balance;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">mint&lt;/span>(&lt;span style="color:#66d9ef">uint256&lt;/span> amount) &lt;span style="color:#66d9ef">external&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[msg.sender] &lt;span style="color:#f92672">+=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">transfer&lt;/span>(&lt;span style="color:#66d9ef">address&lt;/span> to, &lt;span style="color:#66d9ef">uint256&lt;/span> amount) &lt;span style="color:#66d9ef">external&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> require(balance[msg.sender] &lt;span style="color:#f92672">&amp;gt;=&lt;/span> amount, &lt;span style="color:#e6db74">&amp;#34;Insufficient&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[msg.sender] &lt;span style="color:#f92672">-=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[to] &lt;span style="color:#f92672">+=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2common-vulnerabilities">2 Common Vulnerabilities&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Vulnerability&lt;/th>
+ &lt;th>Notorious Example&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Re‑entrancy&lt;/strong>&lt;/td>
+ &lt;td>The DAO hack (2016)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Integer overflow / underflow&lt;/strong>&lt;/td>
+ &lt;td>BatchOverflow (2018)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Unchecked external call&lt;/strong>&lt;/td>
+ &lt;td>Parity Multisig (2017)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Predictable randomness&lt;/strong>&lt;/td>
+ &lt;td>Fomo3D (2018)&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h3 id="mitigations">Mitigations&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>OpenZeppelin&lt;/strong> audited libraries.&lt;/li>
+&lt;li>Re‑entrancy guard (&lt;code>nonReentrant&lt;/code>).&lt;/li>
+&lt;li>Solidity ≥0.8’s built‑in overflow checks.&lt;/li>
+&lt;li>Automated analyzers (Slither, Mythril) + manual audits.&lt;/li>
+&lt;/ul>
+&lt;h2 id="3building-a-dapp-frontend">3 Building a DApp Front‑End&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">ethers&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ethers&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">provider&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">ethers&lt;/span>.&lt;span style="color:#a6e22e">BrowserProvider&lt;/span>(window.&lt;span style="color:#a6e22e">ethereum&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">signer&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">provider&lt;/span>.&lt;span style="color:#a6e22e">getSigner&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">ethers&lt;/span>.&lt;span style="color:#a6e22e">Contract&lt;/span>(&lt;span style="color:#a6e22e">addr&lt;/span>, &lt;span style="color:#a6e22e">abi&lt;/span>, &lt;span style="color:#a6e22e">signer&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span>.&lt;span style="color:#a6e22e">mint&lt;/span>(&lt;span style="color:#ae81ff">100&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span>.&lt;span style="color:#a6e22e">transfer&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;0xAbc…&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">50&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Connect via &lt;strong>MetaMask&lt;/strong> or &lt;strong>WalletConnect&lt;/strong>.&lt;/li>
+&lt;li>Index on‑chain events with &lt;strong>The Graph&lt;/strong> to feed GraphQL queries.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Mantra:&lt;/strong> &lt;em>Code is law&lt;/em>—testing and audits cost less than post‑exploit fixes.&lt;/p></description></item></channel></rss>

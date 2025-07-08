@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/</link><description>Recent content in Kubernetes on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/container/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/controller/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/controller/</guid><description>&lt;h1 id="ontroller">ontroller?&lt;/h1>
+&lt;p>A &lt;strong>controller&lt;/strong> is a control-loop process running in the Kubernetes control plane (or outside, for custom controllers) that:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Watches&lt;/strong> the cluster state via the API server.&lt;/li>
+&lt;li>&lt;strong>Compares&lt;/strong> actual state to the desired state declared by users.&lt;/li>
+&lt;li>&lt;strong>Acts&lt;/strong> to reconcile any drift—creating, updating, or deleting resources until the two match.&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>“Declare intent; let the controller do the work.”&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="built-in-controllers--their-crds">Built-in Controllers &amp;amp; Their CRDs&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Controller&lt;/th>
+ &lt;th>Custom Resource Kind&lt;/th>
+ &lt;th>Purpose&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>DeploymentController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Deployment&lt;/code>&lt;/td>
+ &lt;td>Maintains replica sets &amp;amp; rolling updates&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>ReplicaSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>ReplicaSet&lt;/code>&lt;/td>
+ &lt;td>Ensures a stable set of identical Pods&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>StatefulSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>StatefulSet&lt;/code>&lt;/td>
+ &lt;td>Ordered, sticky identity Pods + PVCs&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>DaemonSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>DaemonSet&lt;/code>&lt;/td>
+ &lt;td>Runs one Pod per node (logs, monitoring)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Job / CronJob Controllers&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Job&lt;/code>, &lt;code>CronJob&lt;/code>&lt;/td>
+ &lt;td>Batch &amp;amp; scheduled workload management&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>HorizontalPodAutoscalerController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>HorizontalPodAutoscaler&lt;/code>&lt;/td>
+ &lt;td>Scales replicas based on metrics&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>ServiceLBController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Service&lt;/code> (type = &lt;code>LoadBalancer&lt;/code>)&lt;/td>
+ &lt;td>Provisions cloud load balancers&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;p>These run inside &lt;code>kube-controller-manager&lt;/code> (or cloud-specific managers).&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/ingress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/ingress/</guid><description>&lt;h1 id="ingress">Ingress&lt;/h1>
+&lt;p>An &lt;strong>Ingress&lt;/strong> acts like an application-layer (Layer-7) router.&lt;br>
+It watches your cluster for Ingress resources and programs the underlying load balancer (NGINX, Traefik, etc.) to map hostnames + paths → cluster Services.&lt;/p>
+&lt;p>&lt;img src="https://shawnswu.github.io/KidiVerse/container/kubernetes/attachments/Ingress.png" alt="Ingress">&lt;/p>
+&lt;hr>
+&lt;h2 id="minimal-https-ingress">Minimal HTTPS Ingress&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">networking.k8s.io/v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Ingress&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">web-ingress&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">annotations&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Force HTTPS and redirect HTTP → HTTPS (NGINX example)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nginx.ingress.kubernetes.io/force-ssl-redirect&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ingressClassName&lt;/span>: &lt;span style="color:#ae81ff">nginx &lt;/span> &lt;span style="color:#75715e"># which controller should handle this&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tls&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">hosts&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">demo.example.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">secretName&lt;/span>: &lt;span style="color:#ae81ff">demo-tls &lt;/span> &lt;span style="color:#75715e"># pre-created TLS secret (kubectl create secret tls …)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">rules&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">host&lt;/span>: &lt;span style="color:#ae81ff">demo.example.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">http&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">paths&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">path&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">pathType&lt;/span>: &lt;span style="color:#ae81ff">Prefix&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">backend&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">web-svc&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">port&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">number&lt;/span>: &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/pod/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/pod/</guid><description>&lt;h1 id="pod">Pod!&lt;/h1>
+&lt;p>A &lt;strong>Pod&lt;/strong> is the smallest deployable unit in Kubernetes.&lt;br>
+Think of it as a wrapper that holds one or more tightly-coupled containers sharing:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Network namespace&lt;/strong> – they all see the same &lt;code>localhost&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Storage volumes&lt;/strong> – optional persistent or ephemeral volumes.&lt;/li>
+&lt;li>&lt;strong>Lifecycle&lt;/strong> – scheduled, started, and stopped together.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="minimal-pod-manifest">Minimal Pod Manifest&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">hello-pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx:1.27-alpine&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">containerPort&lt;/span>: &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

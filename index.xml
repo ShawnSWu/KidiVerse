@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/</link><description>Recent content on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/index.xml" rel="self" type="application/rss+xml"/><item><title>GraphQL</title><link>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/graphql/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/graphql/</guid><description>&lt;h2 id="key-features-of-graphql">Key Features of GraphQL&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Reduced Over-fetching:&lt;/strong> Clients request only the specific data fields they need, preventing the retrieval of excessive data.&lt;/li>
+&lt;li>&lt;strong>Fewer Network Requests:&lt;/strong> A single request can fetch multiple related resources, minimizing network round-trips.&lt;/li>
+&lt;li>&lt;strong>Decoupled Frontend and Backend:&lt;/strong> Defines a clear query language and interface, allowing clients to evolve independently of the backend implementation.&lt;/li>
+&lt;li>&lt;strong>Strong Typing System:&lt;/strong> Supports the definition of complex objects and ensures type safety.&lt;/li>
+&lt;li>&lt;strong>Powerful Caching Mechanisms:&lt;/strong> Queries can be naturally cached, avoiding redundant requests for previously fetched data.&lt;/li>
+&lt;li>&lt;strong>Eliminates Need for Multiple Endpoints for Different Data Views:&lt;/strong> A single query can flexibly retrieve complete information, reducing the need for numerous specialized API endpoints.&lt;/li>
+&lt;li>&lt;strong>Progressive API Adoption:&lt;/strong> Clients are not required to adopt GraphQL wholesale immediately; migration can be done incrementally.&lt;/li>
+&lt;/ul></description></item><item><title>gRPC</title><link>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/grpc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/grpc/</guid><description>&lt;h1 id="1-why-grpc">1. Why gRPC?&lt;/h1>
+&lt;p>In modern distributed systems, different services or applications often need to exchange data efficiently. Traditionally, RESTful APIs use text-based formats like JSON or XML for communication. While easy to understand and debug, they face challenges in certain scenarios:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Data Redundancy:&lt;/strong> JSON/XML are text-based formats. Even for minor data changes, the complete format structure needs to be transmitted.
+For example, updating a user object&amp;rsquo;s name:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Request to update name
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;New Name&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// Only this field changed
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#f92672">&amp;#34;age&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">30&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;skill&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Programming&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;address&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;123 Main St&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;salary&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">50000&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;phone&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;555-1234&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this example, even though only the &lt;code>name&lt;/code> field was updated, the entire object structure (including unchanged &lt;code>age&lt;/code>, &lt;code>skill&lt;/code>, etc.) must be serialized, transmitted, and deserialized. In high-traffic or latency-sensitive systems, this redundancy consumes unnecessary network bandwidth and processing resources.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/blockchain-overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/blockchain-overview/</guid><description>&lt;h1 id="blockchain">Blockchain&lt;/h1>
+&lt;h2 id="what-is-a-blockchain-">What Is a Blockchain? 🔗&lt;/h2>
+&lt;p>Blockchain is a decentralized, distributed ledger technology that ensures secure, transparent, and immutable record-keeping. It underpins cryptocurrencies like Bitcoin and Ethereum but has broader applications in supply chain management, smart contracts, and more. At its core, blockchain relies on a &lt;strong>consensus mechanism&lt;/strong> to validate transactions across nodes, ensuring trust without a central authority. For instance, Kafka, a distributed streaming platform, can complement blockchain by handling high-throughput data feeds for real-time transaction processing, as discussed in &lt;a href="#kafka.md">Apache Kafka: Real-Time Data Streaming&lt;/a>.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/consensus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/consensus/</guid><description>&lt;h1 id="consensus-mechanisms">Consensus Mechanisms&lt;/h1>
+&lt;h2 id="why-consensus">Why Consensus?&lt;/h2>
+&lt;p>In a trustless network, a &lt;strong>consensus algorithm&lt;/strong> decides which block becomes the canonical next block, preventing double‑spends and fork inflation.&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Mechanism&lt;/th>
+ &lt;th>Core Idea&lt;/th>
+ &lt;th>Pros&lt;/th>
+ &lt;th>Cons&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>PoW&lt;/strong>&lt;/td>
+ &lt;td>Hash puzzle; highest hash‑rate wins&lt;/td>
+ &lt;td>Battle‑tested security&lt;/td>
+ &lt;td>Energy‑intensive, low TPS&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>PoS&lt;/strong>&lt;/td>
+ &lt;td>Stake‑weighted random selection&lt;/td>
+ &lt;td>Eco‑friendly, high TPS&lt;/td>
+ &lt;td>“Rich‑get‑richer,” complex&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>dPoS&lt;/strong>&lt;/td>
+ &lt;td>Token holders elect delegates&lt;/td>
+ &lt;td>Second‑level scalability&lt;/td>
+ &lt;td>Potential centralization&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>PBFT / Tendermint&lt;/strong>&lt;/td>
+ &lt;td>3‑phase voting, ≤⅓ faulty ok&lt;/td>
+ &lt;td>Low latency, finality&lt;/td>
+ &lt;td>Hard to scale &amp;gt; 100 nodes&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="1proof-of-work-pow">1 Proof of Work (PoW)&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Goal: find nonce s.t. block_hash &amp;lt; difficulty_target
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Difficulty retarget: every 2 016 blocks (Bitcoin)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="51-attack-cost">51 % Attack Cost&lt;/h3>
+&lt;p>Gaining &amp;gt;50 % of global hash power is astronomically expensive—economic incentives keep attackers honest.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/blockchain/smart-contracts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/blockchain/smart-contracts/</guid><description>&lt;h1 id="smart-contracts">Smart Contracts&lt;/h1>
+&lt;p>Self‑executing code stored immutably on the blockchain.&lt;/p>
+&lt;h2 id="1hello-solidity">1 Hello, Solidity&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-solidity" data-lang="solidity">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// SPDX-License-Identifier: MIT
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">pragma solidity&lt;/span> &lt;span style="color:#f92672">^&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>.&lt;span style="color:#ae81ff">8&lt;/span>.&lt;span style="color:#ae81ff">25&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">contract&lt;/span> &lt;span style="color:#a6e22e">SimpleToken&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">mapping&lt;/span>(&lt;span style="color:#66d9ef">address&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#66d9ef">uint256&lt;/span>) &lt;span style="color:#66d9ef">public&lt;/span> balance;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">mint&lt;/span>(&lt;span style="color:#66d9ef">uint256&lt;/span> amount) &lt;span style="color:#66d9ef">external&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[msg.sender] &lt;span style="color:#f92672">+=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">transfer&lt;/span>(&lt;span style="color:#66d9ef">address&lt;/span> to, &lt;span style="color:#66d9ef">uint256&lt;/span> amount) &lt;span style="color:#66d9ef">external&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> require(balance[msg.sender] &lt;span style="color:#f92672">&amp;gt;=&lt;/span> amount, &lt;span style="color:#e6db74">&amp;#34;Insufficient&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[msg.sender] &lt;span style="color:#f92672">-=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance[to] &lt;span style="color:#f92672">+=&lt;/span> amount;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2common-vulnerabilities">2 Common Vulnerabilities&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Vulnerability&lt;/th>
+ &lt;th>Notorious Example&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Re‑entrancy&lt;/strong>&lt;/td>
+ &lt;td>The DAO hack (2016)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Integer overflow / underflow&lt;/strong>&lt;/td>
+ &lt;td>BatchOverflow (2018)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Unchecked external call&lt;/strong>&lt;/td>
+ &lt;td>Parity Multisig (2017)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Predictable randomness&lt;/strong>&lt;/td>
+ &lt;td>Fomo3D (2018)&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h3 id="mitigations">Mitigations&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>OpenZeppelin&lt;/strong> audited libraries.&lt;/li>
+&lt;li>Re‑entrancy guard (&lt;code>nonReentrant&lt;/code>).&lt;/li>
+&lt;li>Solidity ≥0.8’s built‑in overflow checks.&lt;/li>
+&lt;li>Automated analyzers (Slither, Mythril) + manual audits.&lt;/li>
+&lt;/ul>
+&lt;h2 id="3building-a-dapp-frontend">3 Building a DApp Front‑End&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">ethers&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ethers&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">provider&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">ethers&lt;/span>.&lt;span style="color:#a6e22e">BrowserProvider&lt;/span>(window.&lt;span style="color:#a6e22e">ethereum&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">signer&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">provider&lt;/span>.&lt;span style="color:#a6e22e">getSigner&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">ethers&lt;/span>.&lt;span style="color:#a6e22e">Contract&lt;/span>(&lt;span style="color:#a6e22e">addr&lt;/span>, &lt;span style="color:#a6e22e">abi&lt;/span>, &lt;span style="color:#a6e22e">signer&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span>.&lt;span style="color:#a6e22e">mint&lt;/span>(&lt;span style="color:#ae81ff">100&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">token&lt;/span>.&lt;span style="color:#a6e22e">transfer&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;0xAbc…&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">50&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Connect via &lt;strong>MetaMask&lt;/strong> or &lt;strong>WalletConnect&lt;/strong>.&lt;/li>
+&lt;li>Index on‑chain events with &lt;strong>The Graph&lt;/strong> to feed GraphQL queries.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Mantra:&lt;/strong> &lt;em>Code is law&lt;/em>—testing and audits cost less than post‑exploit fixes.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/docker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/docker/</guid><description>&lt;h1 id="docker">Docker?&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>Consistent environments&lt;/strong> – “It works on my machine” becomes a thing of the past.&lt;/li>
+&lt;li>&lt;strong>Lightweight isolation&lt;/strong> – share the host kernel yet run apps in separate sandboxes.&lt;/li>
+&lt;li>&lt;strong>Fast shipping&lt;/strong> – build once, run anywhere that supports the Docker runtime.&lt;/li>
+&lt;li>&lt;strong>Rich ecosystem&lt;/strong> – tap into Docker Hub and countless community images.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="core-concepts">Core Concepts&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Term&lt;/th>
+ &lt;th>In Plain English&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Image&lt;/strong>&lt;/td>
+ &lt;td>A read-only template (think: snapshot of an OS + your app)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Container&lt;/strong>&lt;/td>
+ &lt;td>A running instance of an image—ephemeral and isolated&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Dockerfile&lt;/strong>&lt;/td>
+ &lt;td>Recipe that tells Docker how to build an image&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Registry&lt;/strong>&lt;/td>
+ &lt;td>Remote store for images (e.g., Docker Hub, GitHub Container Registry)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Docker Engine&lt;/strong>&lt;/td>
+ &lt;td>The daemon (&lt;code>dockerd&lt;/code>) that builds, runs, and manages containers&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="hello-world">Hello, World!&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run --rm hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/controller/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/controller/</guid><description>&lt;h1 id="ontroller">ontroller?&lt;/h1>
+&lt;p>A &lt;strong>controller&lt;/strong> is a control-loop process running in the Kubernetes control plane (or outside, for custom controllers) that:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Watches&lt;/strong> the cluster state via the API server.&lt;/li>
+&lt;li>&lt;strong>Compares&lt;/strong> actual state to the desired state declared by users.&lt;/li>
+&lt;li>&lt;strong>Acts&lt;/strong> to reconcile any drift—creating, updating, or deleting resources until the two match.&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>“Declare intent; let the controller do the work.”&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="built-in-controllers--their-crds">Built-in Controllers &amp;amp; Their CRDs&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Controller&lt;/th>
+ &lt;th>Custom Resource Kind&lt;/th>
+ &lt;th>Purpose&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>DeploymentController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Deployment&lt;/code>&lt;/td>
+ &lt;td>Maintains replica sets &amp;amp; rolling updates&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>ReplicaSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>ReplicaSet&lt;/code>&lt;/td>
+ &lt;td>Ensures a stable set of identical Pods&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>StatefulSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>StatefulSet&lt;/code>&lt;/td>
+ &lt;td>Ordered, sticky identity Pods + PVCs&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>DaemonSetController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>DaemonSet&lt;/code>&lt;/td>
+ &lt;td>Runs one Pod per node (logs, monitoring)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Job / CronJob Controllers&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Job&lt;/code>, &lt;code>CronJob&lt;/code>&lt;/td>
+ &lt;td>Batch &amp;amp; scheduled workload management&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>HorizontalPodAutoscalerController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>HorizontalPodAutoscaler&lt;/code>&lt;/td>
+ &lt;td>Scales replicas based on metrics&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>ServiceLBController&lt;/strong>&lt;/td>
+ &lt;td>&lt;code>Service&lt;/code> (type = &lt;code>LoadBalancer&lt;/code>)&lt;/td>
+ &lt;td>Provisions cloud load balancers&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;p>These run inside &lt;code>kube-controller-manager&lt;/code> (or cloud-specific managers).&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/ingress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/ingress/</guid><description>&lt;h1 id="ingress">Ingress&lt;/h1>
+&lt;p>An &lt;strong>Ingress&lt;/strong> acts like an application-layer (Layer-7) router.&lt;br>
+It watches your cluster for Ingress resources and programs the underlying load balancer (NGINX, Traefik, etc.) to map hostnames + paths → cluster Services.&lt;/p>
+&lt;p>&lt;img src="https://shawnswu.github.io/KidiVerse/container/kubernetes/attachments/Ingress.png" alt="Ingress">&lt;/p>
+&lt;hr>
+&lt;h2 id="minimal-https-ingress">Minimal HTTPS Ingress&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">networking.k8s.io/v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Ingress&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">web-ingress&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">annotations&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Force HTTPS and redirect HTTP → HTTPS (NGINX example)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nginx.ingress.kubernetes.io/force-ssl-redirect&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ingressClassName&lt;/span>: &lt;span style="color:#ae81ff">nginx &lt;/span> &lt;span style="color:#75715e"># which controller should handle this&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tls&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">hosts&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">demo.example.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">secretName&lt;/span>: &lt;span style="color:#ae81ff">demo-tls &lt;/span> &lt;span style="color:#75715e"># pre-created TLS secret (kubectl create secret tls …)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">rules&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">host&lt;/span>: &lt;span style="color:#ae81ff">demo.example.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">http&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">paths&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">path&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">pathType&lt;/span>: &lt;span style="color:#ae81ff">Prefix&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">backend&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">web-svc&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">port&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">number&lt;/span>: &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/container/kubernetes/pod/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/kubernetes/pod/</guid><description>&lt;h1 id="pod">Pod!&lt;/h1>
+&lt;p>A &lt;strong>Pod&lt;/strong> is the smallest deployable unit in Kubernetes.&lt;br>
+Think of it as a wrapper that holds one or more tightly-coupled containers sharing:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Network namespace&lt;/strong> – they all see the same &lt;code>localhost&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Storage volumes&lt;/strong> – optional persistent or ephemeral volumes.&lt;/li>
+&lt;li>&lt;strong>Lifecycle&lt;/strong> – scheduled, started, and stopped together.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="minimal-pod-manifest">Minimal Pod Manifest&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">hello-pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx:1.27-alpine&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">containerPort&lt;/span>: &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/git/git-basics/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/git/git-basics/</guid><description>&lt;h2 id="-3-git-basicsmd">📄 3. &lt;code>git-basics.md&lt;/code>&lt;/h2>
+&lt;h1 id="-git-basics-guide">🧬 Git Basics Guide&lt;/h1>
+&lt;p>Git is a distributed version control system that helps you track changes in source code.&lt;/p>
+&lt;hr>
+&lt;h2 id="-getting-started">✍️ Getting Started&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span> git init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git config --global user.name &lt;span style="color:#e6db74">&amp;#34;Shawn Wu&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git config --global user.email &lt;span style="color:#e6db74">&amp;#34;shawn@example.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>	{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;name&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;age&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;skill&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;address&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;salary&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;phone&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/broker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/broker/</guid><description>&lt;h1 id="broker">broker&lt;/h1>
+&lt;h2 id="inside-a-kafka-broker-">Inside a Kafka Broker 🖥️&lt;/h2>
+&lt;p>A &lt;strong>broker&lt;/strong> is a server process that:&lt;/p>
+&lt;ol>
+&lt;li>Stores partition data on disk.&lt;/li>
+&lt;li>Serves produce/consume requests via the TCP protocol.&lt;/li>
+&lt;li>Replicates partition leaders to followers.&lt;/li>
+&lt;li>Participates in cluster metadata quorum (ZooKeeper or KRaft).&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="essential-broker-configs">Essential Broker Configs&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Property&lt;/th>
+ &lt;th>Purpose&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;code>num.partitions&lt;/code>&lt;/td>
+ &lt;td>Default partition count for new topics&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.retention.hours&lt;/code>&lt;/td>
+ &lt;td>Delete segments older than X hours&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.segment.bytes&lt;/code>&lt;/td>
+ &lt;td>Segment size before roll-over&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.cleanup.policy&lt;/code>&lt;/td>
+ &lt;td>&lt;code>delete&lt;/code> or &lt;code>compact&lt;/code>&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>replica.lag.time.max.ms&lt;/code>&lt;/td>
+ &lt;td>Max follower lag before kicking from ISR&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>auto.create.topics.enable&lt;/code>&lt;/td>
+ &lt;td>Disable in prod; create topics explicitly&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="operational-checklist">Operational Checklist&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Replication Factor ≥ 3&lt;/strong> for multi-AZ resilience.&lt;/li>
+&lt;li>&lt;strong>Disk layout:&lt;/strong> Separate data and log instances; use XFS/ext4 on SSD/NVMe.&lt;/li>
+&lt;li>&lt;strong>Monitoring:&lt;/strong> Track &lt;code>UnderReplicatedPartitions&lt;/code>, &lt;code>IsrShrinks&lt;/code>, CPU, and disk I/O.&lt;/li>
+&lt;li>&lt;strong>TLS &amp;amp; SCRAM:&lt;/strong> Encrypt inter-broker and client traffic; enforce authN.&lt;/li>
+&lt;li>&lt;strong>Rolling Upgrades:&lt;/strong>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>bump IBP → upgrade brokers → migrate metadata (if KRaft)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/consumer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/consumer/</guid><description>&lt;h1 id="consumer">Consumer&lt;/h1>
+&lt;h2 id="reading-from-kafka-">Reading from Kafka 🎣&lt;/h2>
+&lt;p>A &lt;strong>consumer&lt;/strong> pulls records from partitions and tracks its progress via offsets.&lt;/p>
+&lt;h2 id="consumer-group-model">Consumer Group Model&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Same group id&lt;/strong> → load shared; each partition ↔️ one consumer instance.&lt;/li>
+&lt;li>&lt;strong>Different group id&lt;/strong> → each group receives the data independently.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --topic orders --group billing-service --from-beginning
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="java-example-kafka-clients">Java Example (Kafka Clients)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Properties props &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Properties();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;bootstrap.servers&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;localhost:9092&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;group.id&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;billing-service&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;enable.auto.commit&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;false&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;key.deserializer&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;org.apache.kafka.common.serialization.StringDeserializer&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;value.deserializer&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;org.apache.kafka.common.serialization.StringDeserializer&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KafkaConsumer&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> consumer &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> KafkaConsumer&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>(props);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>consumer.&lt;span style="color:#a6e22e">subscribe&lt;/span>(Arrays.&lt;span style="color:#a6e22e">asList&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;orders&amp;#34;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">while&lt;/span> (&lt;span style="color:#66d9ef">true&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ConsumerRecords&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> records &lt;span style="color:#f92672">=&lt;/span> consumer.&lt;span style="color:#a6e22e">poll&lt;/span>(Duration.&lt;span style="color:#a6e22e">ofMillis&lt;/span>(100));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (ConsumerRecord&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> r : records) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> process(r);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> consumer.&lt;span style="color:#a6e22e">commitSync&lt;/span>(); &lt;span style="color:#75715e">// manual commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/kafka-streams/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/kafka-streams/</guid><description>&lt;h1 id="kafka-streams-api">Kafka Streams API&lt;/h1>
+&lt;p>The &lt;strong>Kafka Streams&lt;/strong> library turns a Kafka cluster into a fully-fledged, fault-tolerant stream-processing engine without requiring a separate cluster like Flink or Spark.&lt;/p>
+&lt;h2 id="1dsl-vs-processor-api">1 DSL vs Processor API&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Layer&lt;/th>
+ &lt;th>What It Offers&lt;/th>
+ &lt;th>Example&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>DSL&lt;/strong>&lt;/td>
+ &lt;td>Map/Filter/Join/KTable abstractions&lt;/td>
+ &lt;td>&lt;code>orders.groupByKey().windowedBy(tumblingWindow)&lt;/code>&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Processor API&lt;/strong>&lt;/td>
+ &lt;td>Low-level access to topology nodes&lt;/td>
+ &lt;td>Custom watermarking logic&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="2state-stores">2 State Stores&lt;/h2>
+&lt;ul>
+&lt;li>Backed by &lt;strong>RocksDB&lt;/strong> + &lt;strong>changelog topics&lt;/strong>.&lt;/li>
+&lt;li>Enables exactly-once windowed aggregations.&lt;/li>
+&lt;/ul>
+&lt;h2 id="3interactive-queries">3 Interactive Queries&lt;/h2>
+&lt;blockquote>
+&lt;p>Expose local store via REST to query materialised views in real time.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/kafka/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/kafka/</guid><description>&lt;h1 id="kafka">Kafka&lt;/h1>
+&lt;p>Apache Kafka is a distributed streaming platform designed for high-throughput, fault-tolerant, and scalable data processing. It excels at handling real-time data feeds, making it a powerful tool for applications requiring low-latency data pipelines. Kafka’s architecture, with its publish-subscribe model, can integrate with systems like Blockchain, as noted in &lt;a href="#blockchain.md">Understanding Blockchain Technology&lt;/a>, to stream transaction data for validation or to support consensus mechanisms by ensuring rapid data propagation across nodes.&lt;/p>
+&lt;p>For deployment, Kafka clusters benefit from o&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/producers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/producers/</guid><description>&lt;h1 id="producers">Producers&lt;/h1>
+&lt;h2 id="writing-to-kafka-">Writing to Kafka 🚚&lt;/h2>
+&lt;p>A &lt;strong>producer&lt;/strong> publishes records to one or more topic partitions.&lt;/p>
+&lt;h2 id="cli-quick-start">CLI Quick Start&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>bin/kafka-console-producer.sh --bootstrap-server localhost:9092 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --topic orders
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;orderId&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;A42&amp;#34;&lt;/span>,&lt;span style="color:#e6db74">&amp;#34;amount&amp;#34;&lt;/span>:99.9&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="python-example-kafka-python">Python Example (kafka-python)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> kafka &lt;span style="color:#f92672">import&lt;/span> KafkaProducer
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> json&lt;span style="color:#f92672">,&lt;/span> uuid
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer &lt;span style="color:#f92672">=&lt;/span> KafkaProducer(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> bootstrap_servers&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;localhost:9092&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> value_serializer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">lambda&lt;/span> v: json&lt;span style="color:#f92672">.&lt;/span>dumps(v)&lt;span style="color:#f92672">.&lt;/span>encode(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> acks&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;all&amp;#34;&lt;/span>, &lt;span style="color:#75715e"># strongest durability&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> retries&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> enable_idempotence&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span> &lt;span style="color:#75715e"># per-partition exactly-once&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>event &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#34;orderId&amp;#34;&lt;/span>: str(uuid&lt;span style="color:#f92672">.&lt;/span>uuid4()), &lt;span style="color:#e6db74">&amp;#34;amount&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">42.0&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer&lt;span style="color:#f92672">.&lt;/span>send(&lt;span style="color:#e6db74">&amp;#34;orders&amp;#34;&lt;/span>, value&lt;span style="color:#f92672">=&lt;/span>event)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer&lt;span style="color:#f92672">.&lt;/span>flush()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/fine-tuning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/fine-tuning/</guid><description>&lt;h1 id="fine-tuning-transformers">Fine-Tuning Transformers&lt;/h1>
+&lt;p>Fine-tuning adapts a pre-trained transformer to a downstream task by continuing training on a smaller, task-specific dataset.&lt;/p>
+&lt;h2 id="1why-fine-tune">1 Why Fine-Tune?&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Parameter Efficiency&lt;/strong> – Re-use base model weights; training converges in a few epochs.&lt;/li>
+&lt;li>&lt;strong>Task Specialisation&lt;/strong> – Domain-specific jargon (e.g. legal, medical) improves drastically.&lt;/li>
+&lt;li>&lt;strong>Lower Latency&lt;/strong> – Smaller fine-tuned checkpoints can outperform prompting large models.&lt;/li>
+&lt;/ol>
+&lt;h2 id="2methods">2 Methods&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Method&lt;/th>
+ &lt;th>Parameters Updated&lt;/th>
+ &lt;th>Typical Data Size&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Full Fine-Tune&lt;/strong>&lt;/td>
+ &lt;td>All&lt;/td>
+ &lt;td>10⁵-10⁶ samples&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>LoRA&lt;/strong>&lt;/td>
+ &lt;td>Rank-decomposed adapters&lt;/td>
+ &lt;td>10³-10⁴&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Prefix Tuning&lt;/strong>&lt;/td>
+ &lt;td>Prompt tokens only&lt;/td>
+ &lt;td>10²-10³&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>QLoRA&lt;/strong>&lt;/td>
+ &lt;td>4-bit quantised adapters&lt;/td>
+ &lt;td>10⁴&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="3mlops-pipeline">3 MLOps Pipeline&lt;/h2>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">graph LR
+ D[Dataset] --&amp;gt;|tokenise| P(Pre-processing)
+ P --&amp;gt; T[Training]
+ subgraph Weights &amp;amp; Biases
+ T --&amp;gt; L[Logs]
+ end
+ T --&amp;gt; M{Model Registry}
+ M --&amp;gt; S[Serving]
+&lt;/code>&lt;/pre>&lt;p>Fine-tuning jobs often run on &lt;strong>Kubernetes&lt;/strong> GPU nodes (see &lt;a href="../container/Kubernetes/Controller.md">K8S Controller&lt;/a>) and stream logs into &lt;strong>Kafka Topics&lt;/strong> for monitoring.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/llm-architecture/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/llm-architecture/</guid><description>&lt;h1 id="large-language-models">Large Language Models&lt;/h1>
+&lt;p>These notes consolidate three key areas of modern large‑language models (LLMs):&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Architecture &amp;amp; Transformer Basics&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>Training, Fine‑Tuning, and Retrieval‑Augmented Generation (RAG)&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>Inference, Serving, and Optimization&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="1llm-architecture--transformer-basics">1 LLM Architecture &amp;amp; Transformer Basics&lt;/h2>
+&lt;h3 id="11transformer-blueprint">1.1 Transformer Blueprint&lt;/h3>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">graph TD
+ A[Input Tokens] --&amp;gt;|Embedding| B
+ B --&amp;gt; C[Positional Encoding]
+ C --&amp;gt; D[Transformer Block × N]
+ D --&amp;gt; E[Linear + Softmax]
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Self‑Attention&lt;/strong>&lt;/p>
+&lt;p>For head &lt;em>h&lt;/em>:&lt;/p>
+&lt;p>[
+\mathrm{Attention}(Q_h,K_h,V_h)=\mathrm{softmax}!\left(\frac{Q_h K_h^\top}{\sqrt{d_k}}\right)V_h
+]&lt;/p>
+&lt;p>&lt;em>RoPE&lt;/em> and &lt;em>ALiBi&lt;/em> add relative positioning so models extrapolate to longer contexts.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/prompt-engineering/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/prompt-engineering/</guid><description>&lt;h1 id="prompt-engineering">Prompt Engineering&lt;/h1>
+&lt;p>Prompt engineering is the craft of writing and iterating prompts so that large language models (LLMs) like GPT-4 can generate useful, reliable output.&lt;/p>
+&lt;h2 id="1why-it-matters">1 Why It Matters&lt;/h2>
+&lt;p>LLMs are &lt;strong>probabilistic next-token predictors&lt;/strong>; the prompt is the only controllable input a practitioner has at inference time. Well-designed prompts can:&lt;/p>
+&lt;ul>
+&lt;li>Steer model behaviour (tone, format, persona).&lt;/li>
+&lt;li>Inject background knowledge or constraints.&lt;/li>
+&lt;li>Chain multiple reasoning steps (see &lt;em>Chain-of-Thought&lt;/em>).&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Example:&lt;/strong> Adding &amp;ldquo;You are a senior blockchain architect&amp;rdquo; at the start of a prompt can orient the model to produce enterprise-grade design guidance.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/rag_guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/rag_guide/</guid><description>&lt;h1 id="retrievalaugmented-generation-rag">Retrieval‑Augmented Generation (RAG)&lt;/h1>
+&lt;p>&lt;strong>RAG&lt;/strong> combines vector search with language‑model generation so your application can answer questions using &lt;em>fresh, domain‑specific knowledge&lt;/em> instead of the model’s static training data.&lt;/p>
+&lt;hr>
+&lt;h2 id="1why-rag">1 Why RAG?&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Benefit&lt;/th>
+ &lt;th>Detail&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Up‑to‑date answers&lt;/strong>&lt;/td>
+ &lt;td>Inject current docs; bypass the model’s knowledge cut‑off.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Smaller models&lt;/strong>&lt;/td>
+ &lt;td>Offload facts to the retriever; keep the LLM lightweight.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Reduced hallucination&lt;/strong>&lt;/td>
+ &lt;td>Source grounding text that the model can quote or cite.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Data governance&lt;/strong>&lt;/td>
+ &lt;td>Easily remove or update knowledge by re‑indexing documents.&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="2pipeline-anatomy">2 Pipeline Anatomy&lt;/h2>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">flowchart TD
+ U[User Query] --&amp;gt; E[Embedder]
+ E --&amp;gt; V[Vector&amp;lt;br/&amp;gt;DB]
+ V --&amp;gt;|Top‑k docs| C[Context]
+ U --&amp;gt; P[Prompt Builder]
+ C --&amp;gt; P
+ P --&amp;gt; L[LLM🔮]
+ L --&amp;gt; R[Response]
+&lt;/code>&lt;/pre>&lt;ol>
+&lt;li>&lt;strong>Embed&lt;/strong> query and compare against a vector index.&lt;/li>
+&lt;li>&lt;strong>Retrieve&lt;/strong> top‑k chunks; optional keyword or filter stage.&lt;/li>
+&lt;li>&lt;strong>Compose prompt&lt;/strong>: system msg + retrieved context + user query.&lt;/li>
+&lt;li>&lt;strong>Generate&lt;/strong> answer with citations.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="3retrieval-layer">3 Retrieval Layer&lt;/h2>
+&lt;h3 id="31embedding-models">3.1 Embedding Models&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Model&lt;/th>
+ &lt;th>Dim&lt;/th>
+ &lt;th>Strength&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;code>text-embedding-3-small&lt;/code>&lt;/td>
+ &lt;td>1 536&lt;/td>
+ &lt;td>Cost‑effective, multilingual&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>bge-large-en&lt;/code>&lt;/td>
+ &lt;td>1 024&lt;/td>
+ &lt;td>Open‑source, rerank friendly&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>instructor-xl&lt;/code>&lt;/td>
+ &lt;td>768&lt;/td>
+ &lt;td>Instruction‑tuned for QA&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>&lt;strong>Rule:&lt;/strong> Use domain‑trained or instruction embeddings if your queries are question‑like.&lt;/p></description></item><item><title>About KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/about/</guid><description/></item></channel></rss>

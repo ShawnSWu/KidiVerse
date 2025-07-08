@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLM on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/llm/</link><description>Recent content in LLM on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/llm/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/fine-tuning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/fine-tuning/</guid><description>&lt;h1 id="fine-tuning-transformers">Fine-Tuning Transformers&lt;/h1>
+&lt;p>Fine-tuning adapts a pre-trained transformer to a downstream task by continuing training on a smaller, task-specific dataset.&lt;/p>
+&lt;h2 id="1why-fine-tune">1 Why Fine-Tune?&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Parameter Efficiency&lt;/strong> – Re-use base model weights; training converges in a few epochs.&lt;/li>
+&lt;li>&lt;strong>Task Specialisation&lt;/strong> – Domain-specific jargon (e.g. legal, medical) improves drastically.&lt;/li>
+&lt;li>&lt;strong>Lower Latency&lt;/strong> – Smaller fine-tuned checkpoints can outperform prompting large models.&lt;/li>
+&lt;/ol>
+&lt;h2 id="2methods">2 Methods&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Method&lt;/th>
+ &lt;th>Parameters Updated&lt;/th>
+ &lt;th>Typical Data Size&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Full Fine-Tune&lt;/strong>&lt;/td>
+ &lt;td>All&lt;/td>
+ &lt;td>10⁵-10⁶ samples&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>LoRA&lt;/strong>&lt;/td>
+ &lt;td>Rank-decomposed adapters&lt;/td>
+ &lt;td>10³-10⁴&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Prefix Tuning&lt;/strong>&lt;/td>
+ &lt;td>Prompt tokens only&lt;/td>
+ &lt;td>10²-10³&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>QLoRA&lt;/strong>&lt;/td>
+ &lt;td>4-bit quantised adapters&lt;/td>
+ &lt;td>10⁴&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="3mlops-pipeline">3 MLOps Pipeline&lt;/h2>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">graph LR
+ D[Dataset] --&amp;gt;|tokenise| P(Pre-processing)
+ P --&amp;gt; T[Training]
+ subgraph Weights &amp;amp; Biases
+ T --&amp;gt; L[Logs]
+ end
+ T --&amp;gt; M{Model Registry}
+ M --&amp;gt; S[Serving]
+&lt;/code>&lt;/pre>&lt;p>Fine-tuning jobs often run on &lt;strong>Kubernetes&lt;/strong> GPU nodes (see &lt;a href="../container/Kubernetes/Controller.md">K8S Controller&lt;/a>) and stream logs into &lt;strong>Kafka Topics&lt;/strong> for monitoring.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/llm-architecture/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/llm-architecture/</guid><description>&lt;h1 id="large-language-models">Large Language Models&lt;/h1>
+&lt;p>These notes consolidate three key areas of modern large‑language models (LLMs):&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Architecture &amp;amp; Transformer Basics&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>Training, Fine‑Tuning, and Retrieval‑Augmented Generation (RAG)&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>Inference, Serving, and Optimization&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="1llm-architecture--transformer-basics">1 LLM Architecture &amp;amp; Transformer Basics&lt;/h2>
+&lt;h3 id="11transformer-blueprint">1.1 Transformer Blueprint&lt;/h3>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">graph TD
+ A[Input Tokens] --&amp;gt;|Embedding| B
+ B --&amp;gt; C[Positional Encoding]
+ C --&amp;gt; D[Transformer Block × N]
+ D --&amp;gt; E[Linear + Softmax]
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Self‑Attention&lt;/strong>&lt;/p>
+&lt;p>For head &lt;em>h&lt;/em>:&lt;/p>
+&lt;p>[
+\mathrm{Attention}(Q_h,K_h,V_h)=\mathrm{softmax}!\left(\frac{Q_h K_h^\top}{\sqrt{d_k}}\right)V_h
+]&lt;/p>
+&lt;p>&lt;em>RoPE&lt;/em> and &lt;em>ALiBi&lt;/em> add relative positioning so models extrapolate to longer contexts.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/prompt-engineering/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/prompt-engineering/</guid><description>&lt;h1 id="prompt-engineering">Prompt Engineering&lt;/h1>
+&lt;p>Prompt engineering is the craft of writing and iterating prompts so that large language models (LLMs) like GPT-4 can generate useful, reliable output.&lt;/p>
+&lt;h2 id="1why-it-matters">1 Why It Matters&lt;/h2>
+&lt;p>LLMs are &lt;strong>probabilistic next-token predictors&lt;/strong>; the prompt is the only controllable input a practitioner has at inference time. Well-designed prompts can:&lt;/p>
+&lt;ul>
+&lt;li>Steer model behaviour (tone, format, persona).&lt;/li>
+&lt;li>Inject background knowledge or constraints.&lt;/li>
+&lt;li>Chain multiple reasoning steps (see &lt;em>Chain-of-Thought&lt;/em>).&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Example:&lt;/strong> Adding &amp;ldquo;You are a senior blockchain architect&amp;rdquo; at the start of a prompt can orient the model to produce enterprise-grade design guidance.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/llm/rag_guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/llm/rag_guide/</guid><description>&lt;h1 id="retrievalaugmented-generation-rag">Retrieval‑Augmented Generation (RAG)&lt;/h1>
+&lt;p>&lt;strong>RAG&lt;/strong> combines vector search with language‑model generation so your application can answer questions using &lt;em>fresh, domain‑specific knowledge&lt;/em> instead of the model’s static training data.&lt;/p>
+&lt;hr>
+&lt;h2 id="1why-rag">1 Why RAG?&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Benefit&lt;/th>
+ &lt;th>Detail&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Up‑to‑date answers&lt;/strong>&lt;/td>
+ &lt;td>Inject current docs; bypass the model’s knowledge cut‑off.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Smaller models&lt;/strong>&lt;/td>
+ &lt;td>Offload facts to the retriever; keep the LLM lightweight.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Reduced hallucination&lt;/strong>&lt;/td>
+ &lt;td>Source grounding text that the model can quote or cite.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Data governance&lt;/strong>&lt;/td>
+ &lt;td>Easily remove or update knowledge by re‑indexing documents.&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="2pipeline-anatomy">2 Pipeline Anatomy&lt;/h2>
+&lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">flowchart TD
+ U[User Query] --&amp;gt; E[Embedder]
+ E --&amp;gt; V[Vector&amp;lt;br/&amp;gt;DB]
+ V --&amp;gt;|Top‑k docs| C[Context]
+ U --&amp;gt; P[Prompt Builder]
+ C --&amp;gt; P
+ P --&amp;gt; L[LLM🔮]
+ L --&amp;gt; R[Response]
+&lt;/code>&lt;/pre>&lt;ol>
+&lt;li>&lt;strong>Embed&lt;/strong> query and compare against a vector index.&lt;/li>
+&lt;li>&lt;strong>Retrieve&lt;/strong> top‑k chunks; optional keyword or filter stage.&lt;/li>
+&lt;li>&lt;strong>Compose prompt&lt;/strong>: system msg + retrieved context + user query.&lt;/li>
+&lt;li>&lt;strong>Generate&lt;/strong> answer with citations.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="3retrieval-layer">3 Retrieval Layer&lt;/h2>
+&lt;h3 id="31embedding-models">3.1 Embedding Models&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Model&lt;/th>
+ &lt;th>Dim&lt;/th>
+ &lt;th>Strength&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;code>text-embedding-3-small&lt;/code>&lt;/td>
+ &lt;td>1 536&lt;/td>
+ &lt;td>Cost‑effective, multilingual&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>bge-large-en&lt;/code>&lt;/td>
+ &lt;td>1 024&lt;/td>
+ &lt;td>Open‑source, rerank friendly&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>instructor-xl&lt;/code>&lt;/td>
+ &lt;td>768&lt;/td>
+ &lt;td>Instruction‑tuned for QA&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>&lt;strong>Rule:&lt;/strong> Use domain‑trained or instruction embeddings if your queries are question‑like.&lt;/p></description></item></channel></rss>

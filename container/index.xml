@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Container on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/container/</link><description>Recent content in Container on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/container/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://shawnswu.github.io/KidiVerse/container/docker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/container/docker/</guid><description>&lt;h1 id="docker">Docker?&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>Consistent environments&lt;/strong> – “It works on my machine” becomes a thing of the past.&lt;/li>
+&lt;li>&lt;strong>Lightweight isolation&lt;/strong> – share the host kernel yet run apps in separate sandboxes.&lt;/li>
+&lt;li>&lt;strong>Fast shipping&lt;/strong> – build once, run anywhere that supports the Docker runtime.&lt;/li>
+&lt;li>&lt;strong>Rich ecosystem&lt;/strong> – tap into Docker Hub and countless community images.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="core-concepts">Core Concepts&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Term&lt;/th>
+ &lt;th>In Plain English&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>Image&lt;/strong>&lt;/td>
+ &lt;td>A read-only template (think: snapshot of an OS + your app)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Container&lt;/strong>&lt;/td>
+ &lt;td>A running instance of an image—ephemeral and isolated&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Dockerfile&lt;/strong>&lt;/td>
+ &lt;td>Recipe that tells Docker how to build an image&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Registry&lt;/strong>&lt;/td>
+ &lt;td>Remote store for images (e.g., Docker Hub, GitHub Container Registry)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Docker Engine&lt;/strong>&lt;/td>
+ &lt;td>The daemon (&lt;code>dockerd&lt;/code>) that builds, runs, and manages containers&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="hello-world">Hello, World!&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run --rm hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gRPC vs GraphQL on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/</link><description>Recent content in gRPC vs GraphQL on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/index.xml" rel="self" type="application/rss+xml"/><item><title>GraphQL</title><link>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/graphql/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/graphql/</guid><description>&lt;h2 id="key-features-of-graphql">Key Features of GraphQL&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Reduced Over-fetching:&lt;/strong> Clients request only the specific data fields they need, preventing the retrieval of excessive data.&lt;/li>
+&lt;li>&lt;strong>Fewer Network Requests:&lt;/strong> A single request can fetch multiple related resources, minimizing network round-trips.&lt;/li>
+&lt;li>&lt;strong>Decoupled Frontend and Backend:&lt;/strong> Defines a clear query language and interface, allowing clients to evolve independently of the backend implementation.&lt;/li>
+&lt;li>&lt;strong>Strong Typing System:&lt;/strong> Supports the definition of complex objects and ensures type safety.&lt;/li>
+&lt;li>&lt;strong>Powerful Caching Mechanisms:&lt;/strong> Queries can be naturally cached, avoiding redundant requests for previously fetched data.&lt;/li>
+&lt;li>&lt;strong>Eliminates Need for Multiple Endpoints for Different Data Views:&lt;/strong> A single query can flexibly retrieve complete information, reducing the need for numerous specialized API endpoints.&lt;/li>
+&lt;li>&lt;strong>Progressive API Adoption:&lt;/strong> Clients are not required to adopt GraphQL wholesale immediately; migration can be done incrementally.&lt;/li>
+&lt;/ul></description></item><item><title>gRPC</title><link>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/grpc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/grpc-vs-graphql/grpc/</guid><description>&lt;h1 id="1-why-grpc">1. Why gRPC?&lt;/h1>
+&lt;p>In modern distributed systems, different services or applications often need to exchange data efficiently. Traditionally, RESTful APIs use text-based formats like JSON or XML for communication. While easy to understand and debug, they face challenges in certain scenarios:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Data Redundancy:&lt;/strong> JSON/XML are text-based formats. Even for minor data changes, the complete format structure needs to be transmitted.
+For example, updating a user object&amp;rsquo;s name:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Request to update name
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;New Name&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// Only this field changed
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#f92672">&amp;#34;age&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">30&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;skill&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Programming&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;address&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;123 Main St&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;salary&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">50000&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;phone&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;555-1234&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this example, even though only the &lt;code>name&lt;/code> field was updated, the entire object structure (including unchanged &lt;code>age&lt;/code>, &lt;code>skill&lt;/code>, etc.) must be serialized, transmitted, and deserialized. In high-traffic or latency-sensitive systems, this redundancy consumes unnecessary network bandwidth and processing resources.&lt;/p></description></item></channel></rss>

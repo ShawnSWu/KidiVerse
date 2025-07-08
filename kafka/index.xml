@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kafka on KidiVerse</title><link>https://shawnswu.github.io/KidiVerse/kafka/</link><description>Recent content in Kafka on KidiVerse</description><generator>Hugo</generator><language>zh-tw</language><atom:link href="https://shawnswu.github.io/KidiVerse/kafka/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/broker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/broker/</guid><description>&lt;h1 id="broker">broker&lt;/h1>
+&lt;h2 id="inside-a-kafka-broker-">Inside a Kafka Broker 🖥️&lt;/h2>
+&lt;p>A &lt;strong>broker&lt;/strong> is a server process that:&lt;/p>
+&lt;ol>
+&lt;li>Stores partition data on disk.&lt;/li>
+&lt;li>Serves produce/consume requests via the TCP protocol.&lt;/li>
+&lt;li>Replicates partition leaders to followers.&lt;/li>
+&lt;li>Participates in cluster metadata quorum (ZooKeeper or KRaft).&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="essential-broker-configs">Essential Broker Configs&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Property&lt;/th>
+ &lt;th>Purpose&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;code>num.partitions&lt;/code>&lt;/td>
+ &lt;td>Default partition count for new topics&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.retention.hours&lt;/code>&lt;/td>
+ &lt;td>Delete segments older than X hours&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.segment.bytes&lt;/code>&lt;/td>
+ &lt;td>Segment size before roll-over&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>log.cleanup.policy&lt;/code>&lt;/td>
+ &lt;td>&lt;code>delete&lt;/code> or &lt;code>compact&lt;/code>&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>replica.lag.time.max.ms&lt;/code>&lt;/td>
+ &lt;td>Max follower lag before kicking from ISR&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>auto.create.topics.enable&lt;/code>&lt;/td>
+ &lt;td>Disable in prod; create topics explicitly&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="operational-checklist">Operational Checklist&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Replication Factor ≥ 3&lt;/strong> for multi-AZ resilience.&lt;/li>
+&lt;li>&lt;strong>Disk layout:&lt;/strong> Separate data and log instances; use XFS/ext4 on SSD/NVMe.&lt;/li>
+&lt;li>&lt;strong>Monitoring:&lt;/strong> Track &lt;code>UnderReplicatedPartitions&lt;/code>, &lt;code>IsrShrinks&lt;/code>, CPU, and disk I/O.&lt;/li>
+&lt;li>&lt;strong>TLS &amp;amp; SCRAM:&lt;/strong> Encrypt inter-broker and client traffic; enforce authN.&lt;/li>
+&lt;li>&lt;strong>Rolling Upgrades:&lt;/strong>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>bump IBP → upgrade brokers → migrate metadata (if KRaft)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/consumer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/consumer/</guid><description>&lt;h1 id="consumer">Consumer&lt;/h1>
+&lt;h2 id="reading-from-kafka-">Reading from Kafka 🎣&lt;/h2>
+&lt;p>A &lt;strong>consumer&lt;/strong> pulls records from partitions and tracks its progress via offsets.&lt;/p>
+&lt;h2 id="consumer-group-model">Consumer Group Model&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Same group id&lt;/strong> → load shared; each partition ↔️ one consumer instance.&lt;/li>
+&lt;li>&lt;strong>Different group id&lt;/strong> → each group receives the data independently.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --topic orders --group billing-service --from-beginning
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="java-example-kafka-clients">Java Example (Kafka Clients)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Properties props &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Properties();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;bootstrap.servers&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;localhost:9092&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;group.id&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;billing-service&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;enable.auto.commit&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;false&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;key.deserializer&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;org.apache.kafka.common.serialization.StringDeserializer&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>props.&lt;span style="color:#a6e22e">put&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;value.deserializer&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;org.apache.kafka.common.serialization.StringDeserializer&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KafkaConsumer&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> consumer &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> KafkaConsumer&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>(props);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>consumer.&lt;span style="color:#a6e22e">subscribe&lt;/span>(Arrays.&lt;span style="color:#a6e22e">asList&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;orders&amp;#34;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">while&lt;/span> (&lt;span style="color:#66d9ef">true&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ConsumerRecords&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> records &lt;span style="color:#f92672">=&lt;/span> consumer.&lt;span style="color:#a6e22e">poll&lt;/span>(Duration.&lt;span style="color:#a6e22e">ofMillis&lt;/span>(100));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (ConsumerRecord&lt;span style="color:#f92672">&amp;lt;&lt;/span>String, String&lt;span style="color:#f92672">&amp;gt;&lt;/span> r : records) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> process(r);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> consumer.&lt;span style="color:#a6e22e">commitSync&lt;/span>(); &lt;span style="color:#75715e">// manual commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/kafka-streams/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/kafka-streams/</guid><description>&lt;h1 id="kafka-streams-api">Kafka Streams API&lt;/h1>
+&lt;p>The &lt;strong>Kafka Streams&lt;/strong> library turns a Kafka cluster into a fully-fledged, fault-tolerant stream-processing engine without requiring a separate cluster like Flink or Spark.&lt;/p>
+&lt;h2 id="1dsl-vs-processor-api">1 DSL vs Processor API&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Layer&lt;/th>
+ &lt;th>What It Offers&lt;/th>
+ &lt;th>Example&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;strong>DSL&lt;/strong>&lt;/td>
+ &lt;td>Map/Filter/Join/KTable abstractions&lt;/td>
+ &lt;td>&lt;code>orders.groupByKey().windowedBy(tumblingWindow)&lt;/code>&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;strong>Processor API&lt;/strong>&lt;/td>
+ &lt;td>Low-level access to topology nodes&lt;/td>
+ &lt;td>Custom watermarking logic&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="2state-stores">2 State Stores&lt;/h2>
+&lt;ul>
+&lt;li>Backed by &lt;strong>RocksDB&lt;/strong> + &lt;strong>changelog topics&lt;/strong>.&lt;/li>
+&lt;li>Enables exactly-once windowed aggregations.&lt;/li>
+&lt;/ul>
+&lt;h2 id="3interactive-queries">3 Interactive Queries&lt;/h2>
+&lt;blockquote>
+&lt;p>Expose local store via REST to query materialised views in real time.&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/kafka/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/kafka/</guid><description>&lt;h1 id="kafka">Kafka&lt;/h1>
+&lt;p>Apache Kafka is a distributed streaming platform designed for high-throughput, fault-tolerant, and scalable data processing. It excels at handling real-time data feeds, making it a powerful tool for applications requiring low-latency data pipelines. Kafka’s architecture, with its publish-subscribe model, can integrate with systems like Blockchain, as noted in &lt;a href="#blockchain.md">Understanding Blockchain Technology&lt;/a>, to stream transaction data for validation or to support consensus mechanisms by ensuring rapid data propagation across nodes.&lt;/p>
+&lt;p>For deployment, Kafka clusters benefit from o&lt;/p></description></item><item><title/><link>https://shawnswu.github.io/KidiVerse/kafka/producers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shawnswu.github.io/KidiVerse/kafka/producers/</guid><description>&lt;h1 id="producers">Producers&lt;/h1>
+&lt;h2 id="writing-to-kafka-">Writing to Kafka 🚚&lt;/h2>
+&lt;p>A &lt;strong>producer&lt;/strong> publishes records to one or more topic partitions.&lt;/p>
+&lt;h2 id="cli-quick-start">CLI Quick Start&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>bin/kafka-console-producer.sh --bootstrap-server localhost:9092 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --topic orders
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;orderId&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;A42&amp;#34;&lt;/span>,&lt;span style="color:#e6db74">&amp;#34;amount&amp;#34;&lt;/span>:99.9&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="python-example-kafka-python">Python Example (kafka-python)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> kafka &lt;span style="color:#f92672">import&lt;/span> KafkaProducer
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> json&lt;span style="color:#f92672">,&lt;/span> uuid
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer &lt;span style="color:#f92672">=&lt;/span> KafkaProducer(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> bootstrap_servers&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;localhost:9092&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> value_serializer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">lambda&lt;/span> v: json&lt;span style="color:#f92672">.&lt;/span>dumps(v)&lt;span style="color:#f92672">.&lt;/span>encode(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> acks&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;all&amp;#34;&lt;/span>, &lt;span style="color:#75715e"># strongest durability&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> retries&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> enable_idempotence&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span> &lt;span style="color:#75715e"># per-partition exactly-once&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>event &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#34;orderId&amp;#34;&lt;/span>: str(uuid&lt;span style="color:#f92672">.&lt;/span>uuid4()), &lt;span style="color:#e6db74">&amp;#34;amount&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">42.0&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer&lt;span style="color:#f92672">.&lt;/span>send(&lt;span style="color:#e6db74">&amp;#34;orders&amp;#34;&lt;/span>, value&lt;span style="color:#f92672">=&lt;/span>event)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>producer&lt;span style="color:#f92672">.&lt;/span>flush()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
