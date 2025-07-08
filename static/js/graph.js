@@ -194,9 +194,9 @@ function initGraph() {
             // 使用 links 而不是 edges 來匹配數據結構
             .data(Array.isArray(data.links) ? data.links : [])
             .join('line')
-            .attr('stroke', '#4F7BFF') // 藍色連線
-            .attr('stroke-opacity', 0.4)
-            .attr('stroke-width', d => d.score ? d.score * 2 : 1); // 相似度越高，線越粗，預設為1
+            .attr('stroke', '#4F7BFF')
+            .attr('stroke-opacity', 0.2)
+            .attr('stroke-width', d => d.score ? d.score * 10 : 2); // 相似度越高，線越粗，預設為1
 
         // 創建顏色比例尺
         let color;
