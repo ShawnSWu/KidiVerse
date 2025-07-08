@@ -19,7 +19,7 @@ It offers a clean two-column dark layout that mirrors your folder structure and 
 
 ---
 
-## <h2><img src="/static/images/obsidian.png" width="20" style="vertical-align: middle;"> Obsidian Compatibility</h2>
+## <img src="/images/obsidian-icon.svg" width="20" alt="Obsidian logo" style="vertical-align: middle;" />  Obsidian Compatibility
 
 
 Already keeping your notes in an Obsidian vault? Just copy them into `content/` and you’re ready to go:
