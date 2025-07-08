@@ -239,16 +239,19 @@ function initGraph() {
             .attr('stroke-opacity', 0.2)
             .attr('stroke-width', d => d.score ? d.score * 10 : 2); // 相似度越高，線越粗，預設為1
 
-        // 創建顏色比例尺
+        // ===== 為不同 component 指定隨機顏色 =====
         let color;
         try {
-            // 確保有節點且有group屬性
-            const groups = nodes.length > 0 && nodes[0].group !== undefined ? 
-                [...new Set(nodes.map(d => d.group || 'default'))] : ['default'];
-                
+            // 為每個 component 隨機產生一個 HSL 顏色（偏亮方便閱讀）
+            const compColors = Array.from({length: componentCount}, () => {
+                const h = Math.floor(Math.random()*360);
+                const s = 60 + Math.random()*20; // 60–80%
+                const l = 50 + Math.random()*10; // 50–60%
+                return `hsl(${h},${s}%,${l}%)`;
+            });
             color = d3.scaleOrdinal()
-                .domain(groups)
-                .range(nodeStyles.colors);
+                .domain(d3.range(componentCount))
+                .range(compColors);
         } catch (error) {
             console.error('Error initializing color scale:', error);
             // 提供默認顏色比例尺
@@ -268,7 +271,7 @@ function initGraph() {
         // 為每個節點添加圓形 - 根據效能模式調整視覺效果
         node.append('circle')
             .attr('r', nodeStyles.defaultRadius)
-            .attr('fill', d => color(d.group))
+            .attr('fill', d => color(d.component))
             .attr('stroke', nodeStyles.stroke)
             .attr('stroke-width', performanceSettings.highPerformanceMode ? 0.5 : nodeStyles.strokeWidth)
             .style('opacity', nodeStyles.opacity)
