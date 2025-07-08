@@ -162,6 +162,17 @@
         font-size: 1.3rem;
         font-weight: 400;
       }
+      /* ===== Typewriter cursor styles ===== */
+      .typewriter-cursor {
+        display: inline-block;
+        color: var(--theme-primary);
+        margin-left: 2px;
+        animation: blink 0.8s steps(1) infinite;
+      }
+      @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+      }
       
       .recent-notes-section,
       .knowledge-section {
@@ -712,6 +723,28 @@
       document.addEventListener('DOMContentLoaded', function() {
         const planetAbout = document.getElementById('planetAbout');
         const planetOverlay = document.querySelector('.planet-overlay');
+
+        /* === Typewriter effect for welcome tagline === */
+        const taglineEl = document.querySelector('.welcome-tagline');
+        if (taglineEl) {
+          const fullText = taglineEl.textContent.trim();
+          taglineEl.textContent = '';
+          const cursorSpan = document.createElement('span');
+          cursorSpan.className = 'typewriter-cursor';
+          cursorSpan.textContent = '|';
+          taglineEl.appendChild(cursorSpan);
+
+          let index = 0;
+          const speed = 60; // milliseconds per character
+          const typer = setInterval(() => {
+            if (index < fullText.length) {
+              taglineEl.insertBefore(document.createTextNode(fullText.charAt(index)), cursorSpan);
+              index++;
+            } else {
+              clearInterval(typer);
+            }
+          }, speed);
+        }
         
         planetAbout.addEventListener('click', function(e) {
           e.preventDefault();
