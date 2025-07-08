@@ -1,5 +1,5 @@
 # Base URL configuration
-baseURL = "https://shawnswu.github.io/KidiVerse/"  # Default to production URL
+baseURL = "https://shawnswu.github.io/KidiVerse/" # Default to production URL
 
 
 # Override for local development

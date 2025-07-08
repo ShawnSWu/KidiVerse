@@ -12,22 +12,10 @@ It offers a clean two-column dark layout that mirrors your folder structure and 
 ## ✨ Features
 
 * Two-column dark UI – collapsible sidebar auto-reads your `content/` tree
-* Obsidian-style images – write `![alt](image.png)` and KidiVerse serves it automatically from `attachments/`
+* Obsidian-style images – write `![alt](image.png)` and make sure the image is in the `attachments/`.
 * AI semantic graph – SentenceTransformers + k-NN → interactive D3 force-directed graph (`/graph`)
 * GitHub Actions integration – graph data (`static/data/notes_graph.json`) is rebuilt on **every deploy**
 * Fully client-side, no external APIs required at runtime
-
----
-
-## 📝 Note-Taking Conventions
-
-1. **Directory = Topic** – organise notes under `content/<topic>/<Note>.md`
-2. **Attachments** – place images related to each note in `content/<topic>/attachments/`
-3. Insert images simply as:
-   ```markdown
-   ![my diagram](diagram.png)        # resolves to /<topic>/attachments/diagram.png
-   ![[diagram.png]]                  # Obsidian transclusion also works
-   ```
 
 ---
 
@@ -36,8 +24,9 @@ It offers a clean two-column dark layout that mirrors your folder structure and 
 Already keeping your notes in an Obsidian vault? Just copy them into `content/` and you’re ready to go:
 
 1. **Drag-and-drop folders** – every folder becomes a sidebar section.
-2. **Add an `_index.md`** in each folder so Hugo can render the section landing page & sidebar entry. A minimal example:
+2. **Add an `_index.md`** (Very important, please do it otherwise the folder will not be displayed on your sidebar) in each folder so Hugo can render the section landing page & sidebar entry. 
 
+A minimal example:
    ```markdown
    ---
    title: "Git"   # folder label in sidebar
@@ -48,6 +37,19 @@ Already keeping your notes in an Obsidian vault? Just copy them into `content/` 
    (You can create these quickly with a script or your file manager.)
 3. Keep images in the folder’s `attachments/` sub-directory – the theme will resolve links like `![diagram](diagram.png)` automatically.
 4. Start `hugo server ‑D` and enjoy the same Obsidian structure with a searchable website + AI knowledge graph.
+
+---
+
+
+## 📝 Note-Taking Conventions
+
+1. **Directory = Topic** – organise notes under `content/<topic>/<Note>.md`
+2. **Attachments** – place images related to each note in `content/<topic>/attachments/`
+3. Insert images simply as:
+   ```markdown
+   ![my diagram](diagram.png)        # resolves to /<topic>/attachments/diagram.png
+   ![[diagram.png]]                  # Obsidian transclusion also works
+   ```
 
 ---
 
