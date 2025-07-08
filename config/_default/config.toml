@@ -2,8 +2,8 @@ languageCode = "zh-tw"
 title = "KidiVerse"
 
 [params]
-  projectName = "KidiVerse"
-  description = "Hi Here is KidiVerse"
+  siteName = "KidiVerse"
+    description = "Welcome to KidiVerse, your dynamic hub for organizing and exploring a network of insightful notes!"
   author = "Shawn Wu"
 
 [menu]

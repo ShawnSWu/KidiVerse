@@ -2,7 +2,7 @@
 {{ define "main" }}
   <article class="post-article">
     <div class="dashboard-content">
-      <a href="{{ "/about/" | relURL }}" class="galaxy-btn" id="planetAbout" title="About KidiVerse">
+      <a href="{{ "/about/" | relURL }}" class="galaxy-btn" id="planetAbout" title="About {{ .Site.Params.siteName }}">
         <div class="galaxy-arms">
           <div class="arm arm1"></div>
           <div class="arm arm2"></div>
