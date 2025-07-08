@@ -169,7 +169,45 @@ function initGraph() {
             console.log(`啟用高效能模式：${nodes.length}個節點超過閾值(${performanceSettings.nodeTreshold})`);
         }
         
-        // 創建力導向模擬
+        // ===== Detect connected components so that totally unconnected clusters can be laid out far apart =====
+        // 使用 Union-Find 找 connected components
+        const parent = new Map();
+        function find(x) {
+            if (parent.get(x) !== x) parent.set(x, find(parent.get(x)));
+            return parent.get(x);
+        }
+        function union(a, b) {
+            const pa = find(a);
+            const pb = find(b);
+            if (pa !== pb) parent.set(pa, pb);
+        }
+        // 初始化 parent
+        nodes.forEach(n => parent.set(n.id, n.id));
+        (Array.isArray(data.links) ? data.links : []).forEach(l => {
+            if (l.source && l.target) union(l.source.id || l.source, l.target.id || l.target);
+        });
+        // 給節點標記 component id
+        const compIds = new Map();
+        let compIndex = 0;
+        nodes.forEach(n => {
+            const root = find(n.id);
+            if (!compIds.has(root)) compIds.set(root, compIndex++);
+            n.component = compIds.get(root);
+        });
+        const componentCount = compIndex;
+
+        // 為每個 component 預先算一個目標中心，分佈在圓周上
+        const componentCenters = {};
+        const radiusForClusters = Math.min(width, height) * 0.55; // 拉大羣與羣之間距離
+        for (let i = 0; i < componentCount; i++) {
+            const angle = (2 * Math.PI * i) / componentCount;
+            componentCenters[i] = {
+                x: width / 2 + Math.cos(angle) * radiusForClusters,
+                y: height / 2 + Math.sin(angle) * radiusForClusters
+            };
+        }
+
+        // ===== 創建力導向模擬 =====
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(Array.isArray(data.links) ? data.links : [])
                 .id(d => d.id)
@@ -182,8 +220,11 @@ function initGraph() {
                 .theta(0.9) // 增加theta值以改進Barnes-Hut近似演算法效率
                 .distanceMax(300)) // 限制排斥力最大距離
             .force('center', d3.forceCenter(width / 2, height / 2)) // 居中力
-            // 減小碰撞偵測半徑，降低計算量
-            .force('collision', d3.forceCollide().radius(24).strength(0.7));
+            // 每個 component 向自己中心吸引，讓不同羣分開
+            .force('clusterX', d3.forceX(d => componentCenters[d.component].x).strength(0.15))
+            .force('clusterY', d3.forceY(d => componentCenters[d.component].y).strength(0.15))
+            // 碰撞半徑加大一點避免節點重疊
+            .force('collision', d3.forceCollide().radius(nodeStyles.defaultRadius + 12).strength(1));
             
             // 設置衰減率，讓模擬更快達到穩定狀態
             simulation.alphaDecay(0.028); // 增加衰減率（默認值是0.0228）
