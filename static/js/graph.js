@@ -329,7 +329,7 @@ function initGraph() {
             // 高亮相關節點 - 使用自定義樣式
             node.selectAll('circle')
                 .style('fill', n => (n.id === d.id || isConnected(n, d)) 
-                    ? nodeStyles.colors[n.id % nodeStyles.colors.length] 
+                    ? color(n.component)
                     : '#ccc')
                 .style('stroke', n => (n.id === d.id) ? nodeStyles.hoverStroke : nodeStyles.stroke)
                 .style('stroke-width', n => (n.id === d.id) ? nodeStyles.strokeWidth * 1.5 : nodeStyles.strokeWidth)
@@ -369,7 +369,7 @@ function initGraph() {
                 
             // 恢復節點樣式 - 宇宙風格
             node.selectAll('circle')
-                .style('fill', d => nodeStyles.colors[d.id % nodeStyles.colors.length])
+                .style('fill', d => color(d.component))
                 .style('r', nodeStyles.defaultRadius)
                 .style('stroke', nodeStyles.stroke)
                 .style('stroke-width', nodeStyles.strokeWidth)
