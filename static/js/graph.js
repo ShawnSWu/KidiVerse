@@ -1,14 +1,14 @@
-// 知識圖譜視覺化 - 使用D3.js實現力導向圖
+// Knowledge graph visualization - Force-directed graph using D3.js
 function initGraph() {
     console.log('Initializing graph...');
     
-    // 確保 window.graphData 存在
+    // Ensure window.graphData exists
     if (!window.graphData) {
         console.warn('Graph data not available, using empty data');
         window.graphData = { nodes: [], links: [] };
     }
     
-    // 使用全局變量加載圖表數據並確保數據結構正確
+    // Load graph data from global variable and verify structure
     const data = {
         nodes: Array.isArray(window.graphData.nodes) ? window.graphData.nodes : [],
         links: Array.isArray(window.graphData.links) ? window.graphData.links : []
@@ -21,36 +21,36 @@ function initGraph() {
         sampleLink: data.links[0]
     });
     
-    // 如果沒有節點數據，顯示警告
+    // Warn if there is no node data
     if (data.nodes.length === 0) {
         console.warn('No nodes found in graph data');
     }
     
-    // 添加效能調整參數 - 僅用於內部優化，不展示UI元素
+    // Performance tuning parameters (internal only, no UI exposure)
     const performanceSettings = {
-        // 高效能模式標記
+        // High-performance mode flag
         highPerformanceMode: false,
-        // 節點臨界值：當節點超過此數時，自動開啟高效能模式
+        // Node threshold: enable high-performance mode when exceeded
         nodeTreshold: 50,
-        // 標籤顯示參數 - 系統內部使用
+        // Label display settings (internal)
         labelsAlwaysVisible: true
     };
-    // 獲取容器元素和尺寸
+    // Get container element and dimensions
     const container = document.querySelector('.graph-visualization');
     
-    // 如果沒有找到容器元素，停止執行
+    // Abort if container element is missing
     if (!container) {
         console.error('找不到 .graph-visualization 容器元素');
         return;
     }
     
-    // 自定義節點樣式設定 - 宇宙風格
+    // Custom node style — "cosmic" theme
     const nodeStyles = {
-        // 節點半徑
+        // Node radius
         defaultRadius: 12,
         hoverRadius: 18,
         
-        // 節點顏色 - 宇宙紫藍色系
+        // Node colors — purple/blue palette
         colors: [
             '#8A6BFF', // 主要紫色
             '#6D5EE0', // 深紫色
@@ -64,17 +64,17 @@ function initGraph() {
             '#6B4FF6'  // 藍紫色
         ],
         
-        // 節點效果
-        opacity: 0.85,       // 半透明效果
-        glowStrength: '10px', // 發光效果強度
-        glowColor: 'rgba(138, 107, 255, 0.6)', // 發光顏色
+        // Node visual effects
+        opacity: 0.85,       // Semi-transparent effect
+        glowStrength: '10px', // Glow strength
+        glowColor: 'rgba(138, 107, 255, 0.6)', // Glow color
         
-        // 節點邊框
+        // Node stroke
         stroke: 'rgba(255, 255, 255, 0.3)', // 半透明白色邊框
         strokeWidth: 1,
         hoverStroke: 'rgba(255, 255, 255, 0.8)',
         
-        // 文字樣式
+        // Font styling
         fontSize: '11px',
         fontColor: '#ffffff', // 白色文字
         hoverFontColor: '#ffffff',
@@ -137,7 +137,7 @@ function initGraph() {
         }
         
         if (totalTopicsElement) {
-            totalTopicsElement.textContent = totalTopics;
+            totalTopicsElement.textContent = totalTopics -1; //About page eliminate the "All" topic
         }
         
         console.log(`知識圖譜統計：${totalNotes} 筆記，${totalTopics} 主題`);
